@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exkurs: Die Kalkwasserprobe</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f9; color: #333; line-height: 1.6;
+            display: flex; justify-content: center; padding: 20px;
+        }
+        .container {
+            max-width: 800px; width: 100%; background-color: #fff;
+            padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .info-box { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; }
+        .safety-warning {
+            padding: 15px; background-color: #fdedec; border-left: 5px solid #e74c3c;
+            border-radius: 5px; margin: 20px 0; font-weight: bold;
+            display: flex; align-items: center;
+        }
+        .safety-symbols img { height: 40px; margin-right: 15px; }
+        .btn {
+            display: inline-block; background-color: #27ae60; color: #fff; padding: 15px 25px;
+            border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em;
+            margin-top: 20px; transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #229954; }
+        .question { margin-top: 30px; }
+        .question p { font-weight: bold; }
+        .options label {
+            display: block; background-color: #ecf0f1; padding: 15px;
+            border-radius: 5px; margin-top: 10px; cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options label:hover { background-color: #dfe6e9; }
+        .options input { margin-right: 10px; }
+        #result {
+            display: none; margin-top: 30px; padding: 20px; border-radius: 5px;
+        }
+        #result.success { background-color: #e8f6ef; border-left: 5px solid #2ecc71; }
+        #result.failure { background-color: #fdedec; border-left: 5px solid #e74c3c; }
+        #experiment-section {
+            display: none; margin-top: 30px; padding-top: 30px;
+            border-top: 2px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exkurs: Die Kalkwasserprobe zum Nachweis von Kohlenstoffdioxid (CO₂)</h1>
+        
+        <div id="infomaterial">
+            <h2>Lies den folgenden Text aufmerksam durch:</h2>
+            <div class="info-box">
+                Kohlenstoffdioxid (CO₂) ist ein farb- und geruchloses Gas, das nicht brennbar ist.
+            </div>
+            <p>Für den Nachweis benötigen wir eine <strong>Nachweisreaktion</strong>: Wenn du wissen möchtest, ob sich in einer Gasprobe Kohlenstoffdioxid befindet, kannst du die sogenannte <strong>Kalkwasser-Probe</strong> durchführen. Dazu wird die Gasprobe in Kalkwasser eingeleitet. Wenn sich das Kalkwasser <strong>trübt</strong> (milchig-weiß wird), ist die Probe positiv, das heißt in der Gasprobe hat sich Kohlenstoffdioxid befunden.</p>
+            <div class="safety-warning">
+                <div class="safety-symbols"><img src="./bilder/schutzbrille.jpg" alt="Schutzbrille"></div>
+                Achtung: Kalkwasser ist ätzend und darf nicht in die Augen gelangen!
+            </div>
+        </div>
+
+        <hr style="margin-top: 30px;">
+
+        <div id="quiz">
+            <h2>Überprüfe dein Wissen</h2>
+            <p>Beantworte die folgenden Fragen. Wenn du alles richtig hast, darfst du das Experiment durchführen.</p>
+
+            <div class="question">
+                <p>1. Welche Eigenschaft macht den direkten Nachweis von Kohlenstoffdioxid mit den Sinnen unmöglich?</p>
+                <div class="options" id="q1">
+                    <label><input type="radio" name="q1" value="a"> Es ist brennbar.</label>
+                    <label><input type="radio" name="q1" value="b"> Es ist farb- und geruchlos.</label>
+                    <label><input type="radio" name="q1" value="c"> Es ist ätzend.</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>2. Was bedeutet eine "positive Kalkwasser-Probe"?</p>
+                <div class="options" id="q2">
+                    <label><input type="radio" name="q2" value="a"> Das Kalkwasser bleibt klar, es ist also CO₂ vorhanden.</label>
+                    <label><input type="radio" name="q2" value="b"> Das Kalkwasser färbt sich blau, es ist also CO₂ vorhanden.</label>
+                    <label><input type="radio" name="q2" value="c"> Das Kalkwasser wird trüb, es ist also CO₂ vorhanden.</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>3. Welche Sicherheitsmaßnahme ist laut Text bei der Arbeit mit Kalkwasser besonders wichtig?</p>
+                <div class="options" id="q3">
+                    <label><input type="radio" name="q3" value="a"> Einen Helm tragen.</label>
+                    <label><input type="radio" name="q3" value="b"> Eine Schutzbrille tragen.</label>
+                    <label><input type="radio" name="q3" value="c"> Handschuhe tragen.</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>4. Es werden drei Proben untersucht: 1. Normale Luft, 2. Ausatemluft, 3. Reines CO₂. Welche Erwartung ist am wahrscheinlichsten korrekt?</p>
+                <div class="options" id="q4">
+                    <label><input type="radio" name="q4" value="a"> Alle drei Proben führen zu einer gleich starken Trübung.</label>
+                    <label><input type="radio" name="q4" value="b"> Die Trübung bei Ausatemluft ist am stärksten, gefolgt von reinem CO₂ und dann normaler Luft.</label>
+                    <label><input type="radio" name="q4" value="c"> Die Trübung ist bei reinem CO₂ am stärksten, bei Ausatemluft schwächer und bei normaler Luft am schwächsten (kaum sichtbar).</label>
+                </div>
+            </div>
+
+            <button class="btn" onclick="showResult()">Test auswerten</button>
+        </div>
+
+        <div id="result">
+            <h2 id="result-title"></h2>
+            <p id="result-text"></p>
+        </div>
+        
+        <div id="experiment-section">
+            <h2>Experiment: Durchführung der Kalkwasserprobe</h2>
+            <p><strong>Material und Reagenzien:</strong> Kalkwasser, Pipette, 3 Reagenzgläser, Reagenzglasständer, 2 Spritzen, Schlauch, Luftballon mit Kohlenstoffdioxid, leerer Luftballon</p>
+            <p><strong>Arbeitsauftrag:</strong> Führe das Experiment wie unten beschrieben durch und notiere deine Ergebnisse im Heft.</p>
+            <ol>
+                <li>Fülle in 3 Reagenzgläser je 2 ml Kalkwasser.</li>
+                <li>Leite in das erste Reagenzglas normale Luft ein (z.B. mit einer leeren Spritze).</li>
+                <li>Leite in das zweite Reagenzglas deine Ausatemluft ein (z.B. durch vorsichtiges Pusten durch einen Schlauch).</li>
+                <li>Leite in das dritte Reagenzglas das reine Kohlenstoffdioxid aus dem Luftballon ein.</li>
+            </ol>
+            <hr>
+            <p>Wenn du das Experiment durchgeführt und verstanden hast, schließe dieses Fenster und kehre zum Hauptprotokoll zurück.</p>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'c',
+            q3: 'b',
+            q4: 'c'
+        };
+
+        function showResult() {
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (const question in correctAnswers) {
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                if (selected && selected.value === correctAnswers[question]) {
+                    score++;
+                }
+            }
+
+            const resultElement = document.getElementById('result');
+            const resultTitle = document.getElementById('result-title');
+            const resultText = document.getElementById('result-text');
+            const quizElement = document.getElementById('quiz');
+            const experimentSection = document.getElementById('experiment-section');
+            
+            if (score === totalQuestions) {
+                resultElement.className = 'success';
+                resultTitle.innerText = `Glückwunsch! Alle ${totalQuestions} Fragen sind richtig.`;
+                resultText.innerText = "Du hast das Prinzip der Kalkwasserprobe verstanden. Du darfst nun das folgende Experiment durchführen.";
+                experimentSection.style.display = 'block';
+            } else {
+                resultElement.className = 'failure';
+                resultTitle.innerText = `Leider nur ${score} von ${totalQuestions} richtig.`;
+                resultText.innerText = "Das ist noch nicht sicher genug. Bitte melde dich bei deiner Lehrkraft, um die falschen Antworten zu besprechen. Führe das Experiment noch NICHT durch!";
+            }
+
+            quizElement.style.display = 'none';
+            resultElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
