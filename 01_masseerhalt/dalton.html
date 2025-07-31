@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exkurs: Das Atommodell nach Dalton</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f9; color: #333; line-height: 1.6;
+            display: flex; justify-content: center; padding: 20px;
+        }
+        .container {
+            max-width: 900px; width: 100%; background-color: #fff;
+            padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .step { display: none; margin-top: 25px; padding-top: 25px; border-top: 1px dashed #ccc; }
+        #infomaterial { display: block; border-top: none; padding-top: 0; }
+        .instruction { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; }
+        .instruction-symbol { font-size: 1.5em; margin-right: 10px; }
+        .btn {
+            display: inline-block; background-color: #3498db; color: #fff; padding: 12px 20px;
+            border: none; border-radius: 5px; cursor: pointer; font-size: 16px;
+            margin-top: 10px; transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #2980b9; }
+        .help-btn { background-color: #f39c12; }
+        .help-btn:hover { background-color: #e67e22; }
+        .image-container img {
+            width: 100%; display: block; margin: 20px auto;
+            border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .help-container { display: none; margin-top: 15px; padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exkurs: Das Atommodell nach Dalton</h1>
+        
+        <div id="infomaterial" class="step">
+            <h2>Warum bleibt die Gesamtmasse bei einer chemischen Reaktion gleich? - Daltons Idee</h2>
+            <div class="instruction">
+                <strong>Arbeitsauftrag:</strong> Analysiere die Abbildung sorgfältig. Bearbeite anschließend die Aufgaben, die schrittweise erscheinen werden, in deinem Heft.
+            </div>
+            <div class="image-container">
+                <img src="./bilder/dalton_infografik.jpg" alt="Infografik zum Atommodell nach John Dalton.">
+            </div>
+            <button class="btn" onclick="showStep('aufgabe1')">Aufgaben starten →</button>
+        </div>
+
+        <div id="aufgabe1" class="step">
+            <h2>Aufgaben zu Daltons Atommodell</h2>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>1. Beschreibe</strong>, wie nach Daltons Modell Stoffe aufgebaut sind.
+            </div>
+            <button class="btn help-btn" onclick="toggleHelp('hilfe1')">Tipp anzeigen</button>
+            <div id="hilfe1" class="help-container">
+                <strong>Tipp:</strong> Lies den Text links oben in der Infografik und schau dir die Beispiele für "Elemente" und "Verbindungen" an. Woraus bestehen alle diese Stoffe?
+            </div>
+            <button class="btn" onclick="showStep('aufgabe2')">Nächste Aufgabe →</button>
+        </div>
+
+        <div id="aufgabe2" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>2. Beschreibe</strong> den Ablauf einer chemischen Reaktion nach Daltons Vorstellungen.
+            </div>
+            <button class="btn help-btn" onclick="toggleHelp('hilfe2')">Tipp anzeigen</button>
+            <div id="hilfe2" class="help-container">
+                <strong>Tipp:</strong> Schau dir die Abbildung mit der Überschrift "So laufen nach meinem Modell chemische Reaktionen ab" genau an. Was passiert dort mit den Zink- und Schwefel-Teilchen?
+            </div>
+            <button class="btn" onclick="showStep('aufgabe3')">Nächste Aufgabe →</button>
+        </div>
+
+        <div id="aufgabe3" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>3. Erläutere</strong> das Gesetz vom Erhalt der Masse mithilfe des Dalton'schen Atommodells.
+            </div>
+            <button class="btn help-btn" onclick="toggleHelp('hilfe3')">Tipp anzeigen</button>
+            <div id="hilfe3" class="help-container">
+                <strong>Tipp:</strong> Kombiniere deine Antwort aus Aufgabe 2 mit dem Bild der Waage ("Es gibt verschiedene Atome"). Wenn bei einer Reaktion keine Teilchen verschwinden und jedes Teilchen eine bestimmte Masse hat, was bedeutet das für die Gesamtmasse vor und nach der Reaktion?
+            </div>
+            <button class="btn" onclick="showStep('aufgabe4')">Nächste Aufgabe →</button>
+        </div>
+
+        <div id="aufgabe4" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>4. [Zusatz] Skizziere</strong> die Verbrennung von Kohle im Modell. (Hinweis: reine Kohle ist ein Element)
+            </div>
+            <button class="btn help-btn" onclick="toggleHelp('hilfe4')">Tipp anzeigen</button>
+            <div id="hilfe4" class="help-container">
+                <strong>Tipp:</strong> Die Verbrennung von Kohle ist die Reaktion von Kohlenstoff (C) mit Sauerstoff (O₂). Schau dir das Beispiel "Kohlenstoffdioxid" in der Infografik an. Deine Skizze sollte zeigen, wie die einzelnen Kohlenstoff- und Sauerstoff-Atome sich neu zu Kohlenstoffdioxid-Teilchen verbinden.
+            </div>
+            <button class="btn" onclick="showStep('aufgabe5')">Weiter zu den weiterführenden Aufgaben →</button>
+        </div>
+        
+        <div id="aufgabe5" class="step">
+             <h2>Weiterführende Aufgaben</h2>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>5. Schlage</strong> im Buch die Seite mit dem Periodensystem der Elemente auf. Erkläre mit deinen eigenen Worten, was dort dargestellt wird.
+            </div>
+            <button class="btn" onclick="showStep('aufgabe6')">Nächste Aufgabe →</button>
+        </div>
+
+        <div id="aufgabe6" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>6. Suche</strong> im Periodensystem der Elemente nach Elementen, die offensichtlich nach Orten oder Personen benannt sind. Schreibe mindestens drei dieser Elemente heraus.
+            </div>
+            <button class="btn" onclick="showStep('aufgabe7')">Nächste Aufgabe →</button>
+        </div>
+        
+        <div id="aufgabe7" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>7. Erkläre</strong>, warum zur Kennzeichnung der Elemente nicht ein Buchstabe ausreicht.
+            </div>
+            <button class="btn" onclick="showStep('aufgabe8')">Nächste Aufgabe →</button>
+        </div>
+
+        <div id="aufgabe8" class="step">
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>8. Begründe</strong>, warum die folgenden Aussagen falsch sind:
+                 <ol type="a">
+                    <li>In den Lücken zwischen den Atomen eines Stoffes befindet sich Luft.</li>
+                    <li>Quecksilber ist ein bei Raumtemperatur flüssiges Metall, weil seine Atome auch flüssig sind.</li>
+                    <li>Schwefel ist gelb. Also sind Schwefel-Atome auch gelb.</li>
+                </ol>
+            </div>
+            <button class="btn help-btn" onclick="toggleHelp('hilfe8')">Tipps anzeigen</button>
+            <div id="hilfe8" class="help-container">
+                <p><strong>Tipp zu a):</strong> Daltons Modell geht von unteilbaren Atomen aus. Gibt es zwischen den Atomen noch etwas Kleineres wie Luft-Teilchen?</p>
+                <p><strong>Tipp zu b):</strong> Der Aggregatzustand (fest, flüssig, gasförmig) ist eine Eigenschaft des gesamten Stoffes, die durch die Bewegung und Anziehung der Teilchen entsteht, nicht eine Eigenschaft eines einzelnen Atoms.</p>
+                <p><strong>Tipp zu c):</strong> Die Farbe ist eine Eigenschaft des Stoffes, die dadurch entsteht, wie der Stoff Licht reflektiert. Ist das eine Eigenschaft, die ein einzelnes, winziges Atom haben kann?</p>
+            </div>
+            <button class="btn" onclick="showStep('abschluss')">Alle Aufgaben bearbeitet</button>
+        </div>
+        
+        <div id="abschluss" class="step">
+            <h2>Exkurs abgeschlossen</h2>
+            <p>Sehr gut! Du hast dir nun das notwendige Wissen über das Atommodell erarbeitet. Schließe dieses Fenster und kehre zum Hauptprotokoll zurück, um mit der Hypothese weiterzumachen.</p>
+        </div>
+    </div>
+
+    <script>
+        function showStep(stepId) {
+            const stepElement = document.getElementById(stepId);
+            if (stepElement) {
+                stepElement.style.display = 'block';
+                stepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleHelp(helpId) {
+            const helpElement = document.getElementById(helpId);
+            if (helpElement) {
+                helpElement.style.display = helpElement.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>
