@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktives Protokoll: Der naturwissenschaftliche Erkenntnisgang</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f9; color: #333; line-height: 1.6;
+            display: flex; justify-content: center; padding: 20px;
+        }
+        .container {
+            max-width: 800px; width: 100%; background-color: #fff;
+            padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h3 { color: #34495e; border-bottom: 1px dotted #7f8c8d; padding-bottom: 5px; margin-top: 20px; }
+        .step, .sub-step { display: none; margin-top: 25px; padding-top: 25px; border-top: 1px dashed #ccc; }
+        #vorbereitung { display: block; border-top: none; padding-top: 0; }
+        .instruction { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; }
+        .instruction-symbol { font-size: 1.5em; margin-right: 10px; }
+        .law-box { padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; border-radius: 5px; margin: 20px 0; }
+        .teacher-gate {
+            padding: 20px; background-color: #fef9e7; border: 2px solid #f39c12;
+            border-radius: 5px; margin-top: 20px; text-align: center;
+        }
+        .safety-warning {
+            padding: 15px; background-color: #fdedec; border-left: 5px solid #e74c3c;
+            border-radius: 5px; margin: 20px 0; font-weight: bold;
+        }
+        .safety-symbols { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+        .safety-symbols img { height: 50px; }
+        .link-button {
+            display: inline-block; background-color: #e67e22; color: white; padding: 15px 25px;
+            margin-top: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;
+            text-align: center; transition: background-color 0.3s;
+        }
+        .link-button:hover { background-color: #d35400; }
+        .btn {
+            display: inline-block; background-color: #3498db; color: #fff; padding: 12px 20px;
+            border: none; border-radius: 5px; cursor: pointer; font-size: 16px;
+            margin-top: 10px; transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #2980b9; }
+        .interactive-btn { background-color: #27ae60; }
+        .interactive-btn:hover { background-color: #229954; }
+        .help-btn { background-color: #f39c12; }
+        .help-btn:hover { background-color: #e67e22; }
+        .image-container img {
+            width: 100%; max-width: 500px; display: block; margin: 20px auto;
+            border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .proposals-container, .help-container, .solution-container { display: none; }
+        .proposal {
+            border: 2px solid #bdc3c7; border-radius: 5px; padding: 15px; margin-top: 15px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .proposal:hover { border-color: #3498db; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .proposal.correct { border-color: #2ecc71; background-color: #e8f6ef; cursor: default; }
+        .proposal.incorrect { border-color: #e74c3c; background-color: #fdedec; cursor: default; }
+        .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 5px; }
+        .feedback.correct { background-color: #e8f6ef; border-left: 5px solid #2ecc71; }
+        .feedback.incorrect { background-color: #fdedec; border-left: 5px solid #e74c3c; }
+        .heft-eintrag { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1>Interaktives Protokoll: Der naturwissenschaftliche Erkenntnisgang</h1>
+        <p>Dieses digitale Blatt führt dich durch die Schritte der wissenschaftlichen Arbeit. Nimm dein Heft und einen Stift zur Hand.</p>
+        
+        <div id="vorbereitung" class="step">
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe die Überschrift <strong>"Verbrannt ist nicht vernichtet"</strong> und das heutige Datum.</div>
+            <button class="btn" onclick="showStep('beobachtung')">Starten →</button>
+        </div>
+        
+        <div id="beobachtung" class="step">
+            <h2>1. Beobachtung</h2>
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"1. Beobachtung"</strong> und notiere, was du siehst.</div>
+            <div class="image-container">
+                <img src="./bilder/kerzeundeisenwolle.jpg" alt="Gegenüberstellung: Waage mit Kerze und Waage mit Eisenwolle.">
+            </div>
+            <button class="btn interactive-btn" onclick="showProposals('beobachtung')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_beobachtung" class="proposals-container" data-correct="B">
+                <div class="proposal" onclick="checkAnswer('beobachtung', 'A', 'weiter_beobachtung')"><h4>Vorschlag A</h4><p>Beide Stoffe werden leichter, weil bei einer Verbrennung immer Masse vernichtet wird.</p></div>
+                <div class="proposal" onclick="checkAnswer('beobachtung', 'B', 'weiter_beobachtung')"><h4>Vorschlag B</h4><p>Die brennende Kerze wird leichter. Die glühende Eisenwolle wird schwerer.</p></div>
+                <div id="feedback_beobachtung" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_beobachtung" style="display:none;" onclick="showStep('fragestellung')">Weiter →</button>
+        </div>
+
+        <div id="fragestellung" class="step">
+            <h2>2. Fragestellung</h2>
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"2. Fragestellung"</strong> und formuliere eine Frage zum Widerspruch.</div>
+            <button class="btn interactive-btn" onclick="showProposals('frage')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_frage" class="proposals-container" data-correct="A">
+                <div class="proposal" onclick="checkAnswer('frage', 'A', 'weiter_frage')"><h4>Vorschlag A</h4><p>Warum nimmt ein Stoff (Eisenwolle) bei der Verbrennung an Masse zu, während ein anderer (Kerze) scheinbar an Masse abnimmt?</p></div>
+                <div class="proposal" onclick="checkAnswer('frage', 'B', 'weiter_frage')"><h4>Vorschlag B</h4><p>Warum können Stoffe überhaupt brennen?</p></div>
+                <div id="feedback_frage" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_frage" style="display:none;" onclick="showStep('analyse')">Weiter →</button>
+        </div>
+
+        <div id="analyse" class="step">
+            <h2>3. Analyse des Problems</h2>
+            <div class="instruction">
+                <p><strong>Hinweis:</strong> Um eine passende Hypothese formulieren zu können, benötigst du eine geeignete Modellvorstellung zur chemischen Reaktion.</p>
+                <a href="./dalton.html" target="_blank" class="link-button">Hier klicken: Aufgaben zum Dalton-Modell</a>
+            </div>
+            <hr>
+            <div class="instruction">
+                <p>Nachdem du die Aufgaben zum Dalton-Modell bearbeitet hast:</p>
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"3. Analyse"</strong> und notiere die Kernaussage, die uns bei unserer Fragestellung am besten weiterhilft.
+            </div>
+            <button class="btn interactive-btn" onclick="showProposals('analyse')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_analyse" class="proposals-container" data-correct="A">
+                <div class="proposal" onclick="checkAnswer('analyse', 'A', 'weiter_analyse')"><h4>Vorschlag A</h4><p>Bei chemischen Reaktionen werden die Atome der Ausgangsstoffe nur neu angeordnet. Es gehen keine Atome verloren und es kommen keine hinzu.</p></div>
+                <div class="proposal" onclick="checkAnswer('analyse', 'B', 'weiter_analyse')"><h4>Vorschlag B</h4><p>Alle Atome eines Elements sind gleich (z.B. in ihrer Größe und Masse).</p></div>
+                <div id="feedback_analyse" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_analyse" style="display:none;" onclick="showStep('hypothese')">Weiter →</button>
+        </div>
+        
+        <div id="hypothese" class="step">
+            <h2>4. Hypothese</h2>
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"4. Hypothese"</strong>. Stelle nun eine überprüfbare Vermutung auf.</div>
+            <button class="btn interactive-btn" onclick="showProposals('hypothese')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_hypothese" class="proposals-container" data-correct="B">
+                 <div class="proposal" onclick="checkAnswer('hypothese', 'A', 'weiter_zur_skizze')"><h4>Vorschlag A</h4><p>Die Masse ändert sich, weil bei Reaktionen neue Atome entstehen.</p></div>
+                <div class="proposal" onclick="checkAnswer('hypothese', 'B', 'weiter_zur_skizze')"><h4>Vorschlag B</h4><p>Die Masse ändert sich nur scheinbar, weil sich Atome mit Sauerstoff-Atomen aus der Luft verbinden.</p></div>
+                <div id="feedback_hypothese" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_zur_skizze" style="display:none;" onclick="showStep('hypothese_skizze')">Weiter zur Skizze →</button>
+        </div>
+
+        <div id="hypothese_skizze" class="step">
+            <h2>4b. Hypothese als Skizze</h2>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span>
+                <strong>Zusatzaufgabe:</strong> Visualisiere deine Hypothese! Zeichne eine "Dalton-Gleichung" für die Reaktion von Eisen mit Sauerstoff in dein Heft.
+            </div>
+            <button class="btn help-btn" onclick="toggleVisibility('drawing_help')">Hilfe zur Skizze</button>
+            <div id="drawing_help" class="help-container" style="display:none;">
+                <h3>Hilfestellung zur Dalton-Gleichung</h3>
+                <p><strong>Tipp 1:</strong> Schau dir im Material zum Dalton-Modell die Abbildung "So laufen nach meinem Modell chemische Reaktionen ab" an.</p>
+                <p><strong>Tipp 2:</strong> Du brauchst: Zwei Eisen-Atome (Fe) + ein Sauerstoff-Molekül (zwei O-Atome) → ein neues Teilchen aus diesen vier Atomen.</p>
+                <hr>
+                <button class="btn interactive-btn" onclick="toggleVisibility('solution_image_container')">Lösung anzeigen</button>
+                <div id="solution_image_container" style="display:none; margin-top:15px;">
+                    <p><strong>Lösung zur Selbstkontrolle:</strong></p>
+                    <img src="./bilder/dalton_gleichung.jpg" alt="Dalton-Gleichung für die Reaktion von Eisen und Sauerstoff" style="width:100%; max-width:300px; border:1px solid #ccc; border-radius:5px;">
+                </div>
+            </div>
+            <button class="btn" onclick="showStep('ueberpruefung_main')">Weiter zur Überprüfung →</button>
+        </div>
+
+        <div id="ueberpruefung_main" class="step">
+            <h2>5. Überprüfung</h2>
+            <div class="instruction">
+                <p>Eine gute Hypothese muss sich durch Experimente überprüfen lassen. Wir schauen uns nun zwei Experimente an.</p>
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe die Hauptüberschrift <strong>"5. Überprüfung"</strong>.
+            </div>
+            <button class="btn" onclick="showStep('ueberpruefung_kerze_ergebnis')">Weiter zu Experiment 1 (Kerze) →</button>
+        </div>
+
+        <div id="ueberpruefung_kerze_ergebnis" class="step">
+            <h3>a) Experiment zur Kerze: Durchführung & Ergebnis</h3>
+            <div class="instruction">
+                <strong>Hinweis:</strong> In diesem Experiment wird "Kalkwasser" verwendet. Um zu verstehen, was das ist und wozu man es braucht, bearbeite zuerst den folgenden Exkurs.
+                <a href="./kalkwasserprobe.html" target="_blank" class="link-button">Hier klicken: Exkurs zur Kalkwasserprobe</a>
+            </div>
+            <hr>
+            
+            <div id="teacher-gate-kerze" class="teacher-gate">
+                <h4>Stopp! Bitte die Lehrkraft rufen.</h4>
+                <p>Zeige deiner Lehrkraft deine Ergebnisse aus dem Exkurs. Erst wenn du das OK hast, darfst du mit dem Experimentieren beginnen.</p>
+                <button class="btn interactive-btn" onclick="unlockContent('experiment-kerze-content', 'teacher-gate-kerze')">Ich habe das OK von der Lehrkraft erhalten</button>
+            </div>
+            
+            <div id="experiment-kerze-content" style="display:none;">
+                <div class="instruction">
+                    <strong>Arbeitsauftrag:</strong> Führt das Experiment zur Kerze wie abgebildet durch. Notiert anschließend im Heft unter "Experiment 1 (Kerze) - Ergebnis:" eure Ergebnisse.
+                </div>
+                <div class="safety-warning">
+                    ACHTUNG: Kalkwasser ist ätzend!
+                    <div class="safety-symbols">
+                        <img src="./bilder/schutzbrille.jpg" alt="Schutzbrille tragen">
+                        <img src="./bilder/achtung_aetzend.jpg" alt="Achtung, ätzend">
+                    </div>
+                </div>
+                <div class="image-container">
+                    <img src="./bilder/kerzenexperiment.jpg" alt="Versuchsaufbau zum Nachweis der Reaktionsprodukte einer Kerze.">
+                </div>
+                <button class="btn interactive-btn" onclick="showProposals('kerze_ergebnis')">Lösungsvorschläge zum Ergebnis anzeigen</button>
+                <div id="proposals_kerze_ergebnis" class="proposals-container" data-correct="A">
+                    <div class="proposal" onclick="checkAnswer('kerze_ergebnis', 'A', 'weiter_kerze_ergebnis')"><h4>Vorschlag A</h4><p>Das Kalkwasser wird trüb und das kalte Becherglas beschlägt von innen.</p></div>
+                    <div class="proposal" onclick="checkAnswer('kerze_ergebnis', 'B', 'weiter_kerze_ergebnis')"><h4>Vorschlag B</h4><p>Das Kalkwasser bleibt klar und das Becherglas wird nur heiß.</p></div>
+                    <div id="feedback_kerze_ergebnis" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_kerze_ergebnis" style="display:none;" onclick="showStep('ueberpruefung_kerze_deutung')">Weiter →</button>
+            </div>
+        </div>
+
+        <div id="ueberpruefung_kerze_deutung" class="step">
+            <h3>a) Experiment zur Kerze: Deutung</h3>
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"Deutung:"</strong> und erkläre, was die Ergebnisse bedeuten.</div>
+            <button class="btn interactive-btn" onclick="showProposals('kerze_deutung')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_kerze_deutung" class="proposals-container" data-correct="B">
+                <div class="proposal" onclick="checkAnswer('kerze_deutung', 'A', 'weiter_kerze_deutung')"><h4>Vorschlag A</h4><p>Die Ergebnisse beweisen, dass die Kerze aus Ruß und Wachs besteht.</p></div>
+                <div class="proposal" onclick="checkAnswer('kerze_deutung', 'B', 'weiter_kerze_deutung')"><h4>Vorschlag B</h4><p>Die Trübung des Kalkwassers weist Kohlenstoffdioxid nach. Das Beschlagen des Glases weist Wasser nach. Es sind also gasförmige Produkte entstanden.</p></div>
+                <div id="feedback_kerze_deutung" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_kerze_deutung" style="display:none;" onclick="showStep('ueberpruefung_eisen_ergebnis')">Weiter zu Experiment 2 (Eisenwolle) →</button>
+        </div>
+
+        <div id="ueberpruefung_eisen_ergebnis" class="step">
+            <h3>b) Experiment zur Eisenwolle: Auswertung</h3>
+            <div class="instruction">
+                <strong>Hinweis:</strong> Dieses Experiment wird nicht durchgeführt. Die Abbildung zeigt den Versuchsaufbau und die Messergebnisse.<br><br>
+                <span class="instruction-symbol">✒️</span><strong>Eure Aufgabe:</strong> Wertet die Informationen aus der Abbildung aus und notiert das Ergebnis unter "Experiment 2 (Eisenwolle) - Ergebnis:" in eurem Heft.
+            </div>
+            <div class="image-container">
+                <img src="./bilder/eisenwolleexperiment.jpg" alt="Versuchsaufbau zur Reaktion von Eisenwolle mit Luft in Kolbenprobern.">
+            </div>
+            <button class="btn interactive-btn" onclick="showProposals('eisen_ergebnis')">Lösungsvorschläge zum Ergebnis anzeigen</button>
+            <div id="proposals_eisen_ergebnis" class="proposals-container" data-correct="B">
+                <div class="proposal" onclick="checkAnswer('eisen_ergebnis', 'A', 'weiter_eisen_ergebnis')"><h4>Vorschlag A</h4><p>Die Eisenwolle wird hellgrau und das Volumen in den Kolbenprobern nimmt zu.</p></div>
+                <div class="proposal" onclick="checkAnswer('eisen_ergebnis', 'B', 'weiter_eisen_ergebnis')"><h4>Vorschlag B</h4><p>Die Eisenwolle verfärbt sich dunkelgrau und das Volumen in den Kolbenprobern nimmt von 100 ml auf ca. 79 ml ab.</p></div>
+                <div id="feedback_eisen_ergebnis" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_eisen_ergebnis" style="display:none;" onclick="showStep('ueberpruefung_eisen_deutung')">Weiter →</button>
+        </div>
+
+        <div id="ueberpruefung_eisen_deutung" class="step">
+            <h3>b) Experiment zur Eisenwolle: Deutung</h3>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"Deutung:"</strong> und erkläre, was die Ergebnisse bedeuten. <br>
+                <strong>Tipp:</strong> Recherchiere online nach der "Zusammensetzung der Luft", um die Volumenabnahme von 21 ml (von 100 ml auf 79 ml) zu erklären.
+            </div>
+            <button class="btn interactive-btn" onclick="showProposals('eisen_deutung')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_eisen_deutung" class="proposals-container" data-correct="A">
+                <div class="proposal" onclick="checkAnswer('eisen_deutung', 'A', 'weiter_eisen_deutung')"><h4>Vorschlag A</h4><p>Die Volumenabnahme von ca. 21% zeigt, dass der Sauerstoffanteil der Luft mit dem Eisen reagiert hat. Dieser Teil fehlt nun als Gas.</p></div>
+                <div class="proposal" onclick="checkAnswer('eisen_deutung', 'B', 'weiter_eisen_deutung')"><h4>Vorschlag B</h4><p>Die Volumenabnahme beweist, dass sich die Luft beim Erhitzen zusammenzieht.</p></div>
+                <div id="feedback_eisen_deutung" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_eisen_deutung" style="display:none;" onclick="showStep('erkenntnis')">Weiter zur Erkenntnis →</button>
+        </div>
+        
+        <div id="erkenntnis" class="step">
+            <h2>6. Erkenntnis</h2>
+            <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>"6. Erkenntnis"</strong> und fasse die wichtigste Regel in einem Satz zusammen.</div>
+            <button class="btn interactive-btn" onclick="showProposals('erkenntnis')">Lösungsvorschläge anzeigen</button>
+            <div id="proposals_erkenntnis" class="proposals-container" data-correct="B">
+                <div class="proposal" onclick="checkAnswer('erkenntnis', 'A', 'weiter_erkenntnis')"><h4>Vorschlag A</h4><p>Bei chemischen Reaktionen ändert sich die Masse immer, je nachdem, ob ein Stoff gasförmig oder fest ist.</p></div>
+                <div class="proposal" onclick="checkAnswer('erkenntnis', 'B', 'weiter_erkenntnis')"><h4>Vorschlag B</h4><p>Die Gesamtmasse bleibt bei chemischen Reaktionen immer erhalten. Scheinbare Änderungen entstehen in offenen Systemen durch Gase, die entweichen oder aus der Luft reagieren.</p></div>
+                <div id="feedback_erkenntnis" class="feedback"></div>
+            </div>
+            <button class="btn" id="weiter_erkenntnis" style="display:none;" onclick="showStep('vertiefung')">Weiter zur Vertiefung →</button>
+        </div>
+
+        <div id="vertiefung" class="step">
+            <h2>7. Vertiefung und Transfer</h2>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Übernehmt die folgende Abbildung sauber in euer Heft.
+            </div>
+            <div class="image-container">
+                <img src="./bilder/erkenntnis_kerze.jpg" alt="Skizze zur Verbrennung einer Kerze auf sichtbarer und Teilchenebene.">
+            </div>
+            <button class="btn" onclick="showSubStep('vertiefung_task1')">Weiter zu den Aufgaben →</button>
+        </div>
+
+        <div id="vertiefung_task1" class="sub-step">
+            <h3>Aufgabe 1: Beschreibung</h3>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Beschreibe die in der Abbildung dargestellten Vorgänge. Gehe dabei auf folgende Punkte ein:
+                <ul>
+                    <li>Woraus besteht eine Kerze laut der Abbildung (sichtbare Ebene und Teilchenebene)?</li>
+                    <li>Welche Stoffe aus der Luft werden für die Verbrennung benötigt?</li>
+                    <li>Welche Stoffe entstehen bei der Verbrennung (Reaktionsprodukte)?</li>
+                </ul>
+            </div>
+            <button class="btn interactive-btn" onclick="toggleVisibility('solution_task1')">Lösungsvorschlag anzeigen</button>
+            <div id="solution_task1" class="solution-container">
+                <p><strong>Lösungsvorschlag:</strong> Die Kerze besteht auf der sichtbaren Ebene aus Wachs. Auf der Teilchenebene besteht dieses Wachs aus Wachsteilchen. Für die Verbrennung wird Sauerstoff aus der Luft benötigt. Als Reaktionsprodukte entstehen die gasförmigen Stoffe Kohlenstoffdioxid und Wasser.</p>
+            </div>
+            <button class="btn" onclick="showSubStep('vertiefung_task2')">Weiter zu Aufgabe 2 →</button>
+        </div>
+
+        <div id="vertiefung_task2" class="sub-step">
+            <h3>Aufgabe 2: Erklärung der Massenabnahme</h3>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Erkläre mithilfe der Informationen aus der Abbildung, warum die Waage im Experiment eine Massenabnahme anzeigt.
+                <br><strong>Tipp:</strong> Berücksichtige die Aggregatzustände der Stoffe.
+            </div>
+            <button class="btn interactive-btn" onclick="toggleVisibility('solution_task2')">Lösungsvorschlag anzeigen</button>
+            <div id="solution_task2" class="solution-container">
+                <p><strong>Lösungsvorschlag:</strong> Das Wachs der Kerze reagiert mit gasförmigem Sauerstoff zu den ebenfalls gasförmigen Produkten Kohlenstoffdioxid und Wasser. Da diese Gase in einem offenen System (wie auf der Waage) entweichen, kann die Waage ihre Masse nicht mehr messen. Deshalb zeigt sie eine Abnahme an.</p>
+            </div>
+            <button class="btn" onclick="showSubStep('vertiefung_task3')">Weiter zu Aufgabe 3 →</button>
+        </div>
+        
+        <div id="vertiefung_task3" class="sub-step">
+            <h3>Aufgabe 3: Das Gesetz und das Gedankenexperiment</h3>
+            <div class="law-box">
+                Das <strong>Gesetz von der Erhaltung der Masse</strong> besagt, dass bei einer chemischen Reaktion in einem geschlossenen System die Gesamtmasse der Ausgangsstoffe (Edukte) gleich der Gesamtmasse der Endstoffe (Produkte) ist.
+            </div>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Beantworte folgende Fragen:
+                 <ol type="a">
+                    <li>Begründe, warum das Gesetz bei der normalen Kerzenverbrennung scheinbar nicht gilt.</li>
+                    <li>Entwickle ein Gedankenexperiment: Wie müsstest du den Versuchsaufbau verändern, um nachzuweisen, dass keine Masse verloren geht? Fertige eine beschriftete Skizze an und begründe deine Idee.</li>
+                </ol>
+            </div>
+            <button class="btn interactive-btn" onclick="toggleVisibility('solution_task3')">Lösungsvorschlag anzeigen</button>
+            <div id="solution_task3" class="solution-container">
+                <p><strong>Lösungsvorschlag a):</strong> Das Gesetz gilt scheinbar nicht, weil das Experiment in einem offenen System stattfindet. Die gasförmigen Reaktionsprodukte (Kohlenstoffdioxid, Wasser) können entweichen und werden nicht mitgewogen.</p>
+                <p><strong>Lösungsvorschlag b):</strong> Man müsste das Experiment in einem geschlossenen System durchführen. Man könnte die Kerze unter einen großen Glaszylinder auf die Waage stellen und den Zylinder luftdicht verschließen. Die Waage würde dann keine Massenänderung anzeigen. (Die Kerze würde allerdings nach kurzer Zeit ausgehen, da der Sauerstoff verbraucht ist).</p>
+            </div>
+            <button class="btn" onclick="showSubStep('vertiefung_task4')">Weiter zur Transferaufgabe →</button>
+        </div>
+
+        <div id="vertiefung_task4" class="sub-step">
+            <h3>Transferaufgabe: Massenzunahme bei Eisenwolle</h3>
+            <div class="instruction">
+                <span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Erstelle nun eine ähnlich aufgebaute Skizze wie die zur Kerze für das Experiment zur Massenzunahme bei der Verbrennung von Eisenwolle. Deine Skizze sollte ebenfalls eine sichtbare Ebene und eine Teilchenebene enthalten.
+            </div>
+            <button class="btn" onclick="showStep('abschluss')">Protokoll abschließen →</button>
+        </div>
+
+        <div id="abschluss" class="step">
+            <h2>Protokoll abgeschlossen!</h2>
+            <h3>Deine Auswertung:</h3>
+            <p>Du hast <strong id="final-score">0</strong> von <strong id="total-questions">12</strong> Fragen beim ersten Versuch korrekt beantwortet.</p>
+            <p>Klicke auf den Button, um eine reine Ansicht deines Protokolls für einen letzten Check zu erstellen.</p>
+            <button class="btn" onclick="zeigeHeftansicht()">Finale Heftansicht erstellen</button>
+        </div>
+        
+        <!-- VERSTECKTE VORLAGEN FÜR DIE FINALE HEFTANSICHT -->
+        <div class="heft-eintrag" id="heft-beobachtung"><h2>1. Beobachtung</h2><ul><li>Eine brennende Kerze wird kleiner, die Waage zeigt weniger Masse an.</li><li>Eisenwolle glüht beim Erhitzen, die Waage zeigt mehr Masse an.</li></ul></div>
+        <div class="heft-eintrag" id="heft-frage"><h2>2. Fragestellung</h2><p>Warum nimmt ein Stoff (Eisenwolle) bei der Verbrennung an Masse zu, während ein anderer (Kerze) scheinbar an Masse abnimmt?</p></div>
+        <div class="heft-eintrag" id="heft-analyse"><h2>3. Analyse</h2><p>Die entscheidende Kernaussage des Dalton-Modells ist: Bei chemischen Reaktionen werden die Atome der Ausgangsstoffe nur neu angeordnet. Es gehen keine Atome verloren und es kommen keine hinzu.</p></div>
+        <div class="heft-eintrag" id="heft-hypothese"><h2>4. Hypothese</h2><p>Die Masse ändert sich nur scheinbar. Bei der Verbrennung verbinden sich Atome mit Sauerstoff-Atomen aus der Luft. Entsteht ein Gas (Kerze), entweicht es. Entsteht ein Feststoff (Eisenwolle), wird die Masse des Sauerstoffs mitgewogen.</p><h3>Dalton-Gleichung:</h3><img src="./bilder/dalton_gleichung.jpg" alt="Skizze der Dalton-Gleichung" style="width:100%; max-width:250px;"></div>
+        <div class="heft-eintrag" id="heft-ueberpruefung">
+            <h2>5. Überprüfung</h2>
+            <h3>a) Experiment zur Kerze</h3>
+            <p><strong>Ergebnis:</strong> Das Kalkwasser wird trüb und das kalte Becherglas beschlägt von innen.</p>
+            <p><strong>Deutung:</strong> Die Trübung des Kalkwassers weist Kohlenstoffdioxid nach. Das Beschlagen des Glases weist Wasser nach. Es sind also gasförmige Produkte entstanden.</p>
+            <h3>b) Experiment zur Eisenwolle</h3>
+            <p><strong>Ergebnis:</strong> Die Eisenwolle verfärbt sich dunkelgrau und das Volumen in den Kolbenprobern nimmt von 100 ml auf ca. 79 ml ab.</p>
+            <p><strong>Deutung:</strong> Die Volumenabnahme zeigt, dass ein Teil der Luft (der Sauerstoff, ca. 21%) mit dem Eisen reagiert hat. Dieser Teil fehlt nun als Gas.</p>
+        </div>
+        <div class="heft-eintrag" id="heft-erkenntnis">
+            <h2>6. Erkenntnis</h2>
+            <p>Die Gesamtmasse bleibt bei chemischen Reaktionen immer erhalten (Gesetz vom Erhalt der Masse). Scheinbare Änderungen entstehen in offenen Systemen durch Gase, die entweichen oder aus der Luft reagieren.</p>
+        </div>
+        <div class="heft-eintrag" id="heft-vertiefung">
+            <h2>7. Vertiefung und Transfer</h2>
+            <p><strong>Analyse der Kerzenverbrennung:</strong> Bei der Verbrennung reagiert Wachs mit gasförmigem Sauerstoff zu den gasförmigen Produkten Kohlenstoffdioxid und Wasser. In einem offenen System entweichen diese Gase, was zu einer scheinbaren Massenabnahme führt.</p>
+            <p><strong>Gedankenexperiment:</strong> Um das Gesetz vom Erhalt der Masse zu beweisen, müsste die Reaktion in einem geschlossenen System (z.B. unter einer Glasglocke auf der Waage) stattfinden. Dort würde die Waage keine Massenänderung anzeigen.</p>
+            <p><strong>Übertragung auf Eisenwolle:</strong> Bei der Verbrennung von Eisenwolle reagiert festes Eisen mit gasförmigem Sauerstoff zu festem Eisenoxid. Da ein gasförmiger Stoff aus der Umgebung gebunden und zu einem Feststoff wird, zeigt die Waage eine Massenzunahme an.</p>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        const attempts = {};
+
+        function showStep(stepId) {
+            const stepElement = document.getElementById(stepId);
+            if (stepElement) {
+                stepElement.style.display = 'block';
+                stepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        function showSubStep(stepId) { showStep(stepId); }
+
+        function showProposals(stepId) {
+            const proposalsContainer = document.getElementById('proposals_' + stepId);
+            if (proposalsContainer) {
+                proposalsContainer.style.display = 'block';
+                event.target.style.display = 'none';
+            }
+        }
+        
+        function checkAnswer(stepId, chosenOption, weiterButtonId) {
+            if (attempts[stepId]) return;
+
+            const container = document.getElementById('proposals_' + stepId);
+            const correctOption = container.dataset.correct;
+            const feedbackElement = document.getElementById('feedback_' + stepId);
+            const proposals = container.querySelectorAll('.proposal');
+            
+            proposals.forEach(p => p.onclick = null);
+
+            const chosenProposal = Array.from(proposals).find(p => p.textContent.includes('Vorschlag ' + chosenOption));
+            const correctProposal = Array.from(proposals).find(p => p.textContent.includes('Vorschlag ' + correctOption));
+
+            if (chosenOption === correctOption) {
+                if (!attempts[stepId]) {
+                    score++;
+                }
+                chosenProposal.classList.add('correct');
+                feedbackElement.innerHTML = '<strong>Korrekt!</strong> Sehr gut.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                chosenProposal.classList.add('incorrect');
+                correctProposal.classList.add('correct');
+                feedbackElement.innerHTML = '<strong>Leider falsch.</strong> Sieh dir den grün markierten Vorschlag an.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+
+            attempts[stepId] = true;
+            feedbackElement.style.display = 'block';
+
+            const weiterButton = document.getElementById(weiterButtonId);
+            if (weiterButton) {
+                weiterButton.style.display = 'inline-block';
+            }
+            
+            document.getElementById('final-score').innerText = score;
+        }
+
+        function toggleVisibility(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.style.display = element.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function unlockContent(contentId, gateId) {
+            const content = document.getElementById(contentId);
+            const gate = document.getElementById(gateId);
+            if (content && gate) {
+                content.style.display = 'block';
+                gate.style.display = 'none';
+            }
+        }
+
+        function toggleHelp(helpId) {
+            const helpElement = document.getElementById(helpId);
+            if (helpElement) {
+                helpElement.style.display = helpElement.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function zeigeHeftansicht() {
+            const container = document.getElementById('main-container');
+            const titel = '<h1>Verbrannt ist nicht vernichtet</h1>';
+            const datum = '<p>Datum: _______________</p><hr>';
+            let protokollHTML = titel + datum;
+
+            const eintragIDs = ['beobachtung', 'frage', 'analyse', 'hypothese', 'ueberpruefung', 'erkenntnis', 'vertiefung'];
+            eintragIDs.forEach(id => {
+                const eintrag = document.getElementById('heft-' + id);
+                if (eintrag) {
+                    protokollHTML += eintrag.innerHTML + '<hr style="border-top: 1px solid #eee;">';
+                }
+            });
+
+            container.innerHTML = protokollHTML;
+            container.style.boxShadow = 'none';
+            container.style.border = '1px solid #ccc';
+        }
+    </script>
+</body>
+</html>
