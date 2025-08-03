@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernmodul: Eigenschaften der Metalle</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background-color: #f9f9f9;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .step {
+            display: none;
+            border-top: 1px solid #ddd;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-block {
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .instruction {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .instruction-emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        .question-container {
+            margin-top: 1.5rem;
+            padding: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+        }
+
+        .answer-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #7f8c8d;
+            background-color: #ffffff;
+            color: #34495e;
+            font-size: 1em;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            background-color: #ecf0f1;
+            border-color: #3498db;
+        }
+
+        .answer-btn.correct {
+            background-color: #dff9d8;
+            border-color: #27ae60;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .answer-btn.incorrect {
+            background-color: #f9d8d8;
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
+        .nav-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            float: right;
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background-color: #2980b9;
+        }
+
+        .nav-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        #start-section, #end-section {
+            text-align: center;
+        }
+
+        #end-section {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .score {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 2rem 0;
+        }
+
+        .nav-links a {
+            display: block;
+            margin: 10px 0;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        figure {
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .img-halved {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        figure figcaption {
+            font-style: italic;
+            color: #666;
+            font-size: 1.0em; /* Schriftgröße erhöht */
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Modul 2: Was ist eigentlich ein Metall?</h1>
+
+        <div id="start-section">
+            <button class="nav-btn" id="start-btn">Lektion starten</button>
+        </div>
+
+        <div id="content-container">
+
+            <!-- SCHRITT 1: Die Grundstruktur -->
+            <div class="step" id="step-1">
+                <p class="info-block">
+                    Im letzten Modul hast du die geschichtliche Bedeutung der Metalle kennengelernt. Aber was genau ist chemisch und physikalisch ein Metall? Wir werden nun gemeinsam die wichtigsten Merkmale erarbeiten und eine Mindmap dazu füllen. Die meisten der heute bekannten chemischen Elemente sind übrigens Metalle.
+                </p>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Übertrage die folgende Grundstruktur der Mindmap in dein Heft. Sie wird sich nach und nach füllen.
+                </p>
+                <figure>
+                    <img src="bilder/mindmap_grundstruktur.jpg" alt="Grundstruktur einer Mindmap zum Thema Metalle">
+                </figure>
+                <button class="nav-btn">Weiter</button>
+            </div>
+
+            <!-- SCHRITT 2: Das Vorkommen in der Natur -->
+            <div class="step" id="step-2">
+                <h2>Vorkommen: Wo findet man Metalle?</h2>
+                <p class="info-block">
+                    Nur wenige Metalle, die sogenannten <strong>Edelmetalle</strong> wie Gold, kommen in der Natur in reiner Form vor. Man nennt das 'gediegen'. Die meisten Metalle sind <strong>unedel</strong>. Sie liegen in Gesteinen als chemische Verbindungen vor, die man <strong>Erze</strong> nennt. Auch <strong>Kupfer</strong> zählt als <strong>Halbedelmetall</strong>, weshalb man es manchmal gediegen, meist aber als Erz findet.
+                </p>
+                <figure>
+                    <img src="bilder/goldnugget.jpg" alt="Ein glänzender Goldnugget" class="img-halved">
+                    <figcaption>Ein Goldnugget ist gediegenes Metall.</figcaption>
+                </figure>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Ergänze den Ast 'Vorkommen' sowie den Ast 'Edelmetalle' mit den passenden Begriffen und Beispielen aus dem Text.
+                </p>
+                <div class="question-container">
+                    <p><strong>Frage 1/5:</strong> Ein Stück Gestein, das eine chemische Verbindung aus Eisen und Sauerstoff enthält, nennt man...</p>
+                    <button class="answer-btn" data-correct="false">A) gediegenes Eisen.</button>
+                    <button class="answer-btn" data-correct="true">B) Eisenerz.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 3: Physikalische Eigenschaften -->
+            <div class="step" id="step-3">
+                <h2>Physikalische Eigenschaften: Woran erkennt man Metalle?</h2>
+                <p class="info-block">
+                    Alle Metalle haben typische gemeinsame Eigenschaften. Sie besitzen einen besonderen <strong>metallischen Glanz</strong>, sind gut <strong>elektrisch leitfähig</strong> und leiten auch <strong>Wärme</strong> hervorragend. Außerdem lassen sie sich gut <strong>verformen</strong>. Die gute elektrische Leitfähigkeit ist der Grund, warum fast alle Stromkabel aus Metallen wie Kupfer bestehen.
+                </p>
+                <figure>
+                    <img src="bilder/kupferkabel.jpg" alt="Nahaufnahme von blanken Kupferdrähten in einem Kabel" class="img-halved">
+                    <figcaption>Kupfer ist aufgrund seiner hervorragenden Leitfähigkeit das Standardmaterial für elektrische Leitungen.</figcaption>
+                </figure>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Fülle den Ast 'physikalische Eigenschaften' in deiner Mindmap mit den vier genannten Eigenschaften aus.
+                </p>
+                <div class="question-container">
+                    <p><strong>Frage 2/5:</strong> Warum fühlt sich ein Metallgriff kälter an als ein Holzgriff, obwohl beide die gleiche Temperatur haben?</p>
+                    <button class="answer-btn" data-correct="true">A) Weil das Metall die Wärme meiner Hand viel besser und schneller ableitet als das Holz.</button>
+                    <button class="answer-btn" data-correct="false">B) Weil Metalle grundsätzlich eine niedrigere Temperatur haben als andere Materialien.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 4: Chemische Eigenschaften -->
+            <div class="step" id="step-4">
+                <h2>Chemische Eigenschaften: Wie reagieren Metalle?</h2>
+                <p class="info-block">
+                    Metalle unterscheiden sich in ihrer Reaktionsfreudigkeit. <strong>Edelmetalle</strong> (z.B. Gold) sind sehr <strong>reaktionsträge</strong>. <strong>Unedle Metalle</strong> (z.B. Eisen) sind reaktionsfreudig und reagieren mit Stoffen in ihrer Umgebung, z.B. Sauerstoff. Diesen Vorgang nennt man <strong>Oxidation</strong>. Umgangssprachlich ist dieser Vorgang bei Eisen als 'Rosten' bekannt.
+                </p>
+                <figure>
+                    <img src="bilder/korrosion_bruecke.jpg" alt="Rostschäden an einer Stahlbetonbrücke" class="img-halved">
+                    <figcaption>Korrosion, wie hier bei einer Stahlbetonbrücke, verursacht jedes Jahr Schäden in Milliardenhöhe.</figcaption>
+                </figure>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Trage die Begriffe `reaktionsträge` und `oxidieren an der Luft` passend in deiner Mindmap ein.
+                </p>
+                <div class="question-container">
+                    <p><strong>Frage 3/5:</strong> Rost an einem Fahrradrahmen aus Eisen ist ein typisches Beispiel für...</p>
+                    <button class="answer-btn" data-correct="false">A) die Reaktion eines Edelmetalls, das besonders stabil ist.</button>
+                    <button class="answer-btn" data-correct="true">B) die Oxidation eines unedlen Metalls mit Luftsauerstoff.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            
+            <!-- SCHRITT 5: Einteilung nach Dichte -->
+            <div class="step" id="step-5">
+                <h2>Einteilung: Leicht- und Schwermetalle</h2>
+                 <p class="info-block">
+                    Metalle werden oft nach ihrer Dichte eingeteilt. <strong>Leichtmetalle</strong> wie <strong>Aluminium</strong> und <strong>Magnesium</strong> haben eine geringe Dichte und sind daher sehr leicht. <strong>Schwermetalle</strong> wie <strong>Eisen</strong> oder <strong>Blei</strong> haben eine hohe Dichte. Einige Schwermetalle wie Blei sind für den Menschen schon in kleinen Mengen giftig.
+                </p>
+                <figure>
+                    <img src="bilder/warnschild_blei.jpg" alt="Ein Warnschild, das vor der Gefahr durch Blei warnt" class="img-halved">
+                    <figcaption>Blei ist ein giftiges Schwermetall, dessen Verwendung heute stark eingeschränkt ist.</figcaption>
+                </figure>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Ergänze nun die Äste 'Leichtmetalle' und 'Schwermetalle' in deiner Mindmap mit den passenden Beispielen aus dem Text.
+                </p>
+                 <div class="question-container">
+                    <p><strong>Frage 4/5:</strong> Für einen leichten Fahrradrahmen verwendet man Aluminium. Der Grund dafür ist...</p>
+                    <button class="answer-btn" data-correct="true">A) Aluminium ist ein Leichtmetall mit einer geringen Dichte.</button>
+                    <button class="answer-btn" data-correct="false">B) Aluminium ist ein Edelmetall und daher besonders rostfrei.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 6: Legierungen -->
+            <div class="step" id="step-6">
+                <h2>Legierungen: Wenn Metalle sich mischen</h2>
+                <p class="info-block">
+                    Metalle lassen sich in geschmolzenem Zustand sehr gut mischen. Solche Metallmischungen nennt man <strong>Legierungen</strong>. Bekannte Beispiele sind <strong>Bronze</strong> (Kupfer & Zinn) oder <strong>Stahl</strong> (Eisen & Kohlenstoff). Zwei weitere wichtige Legierungen sind <strong>Messing</strong> (Kupfer & Zink) für Musikinstrumente und <strong>Amalgam</strong> (Quecksilber & andere Metalle), das früher für Zahnfüllungen genutzt wurde.
+                </p>
+                <figure>
+                    <img src="bilder/bronzeschwert.jpg" alt="Ein antikes, gut erhaltenes Bronzeschwert" class="img-halved">
+                    <figcaption>Klingen aus der Legierung Bronze sind deutlich härter als solche aus reinem Kupfer.</figcaption>
+                </figure>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>Vervollständige den Ast 'Legierungen' in deiner Mindmap mit den vier Beispielen.
+                </p>
+                <div class="question-container">
+                    <p><strong>Frage 5/5:</strong> Was ist eine Legierung?</p>
+                    <button class="answer-btn" data-correct="false">A) Eine chemische Verbindung von einem Metall mit Sauerstoff, die man in Erzen findet.</button>
+                    <button class="answer-btn" data-correct="true">B) Eine Mischung aus mindestens zwei verschiedenen Stoffen mit neuen, verbesserten Eigenschaften.</button>
+                </div>
+                <button class="nav-btn" disabled>Lektion abschließen</button>
+            </div>
+        </div>
+
+        <div id="end-section">
+            <h2>Modul abgeschlossen!</h2>
+            <p class="score" id="score-display">Du hast X von 5 Fragen im ersten Versuch richtig beantwortet.</p>
+            <div class="nav-links">
+                <a href="#">Zurück zur Übersicht</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('start-btn');
+            const startSection = document.getElementById('start-section');
+            const contentContainer = document.getElementById('content-container');
+            const steps = Array.from(contentContainer.getElementsByClassName('step'));
+            const endSection = document.getElementById('end-section');
+            const scoreDisplay = document.getElementById('score-display');
+
+            let currentStepIndex = 0;
+            let score = 0;
+            const totalQuestions = 5;
+
+            function showNextStep(event) {
+                // Hide the button that was clicked to prevent multiple clicks
+                event.target.style.display = 'none';
+
+                currentStepIndex++;
+                if (currentStepIndex < steps.length) {
+                    const nextStep = steps[currentStepIndex];
+                    nextStep.style.display = 'block';
+                    // Scroll the new step into view for a smoother experience
+                    nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    showEndScreen();
+                }
+            }
+            
+            function showEndScreen() {
+                 scoreDisplay.textContent = `Du hast ${score} von ${totalQuestions} Fragen im ersten Versuch richtig beantwortet.`;
+                 endSection.style.display = 'block';
+                 endSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            startBtn.addEventListener('click', () => {
+                startSection.style.display = 'none';
+                steps[0].style.display = 'block';
+            });
+
+            steps.forEach((step) => {
+                const nextButton = step.querySelector('.nav-btn');
+                nextButton.addEventListener('click', showNextStep);
+
+                const questionContainer = step.querySelector('.question-container');
+                if (questionContainer) {
+                    const answerButtons = questionContainer.querySelectorAll('.answer-btn');
+                    let questionAnswered = false;
+
+                    answerButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            if (questionAnswered) {
+                                return;
+                            }
+                            questionAnswered = true;
+
+                            const isCorrect = button.getAttribute('data-correct') === 'true';
+                            if (isCorrect) {
+                                button.classList.add('correct');
+                                score++;
+                            } else {
+                                button.classList.add('incorrect');
+                                const correctButton = questionContainer.querySelector('[data-correct="true"]');
+                                correctButton.classList.add('correct');
+                            }
+
+                            answerButtons.forEach(btn => {
+                                btn.disabled = true;
+                            });
+                            
+                            // Enable the next button
+                            nextButton.disabled = false;
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
