@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teil 1: Der Zerteilungsgrad</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f9; color: #333; line-height: 1.6; display: flex; justify-content: center; padding: 20px; } .container { max-width: 800px; width: 100%; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); } h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; } h3 { color: #34495e; border-bottom: 1px dotted #7f8c8d; padding-bottom: 5px; margin-top: 20px; } .step, .sub-step { display: none; margin-top: 25px; padding-top: 25px; border-top: 1px dashed #ccc; } #vorbereitung { display: block; border-top: none; padding-top: 0; } .instruction { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; } .instruction-symbol { font-size: 1.5em; margin-right: 10px; } .help-container { display: block; margin-top: 15px; padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; border-radius: 5px; } .btn { display: inline-block; background-color: #3498db; color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; transition: background-color 0.3s; } .btn:hover { background-color: #2980b9; } .interactive-btn { background-color: #27ae60; } .interactive-btn:hover { background-color: #229954; } .image-container img { width: 100%; max-width: 500px; display: block; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); } .proposals-container { display: none; } .proposal { border: 2px solid #bdc3c7; border-radius: 5px; padding: 15px; margin-top: 15px; cursor: pointer; transition: all 0.3s; } .proposal:hover { border-color: #3498db; box-shadow: 0 2px 8px rgba(0,0,0,0.1); } .proposal.correct { border-color: #2ecc71; background-color: #e8f6ef; cursor: default; } .proposal.incorrect { border-color: #e74c3c; background-color: #fdedec; cursor: default; } .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 5px; } .feedback.correct { background-color: #e8f6ef; border-left: 5px solid #2ecc71; } .feedback.incorrect { background-color: #fdedec; border-left: 5px solid #e74c3c; } .heft-eintrag { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <div id="interactive-content">
+            <h1>Metalle reagieren unterschiedlich stark – Teil 1: Der Zerteilungsgrad</h1>
+            
+            <div id="vorbereitung" class="step">
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe die Überschrift <strong>"Metalle reagieren unterschiedlich stark"</strong> und das heutige Datum.</div>
+                <button class="btn" onclick="showStep('beobachtung')">Starten →</button>
+            </div>
+
+            <div id="beobachtung" class="step">
+                <h2>1. Beobachtungen</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>1. Beobachtungen</strong>. Beschreibe die Unterschiede zwischen den beiden Aluminium-Formen auf dem Bild.</div>
+                <div class="image-container"><img src="./bilder/alu_vergleich.jpg" alt="Vergleich von Alu-Pulver und Alu-Profil"></div>
+                <button class="btn interactive-btn" onclick="showProposals('beobachtung')">Kontroll-Frage</button>
+                <div id="proposals_beobachtung" class="proposals-container" data-correct="B">
+                    <div class="proposal" onclick="checkAnswer('beobachtung', 'A', 'weiter_beobachtung')"><h4>Vorschlag A</h4><p>Beide Aluminium-Formen sind gleich gefährlich.</p></div>
+                    <div class="proposal" onclick="checkAnswer('beobachtung', 'B', 'weiter_beobachtung')"><h4>Vorschlag B</h4><p>Obwohl es derselbe Stoff ist, scheint die Form einen Einfluss auf die Brennbarkeit zu haben.</p></div>
+                    <div id="feedback_beobachtung" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_beobachtung" style="display:none;" onclick="showStep('fragestellung')">Weiter →</button>
+            </div>
+
+            <div id="fragestellung" class="step">
+                <h2>2. Fragestellung</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>2. Fragestellung</strong>. Formuliere eine passende Frage zu deiner Beobachtung.</div>
+                <button class="btn interactive-btn" onclick="showProposals('frage')">Kontroll-Frage</button>
+                <div id="proposals_frage" class="proposals-container" data-correct="A">
+                    <div class="proposal" onclick="checkAnswer('frage', 'A', 'weiter_frage')"><h4>Vorschlag A</h4><p>Warum hat das Aluminium-Pulver das Gefahrensymbol für 'leicht entzündlich' und das massive Alu-Stück nicht?</p></div>
+                    <div class="proposal" onclick="checkAnswer('frage', 'B', 'weiter_frage')"><h4>Vorschlag B</h4><p>Warum ist Aluminium ein Metall?</p></div>
+                    <div id="feedback_frage" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_frage" style="display:none;" onclick="showStep('hypothese')">Weiter →</button>
+            </div>
+
+            <div id="hypothese" class="step">
+                <h2>3. Hypothese</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>3. Hypothese</strong>. Formuliere eine Vermutung, die deine Fragestellung beantwortet. Nutze die Analogie zum Lagerfeuer als Hilfe.</div>
+                <div class="image-container"><img src="./bilder/lagerfeuer.jpg" alt="Analogie zum Lagerfeuer"></div>
+                <button class="btn interactive-btn" onclick="showProposals('hypothese')">Kontroll-Frage</button>
+                <div id="proposals_hypothese" class="proposals-container" data-correct="B">
+                    <div class="proposal" onclick="checkAnswer('hypothese', 'A', 'weiter_hypothese')"><h4>Vorschlag A</h4><p>Große Stücke brennen besser, weil mehr Material da ist.</p></div>
+                    <div class="proposal" onclick="checkAnswer('hypothese', 'B', 'weiter_hypothese')"><h4>Vorschlag B</h4><p>Je kleiner zerteilt ein Brennstoff ist, desto leichter ist er entzündlich.</p></div>
+                    <div id="feedback_hypothese" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_hypothese" style="display:none;" onclick="showStep('ueberpruefung')">Weiter →</button>
+            </div>
+
+            <div id="ueberpruefung" class="step">
+                <h2>4. Überprüfung</h2>
+                <div id="ueberpruefung_durchfuehrung" class="sub-step" style="display:block; border-top:none; padding-top:0;">
+                    <h3>a) Durchführung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>a) Durchführung</strong>. Beschreibe auf Basis des Bildes, wie das Experiment durchgeführt wird.</div>
+                    <div class="image-container"><img src="./bilder/alu_experiment.jpg" alt="Experiment zum Zerteilungsgrad"></div>
+                    <button class="btn interactive-btn" onclick="showProposals('durchfuehrung')">Kontroll-Frage</button>
+                    <div id="proposals_durchfuehrung" class="proposals-container" data-correct="A">
+                        <div class="proposal" onclick="checkAnswer('durchfuehrung', 'A', 'weiter_durchfuehrung')"><h4>Vorschlag A</h4><p>Es soll getestet werden, ob Aluminium in unterschiedlichen Zerteilungsgraden unterschiedlich heftig brennt.</p></div>
+                        <div class="proposal" onclick="checkAnswer('durchfuehrung', 'B', 'weiter_durchfuehrung')"><h4>Vorschlag B</h4><p>Es soll getestet werden, ob Aluminium überhaupt brennt.</p></div>
+                        <div id="feedback_durchfuehrung" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_durchfuehrung" style="display:none;" onclick="showSubStep('ueberpruefung_ergebnis')">Weiter zum Ergebnis →</button>
+                </div>
+
+                <div id="ueberpruefung_ergebnis" class="sub-step">
+                    <h3>b) Ergebnis</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>b) Ergebnis</strong>. Notiere deine Ergebnisse. (Was siehst du auf dem Bild?)</div>
+                    <button class="btn interactive-btn" onclick="showProposals('ergebnis')">Kontroll-Frage</button>
+                    <div id="proposals_ergebnis" class="proposals-container" data-correct="B">
+                        <div class="proposal" onclick="checkAnswer('ergebnis', 'A', 'weiter_ergebnis')"><h4>Vorschlag A</h4><p>Alle drei Formen reagieren gleich heftig.</p></div>
+                        <div class="proposal" onclick="checkAnswer('ergebnis', 'B', 'weiter_ergebnis')"><h4>Vorschlag B</h4><p>Das Pulver reagiert am heftigsten, das massive Stück am wenigsten.</p></div>
+                        <div id="feedback_ergebnis" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_ergebnis" style="display:none;" onclick="showSubStep('ueberpruefung_deutung')">Weiter zur Deutung →</button>
+                </div>
+
+                <div id="ueberpruefung_deutung" class="sub-step">
+                    <h3>c) Deutung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>c) Deutung</strong>. Deute deine Ergebnisse. (Wie erklärst du dir, was du gesehen hast?)</div>
+                    <button class="btn interactive-btn" onclick="showProposals('deutung')">Kontroll-Frage</button>
+                    <div id="proposals_deutung" class="proposals-container" data-correct="A">
+                        <div class="proposal" onclick="checkAnswer('deutung', 'A', 'weiter_deutung')"><h4>Vorschlag A</h4><p>Das Alu-Pulver verbrennt, das Alu-Stück verbrennt nicht.</p></div>
+                        <div class="proposal" onclick="checkAnswer('deutung', 'B', 'weiter_deutung')"><h4>Vorschlag B</h4><p>Aluminium ist hochentzündlich.</p></div>
+                        <div id="feedback_deutung" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_deutung" style="display:none;" onclick="showStep('erkenntnis')">Weiter →</button>
+                </div>
+            </div>
+
+            <div id="erkenntnis" class="step">
+                <h2>5. Erkenntnis</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>5. Erkenntnis</strong>. Übernimm die Skizze und ergänze sie passend, um die Rolle des Zerteilungsgrads zu erklären.</div>
+                <div class="help-container"><p><strong>Tipp:</strong> Zeichne die Sauerstoff-Teilchen aus der Luft ein, die mit der Oberfläche der Aluminium-Würfel reagieren. Wo können mehr Sauerstoff-Teilchen gleichzeitig 'andocken'?</p></div>
+                <div class="image-container"><img src="./bilder/zerteilungsgrad_skizze.jpg" alt="Skizze zum Zerteilungsgrad"></div>
+                <button class="btn interactive-btn" onclick="showProposals('erkenntnis')">Kontroll-Frage</button>
+                <div id="proposals_erkenntnis" class="proposals-container" data-correct="B">
+                    <div class="proposal" onclick="checkAnswer('erkenntnis', 'A', 'weiter_erkenntnis')"><h4>Vorschlag A</h4><p>Man sollte immer die größten Stücke von Stoffen vergleichen.</p></div>
+                    <div class="proposal" onclick="checkAnswer('erkenntnis', 'B', 'weiter_erkenntnis')"><h4>Vorschlag B</h4><p>Für einen fairen Vergleich müssen Stoffe immer den gleichen Zerteilungsgrad haben.</p></div>
+                    <div id="feedback_erkenntnis" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_erkenntnis" style="display:none;" onclick="showStep('abschluss')">Modul abschließen →</button>
+            </div>
+            
+            <div id="abschluss" class="step">
+                <h2>Teil 1 abgeschlossen!</h2>
+                <h3>Deine Auswertung:</h3>
+                <p>Du hast <strong id="final-score">0</strong> von <strong id="total-questions">7</strong> Fragen beim ersten Versuch korrekt beantwortet.</p>
+                <button class="btn" onclick="zeigeHeftansicht('1')">Heftansicht erstellen</button>
+            </div>
+        </div>
+        
+        <!-- VERSTECKTE VORLAGEN FÜR DIE FINALE HEFTANSICHT -->
+        <div class="heft-eintrag" id="heft-beobachtung"><h2>1. Beobachtungen</h2><p>Aluminium als Pulver trägt ein Gefahrensymbol für 'entzündbar', als massives Profil nicht.</p></div>
+        <div class="heft-eintrag" id="heft-frage"><h2>2. Fragestellung</h2><p>Warum hat das Aluminium-Pulver das Gefahrensymbol für 'leicht entzündlich' und das massive Alu-Stück nicht?</p></div>
+        <div class="heft-eintrag" id="heft-hypothese"><h2>3. Hypothese</h2><p>Je kleiner zerteilt ein Brennstoff ist, desto leichter ist er entzündlich.</p></div>
+        <div class="heft-eintrag" id="heft-ueberpruefung"><h2>4. Überprüfung</h2><h3>a) Durchführung</h3><p>Aluminium in drei verschiedenen Zerteilungsgraden (Stück, Band, Pulver) wird in eine Brennerflamme gehalten.</p><h3>b) Ergebnis</h3><p>Das Alu-Stück glüht kaum, das Band glüht stark und verformt sich, das Pulver verbrennt in hellen Funken.</p><h3>c) Deutung</h3><p>Das Alu-Pulver verbrennt, das Alu-Stück verbrennt nicht. Der Zerteilungsgrad beeinflusst die Brennbarkeit.</p></div>
+        <div class="heft-eintrag" id="heft-erkenntnis"><h2>5. Erkenntnis</h2><p>Der Zerteilungsgrad eines Stoffes beeinflusst seine Reaktionsgeschwindigkeit. Für einen fairen Vergleich müssen Stoffe den gleichen Zerteilungsgrad haben.</p><div class="image-container"><img src="./bilder/zerteilungsgrad_skizze.jpg" alt="Skizze zum Zerteilungsgrad"></div></div>
+    </div>
+    <script>
+        let score = 0; const attempts = {}; let originalContent = ''; let revealedSteps = ['vorbereitung'];
+        function showStep(stepId) { const el = document.getElementById(stepId); if (el) { el.style.display = 'block'; el.scrollIntoView({ behavior: 'smooth' }); if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } } }
+        function showSubStep(stepId) { const el = document.getElementById(stepId); if (el) { el.style.display = 'block'; if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } } }
+        function showProposals(stepId) { const el = document.getElementById('proposals_' + stepId); if (el) { el.style.display = 'block'; event.target.style.display = 'none'; } }
+        function checkAnswer(stepId, chosenOption, weiterButtonId) { if (attempts[stepId]) return; const container = document.getElementById('proposals_' + stepId); const correctOption = container.dataset.correct; const feedbackEl = document.getElementById('feedback_' + stepId); const proposals = container.querySelectorAll('.proposal'); proposals.forEach(p => p.onclick = null); const chosenP = Array.from(proposals).find(p => p.textContent.includes('Vorschlag ' + chosenOption)); const correctP = Array.from(proposals).find(p => p.textContent.includes('Vorschlag ' + correctOption)); if (chosenOption === correctOption) { if (!attempts[stepId]) { score++; } chosenP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Korrekt!</strong>'; feedbackEl.className = 'feedback correct'; } else { chosenP.classList.add('incorrect'); correctP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Leider falsch.</strong> Sieh dir den grün markierten Vorschlag an.'; feedbackEl.className = 'feedback incorrect'; } attempts[stepId] = true; feedbackEl.style.display = 'block'; document.getElementById(weiterButtonId).style.display = 'inline-block'; document.getElementById('final-score').innerText = score; document.getElementById('total-questions').innerText = Object.keys(attempts).length; }
+        function zeigeHeftansicht(teil) { const interactiveContent = document.getElementById('interactive-content'); originalContent = interactiveContent.innerHTML; const container = document.getElementById('main-container'); const titel = `<h1>Metalle reagieren unterschiedlich stark – Teil ${teil}</h1>`; const datum = '<p>Datum: _______________</p><hr>'; let html = titel + datum; const ids = ['beobachtung', 'frage', 'hypothese', 'ueberpruefung', 'erkenntnis']; ids.forEach(id => { const el = document.getElementById('heft-' + id); if (el) { html += el.innerHTML + '<hr style="border-top: 1px solid #eee;">'; } }); html += `<button class="btn" onclick="restoreInteractiveView()">Zurück zur interaktiven Ansicht</button>`; html += `<a href="./teil2_reaktivitaet.html" class="btn">Weiter zu Teil 2</a>`; container.innerHTML = html; }
+        function restoreInteractiveView() { const container = document.getElementById('main-container'); container.innerHTML = originalContent; revealedSteps.forEach(stepId => { const stepElement = document.getElementById(stepId); if (stepElement) { stepElement.style.display = 'block'; } }); const lastStep = document.getElementById('abschluss'); if (lastStep) { lastStep.scrollIntoView({ behavior: 'smooth' }); } }
+    </script>
+</body>
+</html>

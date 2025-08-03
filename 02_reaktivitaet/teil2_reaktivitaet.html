@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teil 2: Die Reaktivität</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f9; color: #333; line-height: 1.6; display: flex; justify-content: center; padding: 20px; } .container { max-width: 800px; width: 100%; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); } h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; } h3 { color: #34495e; border-bottom: 1px dotted #7f8c8d; padding-bottom: 5px; margin-top: 20px; } .step, .sub-step { display: none; margin-top: 25px; padding-top: 25px; border-top: 1px dashed #ccc; } #vorbereitung { display: block; border-top: none; padding-top: 0; } .instruction { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; } .instruction-symbol { font-size: 1.5em; margin-right: 10px; } .help-container { display: block; margin-top: 15px; padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; border-radius: 5px; } .btn { display: inline-block; background-color: #3498db; color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; transition: background-color 0.3s; } .btn:hover { background-color: #2980b9; } .interactive-btn { background-color: #27ae60; } .interactive-btn:hover { background-color: #229954; } .image-container img { width: 100%; max-width: 500px; display: block; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); } .proposals-container { display: none; } .proposal { border: 2px solid #bdc3c7; border-radius: 5px; padding: 15px; margin-top: 15px; cursor: pointer; transition: all 0.3s; } .proposal:hover { border-color: #3498db; box-shadow: 0 2px 8px rgba(0,0,0,0.1); } .proposal.correct { border-color: #2ecc71; background-color: #e8f6ef; cursor: default; } .proposal.incorrect { border-color: #e74c3c; background-color: #fdedec; cursor: default; } .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 5px; } .feedback.correct { background-color: #e8f6ef; border-left: 5px solid #2ecc71; } .feedback.incorrect { background-color: #fdedec; border-left: 5px solid #e74c3c; } .heft-eintrag { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <div id="interactive-content">
+            <h1>Metalle reagieren unterschiedlich stark – Teil 2: Reaktivität</h1>
+            
+            <div id="vorbereitung" class="step">
+                <div class="instruction">Nachdem du weißt, wie man Metalle fair vergleicht, untersuchen wir nun ihre unterschiedliche Reaktivität.</div>
+                <button class="btn" data-action="showStep" data-target="beobachtung">Starten →</button>
+            </div>
+
+            <div id="beobachtung" class="step">
+                <h2>1. Beobachtungen & Analyse (Kupferbrief)</h2>
+                <div id="beobachtung_haupt" class="sub-step" style="display:block; border-top:none; padding-top:0;">
+                    <h3>Hauptbeobachtung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>1. Beobachtungen</strong>. Beschreibe, was du siehst, wenn Magnesiumband, ein Eisennagel und ein Kupferblech in die Brennerflamme gehalten werden.</div>
+                    <div class="image-container"><img src="./bilder/reaktion_metalle_brennen.jpg" alt="Metalle in der Brennerflamme"></div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="haupt_beobachtung">Kontroll-Frage</button>
+                    <div id="proposals_haupt_beobachtung" class="proposals-container" data-correct="B">
+                        <div class="proposal" data-action="checkAnswer" data-step="haupt_beobachtung" data-option="A" data-next="weiter_haupt_beobachtung"><h4>Vorschlag A</h4><p>Alle drei Metalle brennen auf die exakt gleiche Weise in der Flamme.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="haupt_beobachtung" data-option="B" data-next="weiter_haupt_beobachtung"><h4>Vorschlag B</h4><p>Das Magnesiumband brennt deutlich heftiger als der Eisennagel und das Kupferblech.</p></div>
+                        <div id="feedback_haupt_beobachtung" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_haupt_beobachtung" style="display:none;" data-action="showSubStep" data-target="beobachtung_exkurs">Weiter zum Exkurs →</button>
+                </div>
+
+                <div id="beobachtung_exkurs" class="sub-step">
+                    <h3>Analyse der Kupfer-Reaktion (Exkurs Kupferbrief)</h3>
+                    <div class="instruction">Das Kupferblech wird nur schwarz. Aber reagiert es dabei wirklich mit Sauerstoff? Um das zu klären, führen wir das Kupferbrief-Experiment durch.</div>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span>Führe den Versuch durch. Notiere anschließend unter <strong>'Analyse: Kupferbrief'</strong> das Ergebnis und die Deutung in einer Wortgleichung.</div>
+                    <div class="help-container">
+                        <p><strong>Anleitung:</strong> Falte das Stück Kupferblech einmal in der Mitte zusammen. Schlag dann die offenen Ränder so um, dass keine Luft in den Innenraum des 'Briefes' gelangen kann. Nun wird der 'Brief' kurz in die Flamme des Brenners gehalten, so dass die Außenseiten anlaufen. Lass den 'Brief' etwas abkühlen und falte ihn dann wieder auseinander.</p>
+                    </div>
+                    <div class="image-container"><img src="./bilder/kupferbrief_durchfuehrung.jpg" alt="Durchführung des Kupferbrief-Experiments"></div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="exkurs_deutung">Kontroll-Frage</button>
+                    <div id="proposals_exkurs_deutung" class="proposals-container" data-correct="A">
+                        <div class="proposal" data-action="checkAnswer" data-step="exkurs_deutung" data-option="A" data-next="weiter_exkurs_deutung"><h4>Vorschlag A</h4><p>Es bestätigt, dass die schwarze Verfärbung eine Reaktion mit Sauerstoff ist, da sie nur außen stattfindet.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="exkurs_deutung" data-option="B" data-next="weiter_exkurs_deutung"><h4>Vorschlag B</h4><p>Es bestätigt, dass Kupfer nicht brennen kann, da es innen blank bleibt.</p></div>
+                        <div id="feedback_exkurs_deutung" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_exkurs_deutung" style="display:none;" data-action="showStep" data-target="fragestellung">Weiter →</button>
+                </div>
+            </div>
+
+            <div id="fragestellung" class="step">
+                <h2>2. Fragestellung</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>2. Fragestellung</strong>. Formuliere nun, da bestätigt wurde, dass alle drei Metalle mit Sauerstoff reagieren, die zentrale Frage.</div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="frage">Kontroll-Frage</button>
+                <div id="proposals_frage" class="proposals-container" data-correct="A">
+                    <div class="proposal" data-action="checkAnswer" data-step="frage" data-option="A" data-next="weiter_frage"><h4>Vorschlag A</h4><p>Warum reagieren Magnesium, Eisen und Kupfer unterschiedlich heftig mit Sauerstoff?</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="frage" data-option="B" data-next="weiter_frage"><h4>Vorschlag B</h4><p>Bei welcher genauen Temperatur schmelzen die unterschiedlichen Metalle?</p></div>
+                    <div id="feedback_frage" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_frage" style="display:none;" data-action="showStep" data-target="hypothese">Weiter →</button>
+            </div>
+
+            <div id="hypothese" class="step">
+                <h2>3. Hypothese</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>3. Hypothese</strong>. Formuliere eine Vermutung, die deine Frage beantwortet. Denke an das Ergebnis aus dem ersten Lernbaustein (Zerteilungsgrad).</div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="hypothese">Kontroll-Frage</button>
+                <div id="proposals_hypothese" class="proposals-container" data-correct="B">
+                    <div class="proposal" data-action="checkAnswer" data-step="hypothese" data-option="A" data-next="weiter_hypothese"><h4>Vorschlag A</h4><p>Magnesium ist leichter als Eisen und Kupfer und kann deswegen besser brennen.</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="hypothese" data-option="B" data-next="weiter_hypothese"><h4>Vorschlag B</h4><p>Metalle besitzen eine unterschiedliche Reaktivität. Um dies fair zu testen, müssen alle Metalle den gleichen Zerteilungsgrad haben (Pulver).</p></div>
+                    <div id="feedback_hypothese" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_hypothese" style="display:none;" data-action="showStep" data-target="ueberpruefung">Weiter →</button>
+            </div>
+
+            <div id="ueberpruefung" class="step">
+                <h2>4. Überprüfung</h2>
+                <div id="ueberpruefung_durchfuehrung2" class="sub-step" style="display:block; border-top:none; padding-top:0;">
+                    <h3>a) Durchführung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>a) Durchführung</strong>. Beschreibe das Experiment, das auf dem Bild gezeigt wird, um die Hypothese fair zu überprüfen.</div>
+                    <div class="image-container"><img src="./bilder/reaktion_pulver.jpg" alt="Reaktion der Metallpulver"></div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="durchfuehrung2">Kontroll-Frage</button>
+                    <div id="proposals_durchfuehrung2" class="proposals-container" data-correct="A">
+                        <div class="proposal" data-action="checkAnswer" data-step="durchfuehrung2" data-option="A" data-next="weiter_durchfuehrung2"><h4>Vorschlag A</h4><p>Weil alle vier Metalle den gleichen Zerteilungsgrad (Pulver) haben und somit die gleiche Oberfläche bieten.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="durchfuehrung2" data-option="B" data-next="weiter_durchfuehrung2"><h4>Vorschlag B</h4><p>Weil alle vier Metalle mit der gleichen Brennerflamme erhitzt werden.</p></div>
+                        <div id="feedback_durchfuehrung2" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_durchfuehrung2" style="display:none;" data-action="showSubStep" data-target="ueberpruefung_ergebnis2">Weiter zum Ergebnis →</button>
+                </div>
+                <div id="ueberpruefung_ergebnis2" class="sub-step">
+                    <h3>b) Ergebnis</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>b) Ergebnis</strong>. Notiere deine Ergebnisse. (Was siehst du?)</div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="ergebnis2">Kontroll-Frage</button>
+                    <div id="proposals_ergebnis2" class="proposals-container" data-correct="B">
+                        <div class="proposal" data-action="checkAnswer" data-step="ergebnis2" data-option="A" data-next="weiter_ergebnis2"><h4>Vorschlag A</h4><p>Alle drei Metallpulver reagieren nun gleich heftig.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="ergebnis2" data-option="B" data-next="weiter_ergebnis2"><h4>Vorschlag B</h4><p>Auch als Pulver reagiert Magnesium am heftigsten, gefolgt von Eisen und Kupfer.</p></div>
+                        <div id="feedback_ergebnis2" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_ergebnis2" style="display:none;" data-action="showSubStep" data-target="ueberpruefung_deutung2">Weiter zur Deutung →</button>
+                </div>
+                <div id="ueberpruefung_deutung2" class="sub-step">
+                    <h3>c) Deutung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>c) Deutung</strong>. Deute deine Ergebnisse und vervollständige dabei die folgenden Wortgleichungen in deinem Heft.</div>
+                    <div class="help-container">
+                        <ul>
+                            <li>Magnesium + Sauerstoff → Magnesiumoxid (+ sehr viel Energie)</li>
+                            <li>Aluminium + Sauerstoff → ??? (+ ... Energie)</li>
+                            <li>Eisen + ??? → Eisenoxid (+ ... Energie)</li>
+                            <li>Kupfer + ??? → ??? (+ ... Energie)</li>
+                        </ul>
+                    </div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="deutung2">Kontroll-Frage</button>
+                    <div id="proposals_deutung2" class="proposals-container" data-correct="A">
+                        <div class="proposal" data-action="checkAnswer" data-step="deutung2" data-option="A" data-next="weiter_deutung2"><h4>Vorschlag A</h4><p>Es entstehen Metalloxide und es wird unterschiedlich viel Energie freigesetzt.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="deutung2" data-option="B" data-next="weiter_deutung2"><h4>Vorschlag B</h4><p>Es entstehen reine Metalle und es wird immer gleich viel Energie benötigt.</p></div>
+                        <div id="feedback_deutung2" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_deutung2" style="display:none;" data-action="showStep" data-target="erkenntnis">Weiter →</button>
+                </div>
+            </div>
+
+            <div id="erkenntnis" class="step">
+                <h2>5. Erkenntnis</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>5. Erkenntnis</strong>. Gib an, ob die Hypothese bestätigt wurde. Übernimm die Skizze und formuliere eine Erkenntnis, indem du den Lückentext vervollständigst.</div>
+                <div class="image-container"><img src="./bilder/oxidation_sketchnote.jpg" alt="Sketchnote zur Oxidation"></div>
+                <div class="help-container">
+                    <p><strong>Lückentext:</strong> Metalle reagieren mit ______ zu ______. In der Regel wird dabei ______ in Form von ______ und Licht freigesetzt. Reaktionen mit Sauerstoff nennt man ______.</p>
+                </div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="erkenntnis2">Kontroll-Frage</button>
+                <div id="proposals_erkenntnis2" class="proposals-container" data-correct="B">
+                    <div class="proposal" data-action="checkAnswer" data-step="erkenntnis2" data-option="A" data-next="weiter_erkenntnis2"><h4>Vorschlag A</h4><p>Wasser</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="erkenntnis2" data-option="B" data-next="weiter_erkenntnis2"><h4>Vorschlag B</h4><p>Sauerstoff</p></div>
+                    <div id="feedback_erkenntnis2" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_erkenntnis2" style="display:none;" data-action="showStep" data-target="abschluss">Modul abschließen →</button>
+            </div>
+            
+            <div id="abschluss" class="step">
+                <h2>Teil 2 abgeschlossen!</h2>
+                <h3>Deine Auswertung:</h3>
+                <p>Du hast <strong id="final-score">0</strong> von <strong id="total-questions">8</strong> Fragen beim ersten Versuch korrekt beantwortet.</p>
+                <button class="btn" data-action="zeigeHeftansicht">Heftansicht erstellen</button>
+            </div>
+        </div>
+        
+        <div class="heft-eintrag" id="heft-beobachtung"><h2>1. Beobachtungen</h2><p>Ein Magnesiumband brennt grell-weiß, ein Eisennagel glüht nur und ein Kupferblech wird schwarz.</p></div>
+        <div class="heft-eintrag" id="heft-analyse"><h2>Analyse: Kupferbrief</h2><p>Ergebnis: Außen schwarz, innen blank. Deutung: Kupfer + Sauerstoff → Kupferoxid.</p></div>
+        <div class="heft-eintrag" id="heft-frage"><h2>2. Fragestellung</h2><p>Warum reagieren Magnesium, Eisen und Kupfer unterschiedlich heftig mit Sauerstoff?</p></div>
+        <div class="heft-eintrag" id="heft-hypothese"><h2>3. Hypothese</h2><p>Metalle besitzen eine unterschiedliche Reaktivität. Für einen fairen Vergleich müssen alle Metalle den gleichen Zerteilungsgrad haben.</p></div>
+        <div class="heft-eintrag" id="heft-ueberpruefung">
+            <h2>4. Überprüfung</h2>
+            <h3>a) Durchführung</h3><p>Pulver von Mg, Al, Fe und Cu werden in eine Brennerflamme gegeben.</p>
+            <h3>b) Ergebnis</h3><p>Mg reagiert am heftigsten, dann Al, dann Fe, dann Cu.</p>
+            <h3>c) Deutung</h3>
+            <p>Die unterschiedliche Heftigkeit ist eine Stoffeigenschaft (Reaktivität). Es entstehen Metalloxide und Energie wird freigesetzt.</p>
+            <ul>
+                <li>Magnesium + Sauerstoff → Magnesiumoxid (+ sehr viel Energie)</li>
+                <li>Aluminium + Sauerstoff → Aluminiumoxid (+ ... Energie)</li>
+                <li>Eisen + Sauerstoff → Eisenoxid (+ ... Energie)</li>
+                <li>Kupfer + Sauerstoff → Kupferoxid (+ ... Energie)</li>
+            </ul>
+        </div>
+        <div class="heft-eintrag" id="heft-erkenntnis"><h2>5. Erkenntnis</h2><p>Die Hypothese wurde bestätigt. Die Reaktion eines Metalls mit Sauerstoff wird Oxidation genannt. Die Reaktivitätsreihe lautet: Magnesium > Aluminium > Eisen > Kupfer.</p><div class="image-container"><img src="./bilder/oxidation_sketchnote.jpg" alt="Sketchnote zur Oxidation"></div></div>
+    </div>
+
+    <script>
+        let score = 0; const attempts = {}; let originalContent = ''; let revealedSteps = ['vorbereitung'];
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            originalContent = document.getElementById('main-container').innerHTML;
+            document.getElementById('main-container').addEventListener('click', handleClicks);
+        });
+
+        function handleClicks(event) {
+            const target = event.target.closest('[data-action]');
+            if (!target) return;
+
+            event.preventDefault();
+            const action = target.dataset.action;
+            const targetId = target.dataset.target;
+
+            switch (action) {
+                case 'showStep': showStep(targetId); break;
+                case 'showSubStep': showSubStep(targetId); break;
+                case 'showProposals': showProposals(targetId); break;
+                case 'checkAnswer':
+                    checkAnswer(target.dataset.step, target.dataset.option, target.dataset.next);
+                    break;
+                case 'zeigeHeftansicht': zeigeHeftansicht('2'); break;
+                case 'restoreView': restoreInteractiveView(); break;
+            }
+        }
+        
+        function showStep(stepId) { const el = document.getElementById(stepId); if (el) { if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } el.style.display = 'block'; el.scrollIntoView({ behavior: 'smooth' }); } }
+        function showSubStep(stepId) { const el = document.getElementById(stepId); if (el) { if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } el.style.display = 'block'; } }
+        function showProposals(stepId) { const el = document.getElementById('proposals_' + stepId); if (el) { el.style.display = 'block'; document.querySelector(`[data-action="showProposals"][data-target="${stepId}"]`).style.display = 'none'; } }
+        function checkAnswer(stepId, chosenOption, weiterButtonId) { if (attempts[stepId]) return; const container = document.getElementById('proposals_' + stepId); const correctOption = container.dataset.correct; const feedbackEl = document.getElementById('feedback_' + stepId); const proposals = container.querySelectorAll('.proposal'); proposals.forEach(p => p.dataset.action = ''); const chosenP = Array.from(proposals).find(p => p.dataset.option === chosenOption); const correctP = Array.from(proposals).find(p => p.dataset.option === correctOption); if (chosenOption === correctOption) { if (!attempts[stepId]) { score++; } chosenP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Korrekt!</strong>'; feedbackEl.className = 'feedback correct'; } else { chosenP.classList.add('incorrect'); correctP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Leider falsch.</strong> Sieh dir den grün markierten Vorschlag an.'; feedbackEl.className = 'feedback incorrect'; } attempts[stepId] = true; feedbackEl.style.display = 'block'; document.getElementById(weiterButtonId).style.display = 'inline-block'; document.getElementById('final-score').innerText = score; document.getElementById('total-questions').innerText = Object.keys(attempts).length; }
+        
+        function zeigeHeftansicht(teil) {
+            const container = document.getElementById('main-container');
+            const titel = `<h1>Metalle reagieren unterschiedlich stark – Teil ${teil}</h1>`;
+            const datum = '<p>Datum: _______________</p><hr>';
+            let html = titel + datum;
+            const ids = ['beobachtung', 'analyse', 'frage', 'hypothese', 'ueberpruefung', 'erkenntnis'];
+            
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = originalContent;
+            
+            ids.forEach(id => {
+                const el = tempDiv.querySelector('#heft-' + id);
+                if (el) { html += el.innerHTML + '<hr style="border-top: 1px solid #eee;">'; }
+            });
+            html += `<button class="btn" data-action="restoreView">Zurück zur interaktiven Ansicht</button>`;
+            html += `<a href="./teil3_rosten.html" class="btn">Weiter zu Teil 3</a>`;
+            container.innerHTML = html;
+        }
+
+        function restoreInteractiveView() {
+            const container = document.getElementById('main-container');
+            container.innerHTML = originalContent; 
+            
+            revealedSteps.forEach(stepId => {
+                const stepElement = document.getElementById(stepId);
+                if (stepElement) { stepElement.style.display = 'block'; }
+            });
+
+            const lastStep = revealedSteps[revealedSteps.length - 1];
+            if(lastStep) {
+                document.getElementById(lastStep).scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>

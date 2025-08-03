@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teil 3: Rosten – Oxidation ohne Flamme</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f9; color: #333; line-height: 1.6; display: flex; justify-content: center; padding: 20px; } .container { max-width: 800px; width: 100%; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); } h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; } h3 { color: #34495e; border-bottom: 1px dotted #7f8c8d; padding-bottom: 5px; margin-top: 20px; } .step, .sub-step { display: none; margin-top: 25px; padding-top: 25px; border-top: 1px dashed #ccc; } #vorbereitung { display: block; border-top: none; padding-top: 0; } .instruction { padding: 15px; background-color: #e3f2fd; border-left: 5px solid #3498db; border-radius: 5px; margin-bottom: 15px; } .instruction-symbol { font-size: 1.5em; margin-right: 10px; } .help-container { display: block; margin-top: 15px; padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; border-radius: 5px; } .btn { display: inline-block; background-color: #3498db; color: #fff; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; transition: background-color 0.3s; } .btn:hover { background-color: #2980b9; } .interactive-btn { background-color: #27ae60; } .interactive-btn:hover { background-color: #229954; } .image-container img { width: 100%; max-width: 500px; display: block; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); } .proposals-container { display: none; } .proposal { border: 2px solid #bdc3c7; border-radius: 5px; padding: 15px; margin-top: 15px; cursor: pointer; transition: all 0.3s; } .proposal:hover { border-color: #3498db; box-shadow: 0 2px 8px rgba(0,0,0,0.1); } .proposal.correct { border-color: #2ecc71; background-color: #e8f6ef; cursor: default; } .proposal.incorrect { border-color: #e74c3c; background-color: #fdedec; cursor: default; } .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 5px; } .feedback.correct { background-color: #e8f6ef; border-left: 5px solid #2ecc71; } .feedback.incorrect { background-color: #fdedec; border-left: 5px solid #e74c3c; } .heft-eintrag { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <div id="interactive-content">
+            <h1>Metalle reagieren unterschiedlich stark – Teil 3: Schnelle und langsame Oxidation</h1>
+            
+            <div id="vorbereitung" class="step">
+                <div class="instruction">Wir haben schnelle Oxidationen (Verbrennungen) gesehen. Aber gibt es auch langsame?</div>
+                <button class="btn" data-action="showStep" data-target="beobachtung">Starten →</button>
+            </div>
+
+            <div id="beobachtung" class="step">
+                <h2>1. Beobachtungen</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span>Übernehme den folgenden Text unter der Überschrift <strong>1. Beobachtungen</strong> in dein Heft.</div>
+                <div class="help-container">
+                    <p>Verbrennungen sind <strong>sehr schnell ablaufende</strong> Reaktionen mit Sauerstoff (Oxidationen) unter Abgabe von <strong>viel Energie</strong> in Form von Wärme und Licht.</p>
+                </div>
+                <div class="image-container"><img src="./bilder/verbrennung_vs_rosten.jpg" alt="Vergleich von Verbrennung und Rosten"></div>
+                <button class="btn" data-action="showStep" data-target="fragestellung">Weiter →</button>
+            </div>
+
+            <div id="fragestellung" class="step">
+                <h2>2. Fragestellung</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span>Übernehme die folgende Fragestellung unter der Überschrift <strong>2. Fragestellung</strong> in dein Heft.</div>
+                <div class="help-container">
+                    <p>Wenn jede Verbrennung eine Oxidation ist, ist dann auch jede Oxidation eine Verbrennung?</p>
+                </div>
+                <button class="btn" data-action="showStep" data-target="analyse">Weiter →</button>
+            </div>
+
+            <div id="analyse" class="step">
+                <h2>3. Analyse des Problems</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span>Schreibe <strong>3. Analyse</strong>. Lies die Seite 48 in deinem Buch und fasse die wichtigsten neuen Informationen zum Thema 'Rosten' stichpunktartig zusammen.</div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="analyse3">Kontroll-Frage</button>
+                <div id="proposals_analyse3" class="proposals-container" data-correct="A">
+                    <div class="proposal" data-action="checkAnswer" data-step="analyse3" data-option="A" data-next="weiter_analyse3"><h4>Vorschlag A</h4><p>Der Text beschreibt das Rosten als eine langsame Form der Oxidation, die ohne Flamme abläuft.</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="analyse3" data-option="B" data-next="weiter_analyse3"><h4>Vorschlag B</h4><p>Der Text beschreibt, wie man Rost am besten entfernt.</p></div>
+                    <div id="feedback_analyse3" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_analyse3" style="display:none;" data-action="showStep" data-target="hypothese">Weiter →</button>
+            </div>
+
+            <div id="hypothese" class="step">
+                <h2>4. Hypothese</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>4. Hypothese</strong>. Formuliere eine Hypothese darüber, ob Rosten auch eine Reaktion mit Sauerstoff ist und wie sie sich von einer Verbrennung unterscheidet.</div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="hypothese3">Kontroll-Frage</button>
+                <div id="proposals_hypothese3" class="proposals-container" data-correct="B">
+                    <div class="proposal" data-action="checkAnswer" data-step="hypothese3" data-option="A" data-next="weiter_hypothese3"><h4>Vorschlag A</h4><p>Rosten wird nur durch Wasser verursacht.</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="hypothese3" data-option="B" data-next="weiter_hypothese3"><h4>Vorschlag B</h4><p>Rosten ist ebenfalls eine Reaktion mit Sauerstoff (Oxidation), die aber sehr langsam und ohne Feuererscheinung abläuft.</p></div>
+                    <div id="feedback_hypothese3" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_hypothese3" style="display:none;" data-action="showStep" data-target="ueberpruefung">Weiter →</button>
+            </div>
+
+            <div id="ueberpruefung" class="step">
+                <h2>5. Überprüfung</h2>
+                <div id="ueberpruefung_durchfuehrung3" class="sub-step" style="display:block; border-top:none; padding-top:0;">
+                    <h3>a) Durchführung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span>Schreibe <strong>a) Durchführung</strong>. Führe den Versuch zum Rosten von feuchter Eisenwolle - so wie auf Seite 48 beschrieben - durch. Stelle Vermutungen über den Sinn und Zweck der umgedrehten Reagenzgläser an und notiere diese Vermutungen.</div>
+                </div>
+                <div id="ueberpruefung_ergebnis3" class="sub-step" style="display:block;">
+                    <h3>b) Ergebnis</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span>Schreibe <strong>b) Ergebnis</strong>. Vergleiche die Ansätze in der nächsten Chemiestunde. Notiere die Ergebnisse.</div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="ergebnis3">Kontroll-Frage</button>
+                    <div id="proposals_ergebnis3" class="proposals-container" data-correct="B">
+                        <div class="proposal" data-action="checkAnswer" data-step="ergebnis3" data-option="A" data-next="weiter_ergebnis3"><h4>Vorschlag A</h4><p>Die Eisenwolle verfärbt sich rotbraun und der Wasserspiegel im Reagenzglas sinkt.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="ergebnis3" data-option="B" data-next="weiter_ergebnis3"><h4>Vorschlag B</h4><p>Die Eisenwolle verfärbt sich rotbraun und der Wasserspiegel im Reagenzglas steigt.</p></div>
+                        <div id="feedback_ergebnis3" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_ergebnis3" style="display:none;" data-action="showSubStep" data-target="ueberpruefung_deutung3">Weiter zur Deutung →</button>
+                </div>
+                <div id="ueberpruefung_deutung3" class="sub-step">
+                    <h3>c) Deutung</h3>
+                    <div class="instruction"><span class="instruction-symbol">✒️</span>Schreibe <strong>c) Deutung</strong>. Erkläre deine Ergebnisse und formuliere eine passende Reaktionsgleichung.</div>
+                    <button class="btn interactive-btn" data-action="showProposals" data-target="deutung3">Kontroll-Frage</button>
+                    <div id="proposals_deutung3" class="proposals-container" data-correct="A">
+                        <div class="proposal" data-action="checkAnswer" data-step="deutung3" data-option="A" data-next="weiter_deutung3"><h4>Vorschlag A</h4><p>Der gasförmige Sauerstoff aus der eingeschlossenen Luft hat mit der Eisenwolle zu einem festen Stoff (Rost) reagiert. Das Gas fehlt nun, der Luftdruck im Reagenzglas sinkt und das Wasser wird hineingedrückt.</p></div>
+                        <div class="proposal" data-action="checkAnswer" data-step="deutung3" data-option="B" data-next="weiter_deutung3"><h4>Vorschlag B</h4><p>Die Eisenwolle saugt das Wasser durch das Rosten an, weil sie porös wird.</p></div>
+                        <div id="feedback_deutung3" class="feedback"></div>
+                    </div>
+                    <button class="btn" id="weiter_deutung3" style="display:none;" data-action="showStep" data-target="erkenntnis">Weiter →</button>
+                </div>
+            </div>
+
+            <div id="erkenntnis" class="step">
+                <h2>6. Erkenntnis</h2>
+                <div class="instruction"><span class="instruction-symbol">✒️</span><strong>Heft-Eintrag:</strong> Schreibe <strong>6. Erkenntnis</strong>. Bestätigt die Überprüfung deine Hypothese? Formuliere einen Merksatz zur Oxidation von Metallen.</div>
+                <button class="btn interactive-btn" data-action="showProposals" data-target="erkenntnis3">Kontroll-Frage</button>
+                <div id="proposals_erkenntnis3" class="proposals-container" data-correct="A">
+                    <div class="proposal" data-action="checkAnswer" data-step="erkenntnis3" data-option="A" data-next="weiter_erkenntnis3"><h4>Vorschlag A</h4><p>Sie zeigen, dass Feuchtigkeit das Rosten stark beschleunigt.</p></div>
+                    <div class="proposal" data-action="checkAnswer" data-step="erkenntnis3" data-option="B" data-next="weiter_erkenntnis3"><h4>Vorschlag B</h4><p>Sie zeigen, dass Fett und Trockenheit Rost entfernen können.</p></div>
+                    <div id="feedback_erkenntnis3" class="feedback"></div>
+                </div>
+                <button class="btn" id="weiter_erkenntnis3" style="display:none;" data-action="showStep" data-target="abschluss">Modul abschließen →</button>
+            </div>
+            
+            <div id="abschluss" class="step">
+                <h2>Teil 3 abgeschlossen!</h2>
+                <h3>Deine Auswertung:</h3>
+                <p>Du hast <strong id="final-score">0</strong> von <strong id="total-questions">5</strong> Fragen beim ersten Versuch korrekt beantwortet.</p>
+                <button class="btn" data-action="zeigeHeftansicht">Heftansicht erstellen</button>
+            </div>
+        </div>
+        
+        <!-- VERSTECKTE VORLAGEN FÜR DIE FINALE HEFTANSICHT -->
+        <div class="heft-eintrag" id="heft-beobachtung"><h2>1. Beobachtungen</h2><p>Verbrennungen sind sehr schnell ablaufende Reaktionen mit Sauerstoff (Oxidationen) unter Abgabe von viel Energie in Form von Wärme und Licht.</p></div>
+        <div class="heft-eintrag" id="heft-frage"><h2>2. Fragestellung</h2><p>Wenn jede Verbrennung eine Oxidation ist, ist dann auch jede Oxidation eine Verbrennung?</p></div>
+        <div class="heft-eintrag" id="heft-analyse"><h2>3. Analyse</h2><p>Rosten ist eine langsame Form der Oxidation, die ohne Flamme abläuft.</p></div>
+        <div class="heft-eintrag" id="heft-hypothese"><h2>4. Hypothese</h2><p>Rosten ist ebenfalls eine Reaktion mit Sauerstoff (Oxidation), die aber sehr langsam und ohne Feuererscheinung abläuft.</p></div>
+        <div class="heft-eintrag" id="heft-ueberpruefung"><h2>5. Überprüfung</h2><h3>a) Durchführung</h3><p>Drei Proben Eisenwolle (trocken, feucht, sehr feucht) werden in umgedrehten Reagenzgläsern in einem Wasserbad eine Woche beobachtet, um den Einfluss von Feuchtigkeit zu testen und einen eventuellen Gasverbrauch zu messen.</p><h3>b) Ergebnis</h3><p>Die Eisenwolle in der feuchten Probe rostet und der Wasserspiegel im Reagenzglas steigt.</p><h3>c) Deutung</h3><p>Der gasförmige Sauerstoff aus der Luft hat mit dem Eisen zu festem Rost reagiert. Der Druck im Reagenzglas sinkt, weshalb Wasser nach oben gedrückt wird. Die Reaktion lautet: Eisen + Sauerstoff → Eisenoxid.</p></div>
+        <div class="heft-eintrag" id="heft-erkenntnis"><h2>6. Erkenntnis</h2><p>Die Hypothese wurde bestätigt. Rosten ist eine langsame Oxidation. Die Negativkontrollen zeigen, dass Feuchtigkeit für diesen Vorgang notwendig ist bzw. ihn stark beschleunigt.</p></div>
+    </div>
+
+    <script>
+        let score = 0; const attempts = {}; let originalContent = ''; let revealedSteps = ['vorbereitung'];
+        document.addEventListener('DOMContentLoaded', () => { originalContent = document.getElementById('main-container').innerHTML; document.getElementById('main-container').addEventListener('click', handleClicks); });
+        function handleClicks(event) { const target = event.target.closest('[data-action]'); if (!target) return; event.preventDefault(); const action = target.dataset.action; const targetId = target.dataset.target; switch (action) { case 'showStep': showStep(targetId); break; case 'showSubStep': showSubStep(targetId); break; case 'showProposals': showProposals(targetId); break; case 'checkAnswer': checkAnswer(target.dataset.step, target.dataset.option, target.dataset.next); break; case 'zeigeHeftansicht': zeigeHeftansicht('3'); break; case 'restoreView': restoreInteractiveView(); break; } }
+        function showStep(stepId) { const el = document.getElementById(stepId); if (el) { if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } el.style.display = 'block'; el.scrollIntoView({ behavior: 'smooth' }); } }
+        function showSubStep(stepId) { const el = document.getElementById(stepId); if (el) { if (!revealedSteps.includes(stepId)) { revealedSteps.push(stepId); } el.style.display = 'block'; } }
+        function showProposals(stepId) { const el = document.getElementById('proposals_' + stepId); if (el) { el.style.display = 'block'; document.querySelector(`[data-action="showProposals"][data-target="${stepId}"]`).style.display = 'none'; } }
+        function checkAnswer(stepId, chosenOption, weiterButtonId) { if (attempts[stepId]) return; const container = document.getElementById('proposals_' + stepId); const correctOption = container.dataset.correct; const feedbackEl = document.getElementById('feedback_' + stepId); const proposals = container.querySelectorAll('.proposal'); proposals.forEach(p => p.dataset.action = ''); const chosenP = Array.from(proposals).find(p => p.dataset.option === chosenOption); const correctP = Array.from(proposals).find(p => p.dataset.option === correctOption); if (chosenOption === correctOption) { if (!attempts[stepId]) { score++; } chosenP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Korrekt!</strong>'; feedbackEl.className = 'feedback correct'; } else { chosenP.classList.add('incorrect'); correctP.classList.add('correct'); feedbackEl.innerHTML = '<strong>Leider falsch.</strong> Sieh dir den grün markierten Vorschlag an.'; feedbackEl.className = 'feedback incorrect'; } attempts[stepId] = true; feedbackEl.style.display = 'block'; document.getElementById(weiterButtonId).style.display = 'inline-block'; document.getElementById('final-score').innerText = score; document.getElementById('total-questions').innerText = Object.keys(attempts).length; }
+        function zeigeHeftansicht(teil) { const container = document.getElementById('main-container'); const titel = `<h1>Metalle reagieren unterschiedlich stark – Teil ${teil}</h1>`; const datum = '<p>Datum: _______________</p><hr>'; let html = titel + datum; const ids = ['beobachtung', 'frage', 'analyse', 'hypothese', 'ueberpruefung', 'erkenntnis']; const tempDiv = document.createElement('div'); tempDiv.innerHTML = originalContent; ids.forEach(id => { const el = tempDiv.querySelector('#heft-' + id); if (el) { html += el.innerHTML + '<hr style="border-top: 1px solid #eee;">'; } }); html += `<button class="btn" data-action="restoreView">Zurück zur interaktiven Ansicht</button>`; html += `<a href="./index.html" class="btn">Zurück zur Übersicht</a>`; container.innerHTML = html; }
+        function restoreInteractiveView() { const container = document.getElementById('main-container'); container.innerHTML = originalContent; revealedSteps.forEach(stepId => { const stepElement = document.getElementById(stepId); if (stepElement) { stepElement.style.display = 'block'; } }); const lastStep = revealedSteps[revealedSteps.length - 1]; if(lastStep) { document.getElementById(lastStep).scrollIntoView({ behavior: 'smooth' }); } }
+    </script>
+</body>
+</html>
