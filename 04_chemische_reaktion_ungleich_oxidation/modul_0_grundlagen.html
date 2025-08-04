@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernmodul: Grundlagen der Stoffe</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .step {
+            display: none;
+            border-top: 1px solid #ddd;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .info-block {
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .instruction {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .instruction-emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        .question-container {
+            margin-top: 1.5rem;
+            padding: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+        }
+        .answer-btn {
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e;
+            font-size: 1em; text-align: left; border-radius: 5px; cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer-btn:hover:not(:disabled) { background-color: #ecf0f1; border-color: #3498db; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; color: #27ae60; font-weight: bold; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; color: #c0392b; }
+        .answer-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; float: right; transition: background-color 0.3s, opacity 0.3s;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.7; }
+        #start-section, #end-section, #heftansicht-section { text-align: center; }
+        #end-section, #heftansicht-section { display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd; }
+        .heftansicht-content { text-align: left; padding: 1.5rem; background-color: #fdfdfd; border: 1px solid #eee; border-radius: 5px;}
+        .heftansicht-content h3 { color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        .heftansicht-content ul { list-style-position: inside; padding-left: 0; }
+        .score { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin: 2rem 0; }
+        .video-container {
+            position: relative; overflow: hidden; width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 1.5rem 0;
+        }
+        .video-container iframe {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Modul 0: Grundlagen – Was ist eigentlich ein Stoff?</h1>
+
+        <div id="start-section">
+            <button class="nav-btn" id="start-btn">Lektion starten</button>
+        </div>
+
+        <div id="content-container">
+
+            <!-- SCHRITT 1: Einführung und Video -->
+            <div class="step" id="step-1">
+                <p class="info-block">In der Chemie geht es darum, die Welt um uns herum zu verstehen. Alles, was wir anfassen, sehen oder riechen können, bezeichnen Chemiker als Stoff. Doch dieser Begriff allein ist zu ungenau. Dieses Modul hilft dir, die grundlegende Ordnung der Stoffe zu verstehen.</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Schau dir das folgende Video aufmerksam an. Jeder der folgenden Schritte wird sich auf eine Information aus diesem Video beziehen.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/g2-g-a_jerk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <button class="nav-btn">Weiter zur ersten Aufgabe</button>
+            </div>
+
+            <!-- SCHRITT 2: Die erste große Unterteilung -->
+            <div class="step" id="step-2">
+                <h2>Die erste große Unterteilung</h2>
+                <p class="info-block">Das Video erklärt die erste große Unterteilung aller Stoffe (ca. 1:28 - 2:14). Achte besonders auf die Beispiele Apfelsaft und Wasser.</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere die Definitionen für <strong>Reinstoff</strong> und <strong>Stoffgemisch</strong> in deinem Heft, so wie du sie aus dem Video verstanden hast.</p>
+                <div class="question-container">
+                    <p><strong>Frage 1/6:</strong> Apfelsaft ist laut Video ein Stoffgemisch, weil...</p>
+                    <button class="answer-btn" data-correct="false">A) er durch das Vermischen von Äpfeln mit Wasser hergestellt wird und daher eine Mischung ist.</button>
+                    <button class="answer-btn" data-correct="true">B) er aus mehreren Reinstoffen wie Wasser, Zucker und Vitaminen zusammengesetzt ist.</button>
+                    <button class="answer-btn" data-correct="false">C) er eine farbige Flüssigkeit ist, während Reinstoffe immer farblos und fest sein müssen.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 3: Elemente -->
+            <div class="step" id="step-3">
+                <h2>Elemente – Die reinen Grundbausteine</h2>
+                <p class="info-block">Achte nun auf die Erklärung, woraus Reinstoffe bestehen können (ca. 2:46 - 3:34). Das Beispiel mit dem Aluminiumwürfel ist hier entscheidend.</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Erkläre in deinen Worten, was ein <strong>Element</strong> ist und was <strong>Atome</strong> damit zu tun haben.</p>
+                <div class="question-container">
+                    <p><strong>Frage 2/6:</strong> Ein Stück reines Aluminium ist ein Element, weil...</p>
+                    <button class="answer-btn" data-correct="true">A) es ausschließlich aus einer einzigen Sorte von Atomen, den Aluminium-Atomen, besteht.</button>
+                    <button class="answer-btn" data-correct="false">B) es ein festes und glänzendes Metall ist, was eine typische Eigenschaft für Elemente ist.</button>
+                    <button class="answer-btn" data-correct="false">C) es, wie alle anderen wichtigen Metalle, im Periodensystem der Elemente zu finden ist.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 4: Chemische Verbindungen -->
+            <div class="step" id="step-4">
+                 <h2>Chemische Verbindungen</h2>
+                 <p class="info-block">Neben den Elementen gibt es eine zweite Art von Reinstoffen. Das Video erklärt diese ab ca. 3:42.</p>
+                 <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere die Definition für eine <strong>chemische Verbindung</strong>.</p>
+                 <div class="question-container">
+                    <p><strong>Frage 3/6:</strong> Was ist der grundlegende Unterschied zwischen einem Element und einer Verbindung?</p>
+                    <button class="answer-btn" data-correct="false">A) Ein Element kann man nicht weiter zerlegen, eine Verbindung kann durch physikalische Methoden wie Filtrieren getrennt werden.</button>
+                    <button class="answer-btn" data-correct="true">B) Ein Element besteht aus nur einer Atomsorte, eine Verbindung aus mindestens zwei verschiedenen, chemisch gebundenen Atomsorten.</button>
+                    <button class="answer-btn" data-correct="false">C) Elemente sind immer einzelne Atome, während Verbindungen immer aus sehr vielen, großen Atomgruppen bestehen.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 5: Das Rätsel des Wassers -->
+            <div class="step" id="step-5">
+                <h2>Das Rätsel des Wassers</h2>
+                <p class="info-block">Das Video erklärt, warum Wasser ein Reinstoff ist, obwohl es aus verschiedenen Atomen besteht (ca. 4:22 und 5:45).</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Begründe in einem Satz, warum Wasser ein Reinstoff ist.</p>
+                <div class="question-container">
+                    <p><strong>Frage 4/6:</strong> Warum ist reines Wasser ein Reinstoff?</p>
+                    <button class="answer-btn" data-correct="false">A) Weil die Wasserstoff- und Sauerstoffatome im Wassermolekül besonders fest miteinander verbunden sind.</button>
+                    <button class="answer-btn" data-correct="false">B) Weil es eine klare Flüssigkeit ist, die in der Natur vorkommt und für uns lebenswichtig ist.</button>
+                    <button class="answer-btn" data-correct="true">C) Weil es nur aus einer einzigen Sorte von Teilchen besteht, nämlich aus H₂O-Teilchen (Wassermolekülen).</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 6: Besondere Teilchen -->
+            <div class="step" id="step-6">
+                 <h2>Besondere Teilchen</h2>
+                 <p class="info-block">Für die Teilchen, aus denen Verbindungen bestehen, gibt es Fachbegriffe. Achte im Video auf die Begriffe <strong>Molekül</strong> und <strong>Ionenverbindung</strong> (ca. 4:51 - 5:29).</p>
+                 <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere die beiden Begriffe mit ihren Beispielen (Wasser und Kochsalz) in dein Heft.</p>
+                 <div class="question-container">
+                    <p><strong>Frage 5/6:</strong> Welcher der folgenden Reinstoffe besteht laut Video aus Molekülen?</p>
+                    <button class="answer-btn" data-correct="false">A) Reines Eisen (Fe).</button>
+                    <button class="answer-btn" data-correct="true">B) Reines Wasser (H₂O).</button>
+                    <button class="answer-btn" data-correct="false">C) Reines Kochsalz (NaCl).</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+
+            <!-- SCHRITT 7: Transfer -->
+            <div class="step" id="step-7">
+                <h2>Transfer in den Alltag</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Denke selbst nach: Nenne weitere Beispiele für Reinstoffe und Stoffgemische aus deinem Alltag und notiere sie.</p>
+                <div class="question-container">
+                    <p><strong>Frage 6/6:</strong> Die Luft, die wir atmen, ist...</p>
+                    <button class="answer-btn" data-correct="false">A) ...ein Reinstoff, weil sie einheitlich und durchsichtig wie ein reines Gas erscheint.</button>
+                    <button class="answer-btn" data-correct="false">B) ...ein Element, weil ihre Hauptbestandteile Sauerstoff und Stickstoff Elemente sind.</button>
+                    <button class="answer-btn" data-correct="true">C) ...ein Stoffgemisch, weil sie aus verschiedenen Reinstoffen wie Sauerstoff, Stickstoff und anderen Gasen besteht.</button>
+                </div>
+                <button class="nav-btn" disabled>Lektion abschließen</button>
+            </div>
+        </div>
+
+        <div id="end-section">
+            <h2>Modul abgeschlossen!</h2>
+            <p class="score" id="score-display"></p>
+            <button class="nav-btn" id="heft-btn">Heftansicht erstellen</button>
+            <a href="index.html" class="nav-btn" style="float: left;">Zurück zur Übersicht</a>
+        </div>
+
+        <div id="heftansicht-section">
+            <h2>Hefteintrag: Grundlagen der Stoffe</h2>
+            <div class="heftansicht-content"></div>
+            <button class="nav-btn" id="back-to-interactive-btn">Zurück</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('start-btn');
+            const contentContainer = document.getElementById('content-container');
+            const steps = Array.from(contentContainer.getElementsByClassName('step'));
+            const endSection = document.getElementById('end-section');
+            const scoreDisplay = document.getElementById('score-display');
+            const heftBtn = document.getElementById('heft-btn');
+            const heftSection = document.getElementById('heftansicht-section');
+            const heftContent = heftSection.querySelector('.heftansicht-content');
+            const backToInteractiveBtn = document.getElementById('back-to-interactive-btn');
+
+            let currentStepIndex = 0;
+            let score = 0;
+            const totalQuestions = 6;
+            
+            function showNextStep(event) {
+                event.target.style.display = 'none';
+                currentStepIndex++;
+                if (currentStepIndex < steps.length) {
+                    const nextStep = steps[currentStepIndex];
+                    nextStep.style.display = 'block';
+                    nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else { showEndScreen(); }
+            }
+
+            function showEndScreen() {
+                 scoreDisplay.textContent = `Du hast ${score} von ${totalQuestions} Fragen im ersten Versuch richtig beantwortet.`;
+                 endSection.style.display = 'block';
+                 endSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function generateHeftansicht() {
+                heftContent.innerHTML = `
+                    <h3>Stoffgemisch</h3>
+                    <p>Besteht aus mindestens zwei verschiedenen Reinstoffen (z.B. Apfelsaft, Luft).</p>
+                    <h3>Reinstoff</h3>
+                    <p>Besteht aus nur einer einzigen Teilchensorte.</p>
+                    <ul>
+                        <li><strong>Element:</strong> Ein Reinstoff, der aus nur einer Atomsorte besteht (z.B. Aluminium, Eisen).</li>
+                        <li><strong>Verbindung:</strong> Ein Reinstoff, der aus mindestens zwei verschiedenen, chemisch gebundenen Atomsorten besteht (z.B. Wasser, Kochsalz).</li>
+                    </ul>
+                    <h3>Teilchen von Verbindungen</h3>
+                     <ul>
+                        <li><strong>Molekül:</strong> Das kleinste Teilchen einer Verbindung wie Wasser (H₂O).</li>
+                        <li><strong>Ionenverbindung:</strong> Eine andere Art von Verbindung, z.B. bei Salzen wie Kochsalz (NaCl).</li>
+                    </ul>
+                `;
+            }
+
+            startBtn.addEventListener('click', () => {
+                document.getElementById('start-section').style.display = 'none';
+                steps[0].style.display = 'block';
+            });
+
+            steps.forEach((step) => {
+                const nextButton = step.querySelector('.nav-btn');
+                nextButton.addEventListener('click', showNextStep);
+                const questionContainer = step.querySelector('.question-container');
+                if (questionContainer) {
+                    const answerButtons = questionContainer.querySelectorAll('.answer-btn');
+                    let questionAnswered = false;
+                    answerButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            if (questionAnswered) return;
+                            questionAnswered = true;
+                            const isCorrect = button.getAttribute('data-correct') === 'true';
+                            if (isCorrect) { 
+                                button.classList.add('correct'); 
+                                score++;
+                            } else { 
+                                button.classList.add('incorrect');
+                                const correctButton = questionContainer.querySelector('[data-correct="true"]');
+                                if (correctButton) correctButton.classList.add('correct');
+                            }
+                            answerButtons.forEach(btn => btn.disabled = true);
+                            nextButton.disabled = false;
+                        });
+                    });
+                }
+            });
+
+            heftBtn.addEventListener('click', () => {
+                generateHeftansicht();
+                contentContainer.style.display = 'none';
+                endSection.style.display = 'none';
+                heftSection.style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+
+            backToInteractiveBtn.addEventListener('click', () => {
+                heftSection.style.display = 'none';
+                contentContainer.style.display = 'block';
+                endSection.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
