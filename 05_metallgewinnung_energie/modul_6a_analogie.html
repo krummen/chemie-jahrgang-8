@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse: Die Geschichte von Karl, Olga & Erik</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto;
+            padding: 0 1rem; background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff; padding: 2rem; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .step {
+            display: none; border-top: 1px solid #ddd; padding-top: 1.5rem; margin-top: 1.5rem;
+        }
+        .info-block {
+            background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px;
+            margin: 1rem 0; border-radius: 0 5px 5px 0;
+        }
+        .story-element {
+            display: none;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .story-element p {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #34495e;
+        }
+        .question-container {
+            margin-top: 1.5rem; padding: 15px; border: 1px solid #bdc3c7; border-radius: 5px;
+        }
+        .answer-btn, .toggle-btn {
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e;
+            font-size: 1em; text-align: center; border-radius: 5px; cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer-btn { text-align: left; }
+        .answer-btn:hover:not(:disabled), .toggle-btn:hover { background-color: #ecf0f1; border-color: #3498db; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; color: #27ae60; font-weight: bold; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; color: #c0392b; }
+        .answer-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; float: right; transition: background-color 0.3s, opacity 0.3s;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.7; }
+        .score { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin: 2rem 0; }
+        figure { margin: 1.5rem 0; text-align: center; }
+        figure img { max-width: 80%; height: auto; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analyse: Die Geschichte von Karl, Olga & Erik</h1>
+
+        <div id="content-container">
+            <!-- Schritt 1: Geschichte Teil 1 -->
+            <div class="step" style="display: block;">
+                <h2>Eine komplizierte Beziehung</h2>
+                <p class="info-block">Wir beginnen mit einer kleinen Geschichte über Beziehungen. Konzentriere dich einfach auf die Handlung.</p>
+                <div id="story-part-1">
+                    <div class="story-element"><figure><img src="bilder/karl_olga_paar_schwach.jpg" alt="Karl und Olga als Paar"></figure><p>Das sind Karl und Olga. Sie sind ein Paar.</p></div>
+                    <div class="story-element"><figure><img src="bilder/karl_und_olga.jpg" alt="Karl und Olga getrennt"></figure><p>Aber ihre Beziehung ist kompliziert. Mit etwas Druck (z.B. Streit) trennen sie sich.</p></div>
+                    <div class="story-element">
+                        <figure id="hinUndHerContainer"><img id="toggleImage" src="bilder/hin_und_her.jpg" alt="Beziehungsstatus"></figure>
+                        <p>So solo sind aber beide auch nicht glücklich. Also kommen sie schnell wieder zusammen.<br>Und so geht das hin und her:</p>
+                        <button id="toggleButton" class="toggle-btn">hin</button>
+                    </div>
+                    <div class="story-element"><figure><img src="bilder/leitungsfunktion.jpg" alt="Karl wird von Olga behindert"></figure><p>Mal davon abgesehen, dass die beiden mit ihrem Beziehungsmüll allen anderen fürchterlich auf die Nerven gehen, ist Karl nicht in der Lage seine wichtigen Leitungsfunktionen auszuüben, wenn er mit Olga in dieser toxischen Beziehung ist.</p></div>
+                </div>
+                <button class="nav-btn" id="reveal-story-btn">Weiter</button>
+            </div>
+            <!-- Schritt 2: Geschichte Teil 2 -->
+            <div class="step">
+                <h2>Erik betritt die Bühne</h2>
+                <p class="info-block">Eines Tages ändert sich die Situation.</p>
+                <div id="story-part-2">
+                     <div class="story-element"><figure><img src="bilder/erik.jpg" alt="Erik"></figure><p>Erik kommt dazu.</p></div>
+                     <div class="story-element"><figure><img src="bilder/reaktionspfeil.jpg" alt="Reaktionspfeil"></figure><p>Erik geht mit Olga eine viel innigere und stärkere Beziehung ein, als Karl es je konnte.</p></div>
+                     <div class="story-element"><figure><img src="bilder/karl_allein_plus_erik_olga_stark.jpg" alt="Karl ist allein, Erik und Olga sind ein Paar"></figure><p>Am Ende sind Erik und Olga ein unzertrennliches Paar und Karl ein verbitterter Incel, aber immerhin funktioniert er wieder und sorgt für Deutschlands Wohlstand.</p></div>
+                </div>
+                <button class="nav-btn" id="reveal-story-btn-2">Weiter</button>
+            </div>
+            <!-- Schritt 3: Die Analyse -->
+            <div class="step">
+                <h2>Analyse der Analogie</h2>
+                <p class="info-block">Diese Geschichte ist eine Analogie für eine chemische Reaktion. Beantworte die folgenden Fragen, um sie zu entschlüsseln.</p>
+                <div class="question-container">
+                    <p><strong>Frage 1/7: Die Personen</strong><br>Wenn die Geschichte die Reaktion von Kupferoxid mit Eisen beschreibt, wofür stehen die drei Personen?</p>
+                    <button class="answer-btn" data-correct="false">A) Karl = Eisen, Olga = Sauerstoff, Erik = Kupfer</button>
+                    <button class="answer-btn" data-correct="true">B) Karl = Kupfer, Olga = Sauerstoff, Erik = Eisen</button>
+                    <button class="answer-btn" data-correct="false">C) Karl = Kupfer, Olga = Eisen, Erik = Sauerstoff</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 2/7: Die Zustände</strong><br>Wofür steht eine einzelne Person (z.B. Erik am Anfang) und wofür steht ein Paar (z.B. Karl & Olga)?</p>
+                    <button class="answer-btn" data-correct="false">A) Eine Person steht für ein Gas, ein Paar für einen Feststoff.</button>
+                    <button class="answer-btn" data-correct="false">B) Eine Person steht für eine chemische Verbindung, ein Paar für ein Element.</button>
+                    <button class="answer-btn" data-correct="true">C) Eine Person steht für ein Element (einzelne Atome), ein Paar für eine chemische Verbindung (gebundene Atome).</button>
+                </div>
+                 <div class="question-container">
+                    <p><strong>Frage 3/7: Die Bindungsstärken</strong><br>Das kleine Herz zwischen Karl & Olga und das große Herz zwischen Erik & Olga symbolisieren...</p>
+                    <button class="answer-btn" data-correct="false">A) ...die unterschiedliche Größe der Atome.</button>
+                    <button class="answer-btn" data-correct="true">B) ...dass die chemische Bindung zwischen Eisen und Sauerstoff viel stärker ist als die zwischen Kupfer und Sauerstoff.</button>
+                    <button class="answer-btn" data-correct="false">C) ...dass die Reaktion mit Eisen mehr Zeit benötigt als die Reaktion mit Kupfer.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 4/7: Karls Leitungsfunktion</strong><br>Karl kann seine "Leitungsfunktion" nur erfüllen, wenn er allein ist. Wofür steht diese Eigenschaft in der Chemie?</p>
+                    <button class="answer-btn" data-correct="true">A) Kupfer ist nur als reines Metall (Element) elektrisch leitfähig, aber nicht, wenn es im Kupferoxid gebunden ist.</button>
+                    <button class="answer-btn" data-correct="false">B) Kupfer kann nur dann mit anderen Stoffen reagieren, wenn es von Sauerstoff getrennt wurde.</button>
+                    <button class="answer-btn" data-correct="false">C) Kupfer leitet Wärme besser, wenn es allein ist, aber Strom leitet es immer.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 5/7: Karls Schicksal (Reduktion)</strong><br>Was ist chemisch mit Karl (Kupfer) passiert, als er Olga (Sauerstoff) an Erik (Eisen) verloren hat?</p>
+                    <button class="answer-btn" data-correct="false">A) Er hat Sauerstoff <em>aufgenommen</em> und wurde dadurch <strong>oxidiert</strong>.</button>
+                    <button class="answer-btn" data-correct="true">B) Er hat Sauerstoff <em>abgegeben</em> und wurde dadurch <strong>reduziert</strong>.</button>
+                    <button class="answer-btn" data-correct="false">C) Er hat sich mit Erik (Eisen) zu einer neuen Legierung verbunden.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 6/7: Eriks Rolle (Oxidation)</strong><br>Was ist chemisch mit Erik (Eisen) passiert, als er sich mit Olga (Sauerstoff) verbunden hat?</p>
+                    <button class="answer-btn" data-correct="true">A) Er hat Sauerstoff <em>aufgenommen</em> und wurde dadurch <strong>oxidiert</strong>.</button>
+                    <button class="answer-btn" data-correct="false">B) Er hat Sauerstoff <em>abgegeben</em> und wurde dadurch <strong>reduziert</strong>.</button>
+                    <button class="answer-btn" data-correct="false">C) Er war nur ein "Zuschauer", der die Reaktion beschleunigt hat.</button>
+                </div>
+                 <div class="question-container">
+                     <p><strong>Frage 7/7: Die chemische Schlussfolgerung</strong><br>Die Geschichte zeigt, dass man Kupferoxid am besten reduziert, indem man...</p>
+                    <button class="answer-btn" data-correct="false">A) ...es einfach nur sehr stark und für eine sehr lange Zeit erhitzt.</button>
+                    <button class="answer-btn" data-correct="true">B) ...einen reaktiveren Stoff wie Eisen hinzufügt, der dem Kupfer den Sauerstoff "wegnimmt".</button>
+                    <button class="answer-btn" data-correct="false">C) ...es mit Wasser mischt, um die chemische Bindung zu schwächen.</button>
+                </div>
+                <button class="nav-btn" disabled>Analyse abschließen</button>
+            </div>
+            <!-- Letzter Schritt -->
+            <div class="step">
+                <h2>Analyse abgeschlossen</h2>
+                <p class="score"></p>
+                <p class="info-block">Sehr gut! Du hast die Analogie entschlüsselt. Du kannst dieses Fenster nun schließen und zum Hauptmodul zurückkehren, um deine Hypothese zu formulieren.</p>
+                <button class="nav-btn" onclick="window.close()">Fenster schließen</button>
+            </div>
+        </div>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const steps = Array.from(document.querySelectorAll('.step'));
+    let currentStepIndex = 0;
+    let score = 0;
+    
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.style.display = i === index ? 'block' : 'none';
+        });
+    }
+
+    function createStoryRevealer(storyPartId, mainButton) {
+        const storyContainer = document.getElementById(storyPartId);
+        const elements = Array.from(storyContainer.querySelectorAll('.story-element'));
+        let currentIndex = 0;
+        
+        function showNextElement() {
+             if (currentIndex < elements.length) {
+                elements[currentIndex].style.display = 'block';
+                currentIndex++;
+                mainButton.textContent = 'Weiter...';
+            }
+            if (currentIndex === elements.length) {
+                mainButton.textContent = (storyPartId === 'story-part-1') ? 'Wie geht die Geschichte weiter?' : 'Zur chemischen Analyse';
+                mainButton.removeEventListener('click', showNextElement);
+                mainButton.addEventListener('click', () => {
+                    currentStepIndex++;
+                    showStep(currentStepIndex);
+                });
+            }
+        }
+        mainButton.addEventListener('click', showNextElement);
+    }
+    
+    createStoryRevealer('story-part-1', document.getElementById('reveal-story-btn'));
+    createStoryRevealer('story-part-2', document.getElementById('reveal-story-btn-2'));
+
+    const toggleButton = document.getElementById('toggleButton');
+    const toggleImage = document.getElementById('toggleImage');
+    toggleButton.addEventListener('click', () => {
+        if (toggleButton.textContent === 'her') {
+            toggleButton.textContent = 'hin';
+            toggleImage.src = 'bilder/karl_und_olga.jpg';
+        } else {
+            toggleButton.textContent = 'her';
+            toggleImage.src = 'bilder/hin_und_her.jpg';
+        }
+    });
+
+    const analysisStep = steps[2];
+    const analysisQuestions = analysisStep.querySelectorAll('.question-container');
+    const analysisNextBtn = analysisStep.querySelector('.nav-btn');
+    
+    analysisQuestions.forEach(qContainer => {
+        const answerButtons = qContainer.querySelectorAll('.answer-btn');
+        let firstTry = true;
+        answerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if(qContainer.classList.contains('answered')) return;
+                
+                const isCorrect = button.getAttribute('data-correct') === 'true';
+                if(isCorrect) {
+                    button.classList.add('correct');
+                    if(firstTry) score++;
+                } else {
+                    button.classList.add('incorrect');
+                    const correctBtn = qContainer.querySelector('[data-correct="true"]');
+                    if(correctBtn) correctBtn.classList.add('correct');
+                }
+                
+                firstTry = false;
+                qContainer.classList.add('answered');
+                answerButtons.forEach(btn => btn.disabled = true);
+                
+                const allAnswered = Array.from(analysisQuestions).every(q => q.classList.contains('answered'));
+                if(allAnswered) {
+                    analysisNextBtn.disabled = false;
+                }
+            });
+        });
+    });
+
+    analysisNextBtn.addEventListener('click', () => {
+        const scoreDisplay = document.querySelector('.score');
+        scoreDisplay.textContent = `Du hast ${score} von ${analysisQuestions.length} Fragen im ersten Versuch richtig beantwortet.`;
+        currentStepIndex++;
+        showStep(currentStepIndex);
+    });
+});
+</script>
+</body>
+</html>

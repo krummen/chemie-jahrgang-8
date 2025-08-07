@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernmodul: Energie und Umkehrbarkeit</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .step {
+            display: none;
+            border-top: 1px solid #ddd;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .info-block {
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .info-block.help {
+            background-color: #fef9e7;
+            border-left-color: #f1c40f;
+            font-style: italic;
+        }
+        .instruction {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .instruction ul { padding-left: 20px; font-weight: normal; }
+        .instruction-emoji { font-size: 1.2em; margin-right: 8px; }
+        .question-container {
+            margin-top: 1.5rem; padding: 15px;
+            border: 1px solid #bdc3c7; border-radius: 5px;
+        }
+        .answer-btn {
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e;
+            font-size: 1em; text-align: left; border-radius: 5px; cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer-btn:hover:not(:disabled) { background-color: #ecf0f1; border-color: #3498db; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; color: #27ae60; font-weight: bold; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; color: #c0392b; }
+        .answer-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; float: right; transition: background-color 0.3s, opacity 0.3s;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.7; }
+        #start-section, #end-section, #heftansicht-section { text-align: center; }
+        #end-section, #heftansicht-section { display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd; }
+        .heftansicht-content { text-align: left; padding: 1.5rem; background-color: #fdfdfd; border: 1px solid #eee; border-radius: 5px;}
+        .heftansicht-content h3 { color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        .heftansicht-content .skizzen-hinweis { font-style: italic; color: #7f8c8d; background-color: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .heftansicht-content p > strong { color: #2c3e50; }
+        .score { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin: 2rem 0; }
+        figure { margin: 1.5rem 0; text-align: center; }
+        figure img { max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .exotherm { color: #c0392b; font-weight: bold; }
+        .endotherm { color: #2980b9; font-weight: bold; }
+        .reaction-equation { display: flex; align-items: center; justify-content: center; font-size: 1.5em; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Modul 5: Energie und die Umkehrbarkeit von Reaktionen</h1>
+
+        <div id="start-section">
+            <button class="nav-btn" id="start-btn">Lektion starten</button>
+        </div>
+
+        <div id="content-container">
+            
+            <!-- SCHRITT 1: Durchführung -->
+            <div class="step" id="step-1">
+                <h2>Durchführung: Das Kupfersulfat-Experiment</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Führe das Modellexperiment mit Kupfersulfat (CuSO₄) durch, indem du die folgenden Schritte aus dem Material befolgst und deine Beobachtungen notierst (z.B. zur Temperatur).</p>
+                <figure>
+                    <img src="bilder/modellexperiment_kupfersulfat.jpg" alt="Modellexperiment mit Kupfersulfat">
+                    <figcaption>Farbloses Kupfersulfat reagiert mit Wasser zu blauem Kupfersulfat.</figcaption>
+                </figure>
+                <ol style="text-align: left;">
+                    <li>Thermometer in das farblose Kupfersulfat stecken</li>
+                    <li>Temperatur notieren</li>
+                    <li>Tropfenweise Wasser hinzugeben bis das Kupfersulfat blau geworden ist (Achtung: es darf kein flüssiges Wasser im Reagenzglas stehen!)</li>
+                    <li>Temperatur notieren</li>
+                    <li>Thermometer entnehmen</li>
+                    <li>Blaues Kupfersulfat über der blauen Brennerflamme erhitzen bis das Kupfersulfat wieder farblos geworden ist</li>
+                    <li>Abkühlen lassen</li>
+                </ol>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere deine Ergebnisse für beide Teilreaktionen (Wasser zugeben und Erhitzen) in Stichpunkten.</p>
+                <button class="nav-btn">Weiter</button>
+            </div>
+
+            <!-- SCHRITT 2: Beobachtung -->
+            <div class="step" id="step-2">
+                 <h2>Beobachtung</h2>
+                 <p class="info-block">Betrachte die folgenden beiden Vorgänge, die chemische Reaktionen darstellen.</p>
+                 <figure>
+                     <img src="bilder/silber_reaktionen.jpg" alt="Silberlöffel läuft an; Silberoxid zerfällt zu Silber">
+                 </figure>
+                 <p class="instruction"><span class="instruction-emoji">✒️</span>Leite aus den beiden Abbildungen und deinem Experiment aus Schritt 1 eine allgemeine Beobachtung ab und notiere sie. (Tipp: Denke darüber nach, was mit der chemischen Reaktion in beide Richtungen passiert.)</p>
+                 <button class="nav-btn">Weiter</button>
+            </div>
+            
+            <!-- SCHRITT 3: Fragestellung -->
+            <div class="step" id="step-3">
+                <h2>Fragestellung</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Übernimm die Fragestellung in dein Heft: <strong>Wie lassen sich chemische Reaktionen umkehren?</strong></p>
+                <button class="nav-btn">Weiter</button>
+            </div>
+
+            <!-- SCHRITT 4: Analyse -->
+            <div class="step" id="step-4">
+                <h2>Analyse Teil 1: Energieformen und -umwandlungen</h2>
+                <p class="info-block">Energie ist der Schlüssel. Öffne die folgende Simulation in einem neuen Tab, um ihre Formen und Umwandlungen zu untersuchen.</p>
+                <p style="text-align: center;"><a href="https://phet.colorado.edu/sims/html/energy-forms-and-changes/latest/energy-forms-and-changes_de.html" target="_blank" class="nav-btn" style="float: none;">PhET Simulation starten</a></p>
+                <div class="instruction">
+                    <p><span class="instruction-emoji">✒️</span>Bearbeite in der Simulation folgende Aufgaben und notiere deine Erkenntnisse:</p>
+                    <ul style="font-weight: normal;">
+                        <li>1. Setze einen Haken bei "Energiesymbole" und lasse dir so zeigen, in welcher Form Energie im System vorliegt. <strong>Gib</strong> diese Energieformen <strong>an</strong> und <strong>erläutere</strong> sie.</li>
+                        <li>2. Setze den Schieberegler unter dem Fahrrad nach rechts. <strong>Beschreibe</strong> und <strong>erkläre</strong>, was bezüglich der Energie passiert.</li>
+                        <li>3. Erinnere dich an das Gesetz vom Erhalt der Massen. Es gibt auch ein Gesetz zum Erhalt der Energie. <strong>Erläutere</strong> dieses Gesetz an dieser Animation.</li>
+                        <li>4. Probiere verschiedene Systeme aus, indem du die Komponenten tauschst:</li>
+                    </ul>
+                </div>
+                 <figure><img src="bilder/phet_komponenten.jpg" alt="Komponenten der PhET Simulation"></figure>
+                <button class="nav-btn">Weiter zum nächsten Teil der Analyse</button>
+            </div>
+
+             <!-- SCHRITT 5: Analyse 2 -->
+            <div class="step" id="step-5">
+                <h2>Analyse Teil 2: Das Energiediagramm einer Reaktion</h2>
+                <p class="info-block">Dieses Diagramm zeigt, was bei der Reaktion von Eisen und Schwefel energetisch passiert. Es hilft uns, allgemeine Begriffe zu verstehen.</p>
+                <figure><img src="bilder/energiediagramm_fe_s.jpg" alt="Energiediagramm der Reaktion von Eisen und Schwefel"></figure>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Erkläre mithilfe der Abbildung die folgenden Begriffe in deinem Heft: <strong>Energiegehalt der Stoffe</strong>, <strong>Aktivierungsenergie (E<sub>A</sub>)</strong> und <strong>freigesetzte Energie (Reaktionsenthalpie H)</strong>.</p>
+                <div class="info-block help">Falls du Schwierigkeiten hast, die Begriffe zu erklären, lies dir die Seiten 28 und 29 im Buch durch.</div>
+                <div class="question-container">
+                    <p><strong>Frage 1/3:</strong> Was muss man laut Diagramm tun, um die Reaktion von Eisen und Schwefel zu starten?</p>
+                    <button class="answer-btn" data-correct="false">A) Die Stoffe mischen und abwarten.</button>
+                    <button class="answer-btn" data-correct="true">B) Aktivierungsenergie hinzufügen, z.B. durch kurzes Erhitzen.</button>
+                    <button class="answer-btn" data-correct="false">C) Die Stoffe abkühlen, um den Energiegehalt zu senken.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter zum letzten Teil der Analyse</button>
+            </div>
+            
+            <!-- SCHRITT 6: Analyse 3 -->
+            <div class="step" id="step-6">
+                <h2>Analyse Teil 3: Der Weg zurück</h2>
+                <p class="info-block">Stellen wir uns eine Reaktion als Analogie vor: Ein Ball (Ausgangsstoff) rollt einen Hügel hinunter und landet im Tal (Endstoff). Betrachte nun die Abbildung.</p>
+                <figure><img src="bilder/energiehuegel_rueckweg.jpg" alt="Analogie eines Energiehügels mit Pfeil für den Rückweg"></figure>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Was muss man tun, um den Ball vom Endzustand wieder zum Ausgangszustand zu bringen? Übertrage den Gedanken auf chemische Reaktionen.</p>
+                <button class="nav-btn">Zur Hypothese</button>
+            </div>
+
+            <!-- SCHRITT 7: Hypothese -->
+            <div class="step" id="step-7">
+                <h2>Hypothese</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Formuliere nun, auf Basis deiner Analyse, eine Hypothese, die die Fragestellung "Wie lassen sich chemische Reaktionen umkehren?" beantwortet.</p>
+                <div class="question-container">
+                    <p><strong>Frage 2/3:</strong> Welche Aussage beschreibt deine Hypothese am besten?</p>
+                    <button class="answer-btn" data-correct="false">A) Um eine Reaktion umzukehren, muss man die Aktivierungsenergie einfach in die andere Richtung überwinden.</button>
+                    <button class="answer-btn" data-correct="true">B) Um eine Reaktion umzukehren, muss man dem System genau die Energiemenge wieder zuführen, die bei der Hinreaktion frei wurde.</button>
+                    <button class="answer-btn" data-correct="false">C) Um eine Reaktion umzukehren, muss man die Endstoffe einfach abkühlen, damit sie wieder zum Ausgangszustand zurückkehren.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            
+            <!-- SCHRITT 8: Deutung -->
+            <div class="step" id="step-8">
+                 <h2>Deutung</h2>
+                 <p class="instruction"><span class="instruction-emoji">✒️</span>Deute nun deine Beobachtungen aus dem Kupfersulfat-Experiment (Schritt 1) mithilfe deiner Hypothese. Erkläre, warum beim Hinzufügen von Wasser eine Erwärmung zu spüren war und warum du für die Umkehrung erhitzen musstest.</p>
+                 <div class="question-container">
+                    <p><strong>Frage 3/3:</strong> Das Hinzufügen von Wasser zum weißen Kupfersulfat ist ein Beispiel für eine...</p>
+                    <button class="answer-btn" data-correct="false">A) endotherme Reaktion, da Wasser aufgenommen wird.</button>
+                    <button class="answer-btn" data-correct="true">B) exotherme Reaktion, da Energie in Form von Wärme frei wird.</button>
+                    <button class="answer-btn" data-correct="false">C) neutrale Reaktion, da sich nur die Farbe ändert.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            
+            <!-- SCHRITT 9: Erkenntnis -->
+            <div class="step" id="step-9">
+                <h2>Erkenntnis</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Übernimm die folgenden allgemeinen Definitionen und die Reaktionsgleichung als Erkenntnis in dein Heft.</p>
+                <div class="info-block">Chemische Reaktionen, bei denen mehr Energie frei wird als hineingesteckt werden muss, nennt man <span class="exotherm">exotherme</span> Reaktionen.</div>
+                <div class="info-block">Chemische Reaktionen, bei denen dauerhaft mehr Energie hineingesteckt werden muss, als frei wird, nennt man <span class="endotherm">endotherme</span> Reaktionen.</div>
+                <div class="info-block reaction-equation">
+                    <span>Stoff A + Stoff B</span>
+                    <svg width="60" height="24" viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg" style="margin: 0 15px; vertical-align: middle;">
+                        <path d="M5 6 L50 6 L42 2" stroke="#c0392b" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                        <path d="M55 18 L10 18 L18 22" stroke="#2980b9" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                    </svg>
+                    <span>Stoff C + Stoff D + Energie</span>
+                </div>
+                <button class="nav-btn">Lektion abschließen</button>
+            </div>
+        </div>
+
+        <div id="end-section">
+            <h2>Modul abgeschlossen!</h2>
+            <p class="score" id="score-display"></p>
+            <button class="nav-btn" id="heft-btn">Heftansicht erstellen</button>
+            <a href="index.html" class="nav-btn" style="float: left;">Zurück zur Übersicht</a>
+        </div>
+
+        <div id="heftansicht-section">
+            <h2>Hefteintrag: Energie und Umkehrbarkeit</h2>
+            <div class="heftansicht-content"></div>
+            <button class="nav-btn" id="back-to-interactive-btn">Zurück</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('start-btn');
+            const contentContainer = document.getElementById('content-container');
+            const steps = Array.from(contentContainer.getElementsByClassName('step'));
+            const endSection = document.getElementById('end-section');
+            const scoreDisplay = document.getElementById('score-display');
+            const heftBtn = document.getElementById('heft-btn');
+            const heftSection = document.getElementById('heftansicht-section');
+            const heftContent = heftSection.querySelector('.heftansicht-content');
+            const backToInteractiveBtn = document.getElementById('back-to-interactive-btn');
+            let currentStepIndex = 0;
+            let score = 0;
+            const totalQuestions = 3;
+            function showNextStep(event) {
+                event.target.style.display = 'none';
+                currentStepIndex++;
+                if (currentStepIndex < steps.length) {
+                    const nextStep = steps[currentStepIndex];
+                    nextStep.style.display = 'block';
+                    nextStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else { showEndScreen(); }
+            }
+            function showEndScreen() {
+                 scoreDisplay.textContent = `Du hast ${score} von ${totalQuestions} Fragen im ersten Versuch richtig beantwortet.`;
+                 endSection.style.display = 'block';
+                 endSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            function generateHeftansicht() {
+                heftContent.innerHTML = `
+                    <h3>Beobachtung</h3>
+                    <p>Chemische Reaktionen sind umkehrbar.</p>
+                    
+                    <h3>Fragestellung</h3>
+                    <p>Wie lassen sich chemische Reaktionen umkehren?</p>
+                    
+                    <h3>Analyse des Problems</h3>
+                    <div class="skizzen-hinweis">[Hier sollten deine Notizen zur PhET-Simulation und zum Energieerhaltungssatz sein.]</div>
+                    <div class="skizzen-hinweis">[Hier sollten deine Erklärungen zu den Begriffen des Energiediagramms (Aktivierungsenergie etc.) sein.]</div>
+                    <div class="skizzen-hinweis">[Hier sollte deine Übertragung der Analogie auf chemische Reaktionen sein.]</div>
+                    
+                    <h3>Hypothese</h3>
+                    <p>Um eine Reaktion umzukehren, muss man dem System genau die Energiemenge wieder zuführen, die bei der Hinreaktion freigesetzt wurde.</p>
+
+                    <h3>Überprüfung (Kupfersulfat-Experiment)</h3>
+                    <p><strong>Durchführung:</strong> Farbloses Kupfersulfat wird erst mit Wasser versetzt und anschließend wird das entstandene blaue Produkt erhitzt.</p>
+                    <p><strong>Ergebnis:</strong> Bei der Zugabe von Wasser erwärmt sich das Gemisch (exotherm). Beim Erhitzen entweicht Wasserdampf und das Pulver wird wieder farblos (endotherm).</p>
+                    <p><strong>Deutung:</strong> Die bei der exothermen Hinreaktion freiwerdende Energie muss für die endotherme Rückreaktion durch Erhitzen wieder zugeführt werden. Die Hypothese wird bestätigt.</p>
+                    
+                    <h3>Erkenntnis</h3>
+                    <p>Reaktionen, bei denen Energie frei wird, nennt man <span class="exotherm">exotherm</span>.</p>
+                    <p>Reaktionen, die dauerhaft Energie benötigen, nennt man <span class="endotherm">endotherm</span>.</p>
+                    <p>Chemische Reaktionen sind umkehrbar, wenn die Energiebilanz ausgeglichen wird.</p>
+                `;
+            }
+            startBtn.addEventListener('click', () => {
+                document.getElementById('start-section').style.display = 'none';
+                steps[0].style.display = 'block';
+            });
+            steps.forEach((step) => {
+                const nextButton = step.querySelector('.nav-btn');
+                nextButton.addEventListener('click', showNextStep);
+                const questionContainer = step.querySelector('.question-container');
+                if (questionContainer) {
+                    const answerButtons = questionContainer.querySelectorAll('.answer-btn');
+                    let questionAnswered = false;
+                    answerButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            if (questionAnswered) return;
+                            questionAnswered = true;
+                            const isCorrect = button.getAttribute('data-correct') === 'true';
+                            if (isCorrect) { button.classList.add('correct'); score++;
+                            } else {
+                                button.classList.add('incorrect');
+                                const correctButton = questionContainer.querySelector('[data-correct="true"]');
+                                if (correctButton) correctButton.classList.add('correct');
+                            }
+                            answerButtons.forEach(btn => btn.disabled = true);
+                            nextButton.disabled = false;
+                        });
+                    });
+                }
+            });
+            heftBtn.addEventListener('click', () => {
+                generateHeftansicht();
+                contentContainer.style.display = 'none';
+                endSection.style.display = 'none';
+                heftSection.style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+            backToInteractiveBtn.addEventListener('click', () => {
+                heftSection.style.display = 'none';
+                contentContainer.style.display = 'block';
+                endSection.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

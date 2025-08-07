@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernmodul: Wer spannt wem den Sauerstoff aus?</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto;
+            padding: 0 1rem; background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff; padding: 2rem; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .step {
+            display: none; border-top: 1px solid #ddd; padding-top: 1.5rem; margin-top: 1.5rem;
+        }
+        .info-block {
+            background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px;
+            margin: 1rem 0; border-radius: 0 5px 5px 0;
+        }
+        .instruction { color: #c0392b; font-weight: bold; }
+        .instruction-emoji { font-size: 1.2em; margin-right: 8px; }
+        .instruction ul { padding-left: 20px; font-weight: normal; }
+        .question-container {
+            margin-top: 1.5rem; padding: 15px; border: 1px solid #bdc3c7; border-radius: 5px;
+        }
+        .answer-btn {
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e;
+            font-size: 1em; text-align: left; border-radius: 5px; cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .answer-btn:hover:not(:disabled) { background-color: #ecf0f1; border-color: #3498db; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; color: #27ae60; font-weight: bold; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; color: #c0392b; }
+        .answer-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; float: right; transition: background-color 0.3s, opacity 0.3s;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.7; }
+        #start-section, #end-section, #heftansicht-section { text-align: center; }
+        #end-section, #heftansicht-section { display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd; }
+        .heftansicht-content { text-align: left; padding: 1.5rem; background-color: #fdfdfd; border: 1px solid #eee; border-radius: 5px;}
+        .heftansicht-content h3 { color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        .heftansicht-content .skizzen-hinweis { font-style: italic; color: #7f8c8d; background-color: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .score { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin: 2rem 0; }
+        figure { margin: 1.5rem 0; text-align: center; }
+        figure img { max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .lueckentext select { padding: 5px; font-size: 1em; border: 1px solid #bdc3c7; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modul 6: Wer spannt wem den Sauerstoff aus?</h1>
+
+        <div id="start-section"><button class="nav-btn" id="start-btn">Lektion starten</button></div>
+
+        <div id="content-container">
+            <!-- SCHRITT 1: Beobachtung -->
+            <div class="step">
+                <h2>Beobachtung</h2>
+                <div class="info-block">Wir wissen aus einem früheren Versuch, dass sich manche Metalloxide durch Energiezufuhr zerlegen lassen.</div>
+                <figure><img src="bilder/silberherstellung.jpg" alt="Thermolyse von Silberoxid zu Silber"></figure>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere die Beobachtung in deinem Heft: <strong>Die Gewinnung von Silber aus Silberoxid ist durch Erhitzen (Thermolyse) möglich.</strong></p>
+                <hr style="margin: 2rem 0;">
+                <div class="info-block">Funktioniert dieser Weg auch bei unedleren Metallen wie Kupfer oder Eisen?</div>
+                <figure><img src="bilder/problem_cu_fe.jpg" alt="Problem der Kupfer- und Eisenherstellung durch Hitze"></figure>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Ergänze deine Beobachtung: <strong>Die Gewinnung von Kupfer oder Eisen aus ihren Oxiden ist durch einfaches Erhitzen nicht (oder nur sehr schwer) möglich.</strong></p>
+                <button class="nav-btn">Weiter</button>
+            </div>
+            <!-- SCHRITT 2: Fragestellung -->
+            <div class="step">
+                <h2>Fragestellung</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Übernimm die Fragestellung aus dem Material in dein Heft: <strong>Wie lässt sich Kupferoxid reduzieren?</strong></p>
+                <button class="nav-btn">Weiter</button>
+            </div>
+            <!-- SCHRITT 3: Analyse -->
+            <div class="step">
+                <h2>Analyse des Problems: Eine Analogie</h2>
+                <p class="info-block">Um eine Lösung für unser Problem zu finden, müssen wir die Vorgänge auf der Teilchenebene besser verstehen. Eine Analogie hilft uns dabei.</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Öffne das Analyse-Modul, bearbeite die Geschichte und die dazugehörigen Fragen. Kehre danach hierher zurück, um deine Hypothese zu formulieren.</p>
+                <p style="text-align: center; margin-top: 2rem;"><a href="modul_6a_analogie.html" target="_blank" class="nav-btn" style="float: none;">Analyse-Modul starten</a></p>
+                <button class="nav-btn">Zur Hypothese</button>
+            </div>
+            <!-- SCHRITT 4: Hypothese -->
+            <div class="step">
+                <h2>Hypothese</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Formuliere nun auf Basis der Analogie und der geplanten Durchführung eine passende Hypothese.</p>
+                <div class="question-container">
+                    <p><strong>Kontrollfrage:</strong> Welche Hypothese leitet sich direkt aus der Analogie ab?</p>
+                    <button class="answer-btn" data-correct="false">A) Wenn man Kupferoxid erhitzt, wird es zu Kupfer, weil die Atome ihre Freiheit wollen.</button>
+                    <button class="answer-btn" data-correct="true">B) Wenn man Kupferoxid mit einem reaktiveren Metall wie Eisen mischt und erhitzt, entreißt das Eisen dem Kupferoxid den Sauerstoff.</button>
+                    <button class="answer-btn" data-correct="false">C) Wenn man Eisen und Kupfer mischt, entsteht immer eine neue, stärkere Verbindung.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            <!-- SCHRITT 5: Überprüfung -->
+            <div class="step">
+                <h2>Überprüfung: Die Experimente</h2>
+                <p class="info-block">Wir überprüfen die Hypothese, indem wir zwei Versuche durchführen.</p>
+                <figure>
+                    <img src="bilder/versuch_1.jpg" alt="Versuch 1: Kupferoxid und Eisen erhitzen" style="width: 48%; margin-right: 2%;">
+                    <img src="bilder/versuch_2.jpg" alt="Versuch 2: Eisenoxid und Kupfer erhitzen" style="width: 48%;">
+                </figure>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Beschreibe in 1-2 Sätzen, was bei der Durchführung von <strong>Versuch 1</strong> und <strong>Versuch 2</strong> gemacht wird und was damit erreicht werden soll.</p>
+                <div class="question-container">
+                    <p><strong>Kontrollfrage:</strong> Warum führt man Versuch 2 als "Kontrollexperiment" durch?</p>
+                    <button class="answer-btn" data-correct="false">A) Um zu beweisen, dass die Reaktion auch in die andere Richtung funktioniert.</button>
+                    <button class="answer-btn" data-correct="true">B) Um zu beweisen, dass die Reaktion nur in eine Richtung funktioniert, wenn das unedlere Metall (Eisen) dem edleren (Kupfer) den Sauerstoff entzieht.</button>
+                    <button class="answer-btn" data-correct="false">C) Um sicherzustellen, dass man genügend Chemikalien für den ersten Versuch hat.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            <!-- SCHRITT 6: Ergebnis -->
+            <div class="step">
+                <h2>Ergebnis</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Notiere die Ergebnisse beider Versuche in Stichpunkten.</p>
+                <div class="question-container">
+                    <p><strong>Frage 1/4: Neuer Stoff 1</strong><br>Welche neue Art von Körnchen kann man im Produkt von Versuch 1 erkennen?</p>
+                    <button class="answer-btn" data-correct="false">A) Kleine, schwarze, glänzende Körnchen.</button>
+                    <button class="answer-btn" data-correct="true">B) Rot-metallisch glänzende Körnchen.</button>
+                    <button class="answer-btn" data-correct="false">C) Gelbe, pulverartige Körnchen.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 2/4: Alter Stoff neu</strong><br>Was passiert mit dem ursprünglich schwarzen Pulver in Versuch 1?</p>
+                    <button class="answer-btn" data-correct="false">A) Es bleibt unverändert, nur die neuen Körnchen kommen hinzu.</button>
+                    <button class="answer-btn" data-correct="false">B) Es wird ebenfalls zu einem rot-metallischen, glänzenden Stoff.</button>
+                    <button class="answer-btn" data-correct="true">C) Es bleibt ein dunkler, fester Stoff, der nun mit den neuen Körnchen vermischt ist.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 3/4: Energie</strong><br>Was beobachtet man kurz nach dem Starten der Reaktion in Versuch 1?</p>
+                    <button class="answer-btn" data-correct="true">A) Das Gemisch glüht von alleine kurzzeitig hell auf.</button>
+                    <button class="answer-btn" data-correct="false">B) Das Gemisch kühlt sich stark ab.</button>
+                    <button class="answer-btn" data-correct="false">C) Das Gemisch muss die ganze Zeit erhitzt werden, damit etwas passiert.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 4/4: Kontrollversuch</strong><br>Was ist das Ergebnis von Versuch 2?</p>
+                    <button class="answer-btn" data-correct="false">A) Es findet die gleiche Reaktion statt wie in Versuch 1, nur langsamer.</button>
+                    <button class="answer-btn" data-correct="true">B) Es findet keine sichtbare Reaktion statt; die Stoffe bleiben unverändert.</button>
+                    <button class="answer-btn" data-correct="false">C) Es entsteht eine Explosion.</button>
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            <!-- SCHRITT 7: Deutung -->
+            <div class="step">
+                <h2>Deutung</h2>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Erkläre die Ergebnisse in Stichpunkten und formuliere eine passende Reaktionsgleichung als Wortgleichung.</p>
+                <div class="question-container">
+                    <p><strong>Frage 1/4: Deutung von Stoff 1</strong><br>Die rot-metallisch glänzenden Körnchen sind...</p>
+                    <button class="answer-btn" data-correct="true">A) ...neu entstandenes, elementares Kupfer.</button>
+                    <button class="answer-btn" data-correct="false">B) ...Reste des Eisens, das sich rot verfärbt hat.</button>
+                    <button class="answer-btn" data-correct="false">C) ...eine Legierung aus Eisen und Kupfer.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 2/4: Deutung von Stoff 2</strong><br>Der dunkle Feststoff ist nun...</p>
+                    <button class="answer-btn" data-correct="false">A) ... immer noch Kupferoxid.</button>
+                    <button class="answer-btn" data-correct="true">B) ...neu entstandenes Eisenoxid.</button>
+                    <button class="answer-btn" data-correct="false">C) ...eine Mischung aus Ruß und Asche.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 3/4: Deutung der Energie</strong><br>Das selbstständige Aufglühen bedeutet, dass die Reaktion...</p>
+                    <button class="answer-btn" data-correct="false">A) ...endotherm ist, weil man sie erst starten musste.</button>
+                    <button class="answer-btn" data-correct="true">B) ...exotherm ist, weil nach dem Start Energie freigesetzt wird.</button>
+                    <button class="answer-btn" data-correct="false">C) ...energetisch neutral ist.</button>
+                </div>
+                <div class="question-container">
+                    <p><strong>Frage 4/4: Deutung des Kontrollversuchs</strong><br>Dass in Versuch 2 nichts passiert, beweist:</p>
+                    <button class="answer-btn" data-correct="true">A) Kupfer ist nicht reaktiv genug (zu edel), um dem Eisen den Sauerstoff zu entreißen.</button>
+                    <button class="answer-btn" data-correct="false">B) Man hat das Gemisch in Versuch 2 nicht stark genug erhitzt.</button>
+                    <button class="answer-btn" data-correct="false">C) Die Reaktion von Eisenoxid mit Kupfer ist endotherm und benötigt dauerhaft Energie.</button>
+                </div>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Übernimm den Lückentext und fülle die Lücken.</p>
+                <div class="info-block lueckentext">
+                    <select id="luecke1"><option>...</option><option>Eisen</option><option>Kupfer</option></select> ist also reaktiver als <select id="luecke2"><option>...</option><option>Eisen</option><option>Kupfer</option></select> und geht daher eine festere Bindung zum Sauerstoff ein. Es ist deshalb in der Lage, dem <select id="luecke3"><option>...</option><option>Kupferoxid</option><option>Eisenoxid</option></select> den Sauerstoff zu entziehen.
+                </div>
+                <button class="nav-btn" disabled>Weiter</button>
+            </div>
+            <!-- SCHRITT 8: Erkenntnis -->
+            <div class="step">
+                <h2>Erkenntnis</h2>
+                <div class="instruction">
+                    <p><span class="instruction-emoji">✒️</span>Führe die folgenden Aufgaben aus dem Material als Erkenntnis in deinem Heft aus:</p>
+                    <ul>
+                        <li>1. Übernimm die beschriftete Reaktionsgleichung.</li>
+                        <figure><img src="bilder/reaktionsgleichung_beschriftet.jpg" alt="Beschriftete Reaktionsgleichung der Redoxreaktion"></figure>
+                        <li>2. Beschreibe die Reaktion unter Verwendung der Fachbegriffe.</li>
+                        <li>3. Formuliere Definitionen für <strong>Oxidationsmittel</strong> und <strong>Reduktionsmittel</strong>.</li>
+                        <li>4. Übernimm die <strong>Redoxreihe der Metalle</strong>.</li>
+                        <figure><img src="bilder/redoxreihe.jpg" alt="Die Redoxreihe der Metalle"></figure>
+                    </ul>
+                </div>
+                <button class="nav-btn">Lektion abschließen</button>
+            </div>
+        </div>
+
+        <div id="end-section"></div>
+        <div id="heftansicht-section"></div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startBtn = document.getElementById('start-btn');
+    const contentContainer = document.getElementById('content-container');
+    const steps = Array.from(contentContainer.querySelectorAll('.step'));
+    const endSectionContainer = document.getElementById('end-section');
+    const heftSectionContainer = document.getElementById('heftansicht-section');
+
+    let currentStepIndex = 0;
+    let score = 0;
+
+    function showNextStep(event) {
+        event.target.style.display = 'none';
+        currentStepIndex++;
+        if (currentStepIndex < steps.length) {
+            steps[currentStepIndex].style.display = 'block';
+            steps[currentStepIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            showEndScreen();
+        }
+    }
+
+    function showEndScreen() {
+        const allQuestions = contentContainer.querySelectorAll('.question-container:not([data-is-reflexion="true"])');
+        const totalQuestions = allQuestions.length;
+        endSectionContainer.innerHTML = `
+            <h2>Modul abgeschlossen!</h2>
+            <p class="score">Du hast ${score} von ${totalQuestions} Fragen im ersten Versuch richtig beantwortet.</p>
+            <button class="nav-btn" id="heft-btn">Heftansicht erstellen</button>
+            <a href="index.html" class="nav-btn" style="float: left;">Zurück zur Übersicht</a>
+        `;
+        endSectionContainer.style.display = 'block';
+        document.getElementById('heft-btn').addEventListener('click', showHeftansicht);
+    }
+
+    function showHeftansicht() {
+        contentContainer.style.display = 'none';
+        endSectionContainer.style.display = 'none';
+        heftSectionContainer.innerHTML = `
+            <h2>Hefteintrag: Wer spannt wem den Sauerstoff aus?</h2>
+            <div class="heftansicht-content">
+                <h3>Beobachtung</h3>
+                <p>Die Gewinnung von Silber aus Silberoxid ist durch Erhitzen (Thermolyse) möglich. Die Gewinnung von Kupfer oder Eisen aus ihren Oxiden ist durch einfaches Erhitzen nicht (oder nur sehr schwer) möglich.</p>
+                <h3>Fragestellung</h3>
+                <p>Wie lässt sich Kupferoxid reduzieren?</p>
+                <h3>Analyse des Problems</h3>
+                <div class="skizzen-hinweis">[Hier sollten deine Notizen zur Analogie von Karl, Olga und Erik sein, die zeigen, dass ein reaktiverer Partner eine bestehende Bindung aufbrechen kann.]</div>
+                <h3>Hypothese</h3>
+                <p>Wenn man Kupferoxid mit einem reaktiveren Metall wie Eisen mischt und erhitzt, entreißt das Eisen dem Kupferoxid den Sauerstoff.</p>
+                <h3>Überprüfung</h3>
+                <p><strong>Ergebnis:</strong> In Versuch 1 glüht das Gemisch auf und es entstehen rot-metallische Körnchen in einem dunklen Feststoff. In Versuch 2 findet keine Reaktion statt.</p>
+                <p><strong>Deutung:</strong> Das Aufglühen zeigt eine exotherme Reaktion. Die roten Körnchen sind Kupfer, der dunkle Stoff Eisenoxid. Kupfer ist zu edel, um Eisen den Sauerstoff zu entreißen. Die Wortgleichung lautet: Kupferoxid + Eisen → Kupfer + Eisenoxid.</p>
+                <h3>Erkenntnis</h3>
+                <div class="skizzen-hinweis">[Hier sollten deine übernommenen Skizzen der beschrifteten Reaktionsgleichung und der Redoxreihe sowie deine Definitionen sein.]</div>
+            </div>
+            <button class="nav-btn" id="back-to-interactive-btn">Zurück</button>
+        `;
+        heftSectionContainer.style.display = 'block';
+        document.getElementById('back-to-interactive-btn').addEventListener('click', () => {
+            heftSectionContainer.style.display = 'none';
+            contentContainer.style.display = 'block';
+            endSectionContainer.style.display = 'block';
+        });
+        window.scrollTo(0, 0);
+    }
+
+    function checkStepCompletion(step) {
+        const questionsInStep = step.querySelectorAll('.question-container');
+        if (questionsInStep.length === 0) return true;
+        const answeredQuestions = step.querySelectorAll('.question-container.answered');
+        return questionsInStep.length === answeredQuestions.length;
+    }
+
+    startBtn.addEventListener('click', () => {
+        document.getElementById('start-section').style.display = 'none';
+        steps[0].style.display = 'block';
+    });
+
+    steps.forEach((step) => {
+        const nextButton = step.querySelector('.nav-btn');
+        const questionsInStep = step.querySelectorAll('.question-container');
+
+        if (questionsInStep.length > 0) {
+            nextButton.disabled = true;
+        }
+
+        nextButton.addEventListener('click', showNextStep);
+
+        questionsInStep.forEach(questionContainer => {
+            const answerButtons = questionContainer.querySelectorAll('.answer-btn');
+            const isReflexion = questionContainer.getAttribute('data-is-reflexion') === 'true';
+            let firstTry = true;
+
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (questionContainer.classList.contains('answered')) return;
+                    
+                    const isCorrect = button.getAttribute('data-correct') === 'true';
+                    if (isCorrect) {
+                        button.classList.add('correct');
+                        if (!isReflexion && firstTry) score++;
+                    } else {
+                        button.classList.add('incorrect');
+                        const correctButton = questionContainer.querySelector('[data-correct="true"]');
+                        if (correctButton) correctButton.classList.add('correct');
+                    }
+                    
+                    firstTry = false;
+                    questionContainer.classList.add('answered');
+                    answerButtons.forEach(btn => btn.disabled = true);
+                    
+                    if (checkStepCompletion(step)) {
+                        nextButton.disabled = false;
+                    }
+                });
+            });
+        });
+    });
+});
+</script>
+</body>
+</html>
