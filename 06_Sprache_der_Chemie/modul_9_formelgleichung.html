@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 9: Easypeasy zur Reaktionsgleichung</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto; padding: 0 1rem; background-color: #f9f9f9; }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .container { background-color: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative; }
+        .info-block { background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px; margin: 1.5rem 0; border-radius: 0 5px 5px 0; }
+        .highlight-block { background-color: #fef3b5; border-left-color: #f1c40f; }
+        .instruction { color: #c0392b; font-weight: bold; margin-top: 1.5rem; text-align: center; }
+        .instruction-emoji { font-size: 1.2em; margin-right: 8px; }
+        .nav-btn { display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer; margin-top: 1.5rem; transition: background-color 0.3s; }
+        .nav-btn.secondary { background-color: #7f8c8d; }
+        .nav-btn.admin-skip { background-color: #e67e22; font-size: 0.8em; padding: 5px 10px; margin-left: 10px; }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        .image-story-container, .interactive-container { text-align: center; }
+        .image-story { display: flex; justify-content: center; align-items: flex-start; text-align: center; margin-top: 1rem; flex-wrap: wrap; min-height: 150px; }
+        .story-element { display: flex; flex-direction: column; align-items: center; margin: 10px; min-width: 125px; }
+        .story-element img { margin-bottom: 5px; }
+        .story-element figcaption { font-style: italic; color: #555; min-height: 1.2em; font-weight: bold; }
+        .story-hidden { visibility: hidden; }
+        .story-element .reactant-image { width: 125px; height: 100px; object-fit: cover; border-radius: 4px; }
+        .story-element .plus-image { width: 35px; height: 100px; object-fit: contain; }
+        .story-element .arrow-image { width: 125px; height: 100px; object-fit: contain; }
+        .hidden-section, .post-formula-step { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .is-visible { display: block; opacity: 1; }
+        .side-by-side-block { display: flex; align-items: center; gap: 20px; }
+        .side-by-side-block.is-visible { display: flex; }
+        .side-by-side-block p { flex-grow: 1; }
+        .side-by-side-block .side-image { flex-shrink: 0; width: 22.5%; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .question-container { margin-top: 1.5rem; padding: 15px; border: 1px solid #bdc3c7; border-radius: 5px; }
+        .answer-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e; text-align: left; border-radius: 5px; cursor: pointer; }
+        .answer-btn:hover:not(:disabled) { background-color: #ecf0f1; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; }
+        .word-equation-reference { font-size: 1.5em; font-weight: bold; text-align: center; margin: 2rem 0; padding: 10px; }
+        #arrow-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+        #arrow-svg line { visibility: hidden; transition: visibility 0.1s; }
+        #arrow-svg line.is-visible { visibility: visible; }
+        .formula-display { display: flex; flex-direction: column; align-items: center; margin-top: 1rem; }
+        .formula-row { display: flex; justify-content: center; align-items: baseline; font-size: 2em; font-family: monospace; position: relative; z-index: 2; min-height: 50px; }
+        .equation-part-wrapper { display: flex; flex-direction: column; align-items: center; }
+        .explanation-bubble { display: none; opacity: 0; position: relative; background: #eaf5fc; border: 2px solid #3498db; border-radius: .4em; padding: 1em; margin-top: 2.2em; width: 230px; font-family: 'Caveat', cursive; font-size: 1.2rem; line-height: 1.4; color: #2c3e50; transition: opacity 0.5s, visibility 0.5s; }
+        .explanation-bubble.is-visible { display: block; opacity: 1; }
+        .explanation-bubble:after { content: ''; position: absolute; bottom: 100%; left: 50%; width: 0; height: 0; border: 0.8em solid transparent; border-bottom-color: #3498db; border-top: 0; margin-left: -0.8em; }
+        .formula-part { border: 2px solid #bdc3c7; border-radius: 8px; padding: 10px 20px; min-width: 80px; text-align: center; background-color: white; margin: 0 10px; transition: all 0.3s; }
+        .formula-part.highlight { border-color: #27ae60; transform: scale(1.05); box-shadow: 0 0 10px rgba(40, 167, 69, 0.5); }
+        .bubble-btn { float: none; padding: 8px 15px; margin-top: 10px; font-size: 1rem; line-height: 1.2; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .full-width-bubble { width: 90%; max-width: 600px; }
+        .bubble-with-image { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .bubble-with-image .bubble-content { display: flex; align-items: center; gap: 15px; }
+        .bubble-with-image .bubble-content img { width: 50px; height: 50px; }
+        .bubble-with-image .bubble-content span { flex-grow: 1; text-align: left; }
+        .bubble-with-image .bubble-controls { align-self: flex-end; }
+        .conflict-zone { margin-top: 1rem; text-align: center; }
+        .halt-message { color: #c0392b; font-weight: bold; font-size: 2em; margin-bottom: 1rem; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .atom-counter { display: flex; justify-content: space-around; align-items: center; font-size: 1.5em; background-color: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        .imbalance-symbol { font-size: 2.5em; color: #c0392b; font-weight: bold; }
+        .heft-eintrag-box { background-color: #fffde7; border: 1px solid #ddd; padding: 2rem; border-radius: 5px; margin-top: 2rem; font-family: 'Caveat', cursive; font-size: 1.5em; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .heft-eintrag-box h3 { font-size: 1.5em; color: #2c3e50; border-bottom: 1px solid #ccc; }
+        .heft-eintrag-box p { font-size: 1.2em; font-family: monospace; text-align: center; }
+        .heft-eintrag-box .title { font-size: 2em; font-weight: bold; text-align: center; margin-bottom: 1.5rem; }
+        .heft-eintrag-box .coefficient { color: #c0392b; font-weight: bold; }
+        .final-nav-buttons { text-align: center; margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modul 9: Easypeasy zur Reaktionsgleichung</h1>
+        <svg id="arrow-svg"><defs><marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db"></path></marker></defs></svg>
+        <div id="step1-container"></div>
+        <div id="step2-container" style="display:none;"></div>
+        <div id="final-summary-container" style="display:none;"></div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const mainContainer = document.querySelector('.container');
+    const step1Container = document.getElementById('step1-container');
+    const step2Container = document.getElementById('step2-container');
+    const finalSummaryContainer = document.getElementById('final-summary-container');
+    const svg = document.getElementById('arrow-svg');
+
+    // --- STEP 1 LOGIC ---
+    step1Container.innerHTML = `<h2>In Bildern: Oxidation von Eisen aka Rostbildung</h2><div class="image-story-container"><div class="image-story"><div class="story-element"><img src="bilder/eisen_naegel.jpg" alt="Eisennägel" class="reactant-image"><figcaption>Eisen</figcaption></div><div class="story-element story-hidden" id="story-step-1"><img src="bilder/plus.png" alt="Plus-Zeichen" class="plus-image"><figcaption>reagiert mit</figcaption></div><div class="story-element story-hidden" id="story-step-2"><img src="bilder/sauerstoff_flasche.jpg" alt="Sauerstoffflasche" class="reactant-image"><figcaption>Sauerstoff</figcaption></div><div class="story-element story-hidden" id="story-step-3"><img src="bilder/pfeil.jpg" alt="Pfeil-Zeichen" class="arrow-image"><figcaption>zu</figcaption></div><div class="story-element story-hidden" id="story-step-4"><img src="bilder/rost.jpg" alt="Rostiges Eisenpulver" class="reactant-image"><figcaption>Eisen(III)oxid</figcaption></div></div><button id="image-story-btn" class="nav-btn" style="float: none; margin-top: 1rem;">Weiter</button></div><div id="content-reveal-area"><div id="word-equation-section" class="hidden-section"><h2 style="margin-top: 2.5rem;">In Worten (Wortgleichung)</h2><div class="info-block highlight-block"><p style="font-size: 1.2em; font-weight: bold; text-align: center;">Eisen + Sauerstoff → Eisen(III)oxid</p></div></div><div id="explanation1-section" class="hidden-section info-block side-by-side-block"><p>Eine Wortgleichung zeigt, welche <b>Edukte</b> zu welchen <b>Produkten</b> reagieren. Sie zeigt also die Qualität der Reaktion.<br><br>"Eier, Mehl, Zucker, Milch" ist die Wortgleichung für einen Kuchen. Ohne eine Mengenangabe wird es aber wohl nichts mit dem Kuchen.</p><img src="bilder/kuchen_unfertig.jpg" alt="Zutaten für einen Kuchen durcheinander" class="side-image"></div><div id="explanation2-section" class="hidden-section info-block side-by-side-block"><p>Ein Rezept gibt an, <b>wie viel</b> der Zutaten benötigt wird. Nur dann wird es was mit dem Kuchen. In der Chemie nennen wir das Rezept <b>Formelgleichung</b>.</p><img src="bilder/kuchen_fertig.jpg" alt="Ein leckerer fertiger Kuchen" class="side-image"></div><div id="question-section" class="hidden-section question-container"><p><strong>Kontrollfrage:</strong> Wofür benötigen wir die Formelgleichung hauptsächlich?</p><button class="answer-btn" data-correct="false">A) Um die Namen der Stoffe zu lernen.</button><button class="answer-btn" data-correct="true">B) Um das genaue Mengenverhältnis der Stoffe darzustellen.</button><button class="answer-btn" data-correct="false">C) Um die Farbe der Stoffe zu bestimmen.</button></div><div id="instruction-section" class="hidden-section instruction"><p><span class="instruction-emoji">✒️</span>Übernehmt die Überschrift <strong>"Easypeasy zur Reaktionsgleichung"</strong> und die gelb markierte <strong>Wortgleichung</strong> oben in euer Heft.</p></div><button id="content-reveal-btn" class="nav-btn" style="float: right; display: none;">Weiter</button></div>`;
+    const storyBtn = document.getElementById('image-story-btn');
+    const contentBtn = document.getElementById('content-reveal-btn');
+    const storyElements = Array.from(document.querySelectorAll('.image-story .story-element')).slice(1);
+    let imageStoryStep = 0;
+    storyBtn.addEventListener('click', () => { if (imageStoryStep < storyElements.length) storyElements[imageStoryStep++].style.visibility = 'visible'; if (imageStoryStep === storyElements.length) { storyBtn.style.display = 'none'; contentBtn.style.display = 'inline-block'; } });
+    const sectionsToReveal = Array.from(document.querySelectorAll('#content-reveal-area > div'));
+    let contentRevealStep = 0;
+    contentBtn.addEventListener('click', () => { if (contentRevealStep < sectionsToReveal.length) { const section = sectionsToReveal[contentRevealStep]; section.style.display = section.classList.contains('side-by-side-block') ? 'flex' : 'block'; setTimeout(() => section.classList.add('is-visible'), 10); if (section.id === 'question-section') contentBtn.disabled = true; if (section.id === 'instruction-section') contentBtn.textContent = 'Nächsten Schritt beginnen'; contentRevealStep++; } else { step1Container.style.display = 'none'; step2Container.style.display = 'block'; initializeStep2(); } });
+    document.querySelectorAll('.answer-btn').forEach(button => { button.addEventListener('click', function() { const isCorrect = this.dataset.correct === 'true'; document.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = true); this.classList.add(isCorrect ? 'correct' : 'incorrect'); if (!isCorrect) document.querySelector('.answer-btn[data-correct="true"]').classList.add('correct'); contentBtn.disabled = false; }); });
+
+    // --- STEP 2 LOGIC ---
+    step2Container.innerHTML = `<h2>Von der Wort- zur Formelgleichung</h2><div class="info-block"><p>Lasst uns die Wortgleichung nun Schritt für Schritt in die Sprache der Chemie übersetzen...</p></div><div class="word-equation-reference"><span id="ref-eisen">Eisen</span> + <span id="ref-sauerstoff">Sauerstoff</span> → <span id="ref-eisenoxid">Eisen(III)oxid</span></div><div class="formula-display"><div class="formula-row"><div class="equation-part-wrapper"><div class="formula-part" id="formula-eisen">&nbsp;</div><div class="explanation-bubble" id="bubble-eisen">Eisen hat das Symbol "Fe".</div></div><div class="operator">+</div><div class="equation-part-wrapper"><div class="formula-part" id="formula-sauerstoff">&nbsp;</div><div class="explanation-bubble" id="bubble-sauerstoff">Sauerstoff kommt immer als Molekül aus 2 Atomen vor. Man muss sich leider merken, dass man O₂ schreibt.</div></div><div class="operator">→</div><div class="equation-part-wrapper"><div class="formula-part" id="formula-eisenoxid">?</div><div class="explanation-bubble" id="bubble-eisenoxid">Woher soll man das wissen?</div></div></div></div><div id="post-formula-area"></div><div class="interactive-container"><button id="back-btn" class="nav-btn secondary" disabled>Zurück</button><button id="reveal-btn" class="nav-btn">Weiter</button><button class="nav-btn admin-skip" id="skip-hilfe1">[Admin] Skip Hilfe 1</button><button class="nav-btn admin-skip" id="skip-hilfe2">[Admin] Skip Hilfe 2</button></div>`;
+    
+    // --- FINAL SUMMARY LOGIC ---
+    finalSummaryContainer.innerHTML = `<h2>Zusammenfassung für dein Heft</h2><div class="info-block"><p>Sehr gut! Du hast alle Schritte gemeistert. So sollte der vollständige Eintrag in deinem Heft nun aussehen.</p></div><div class="heft-eintrag-box"><div class="title">Easypeasy zur Reaktionsgleichung</div><h3>1. Wortgleichung</h3><p>Eisen + Sauerstoff → Eisen(III)oxid</p><h3>2. Formelgleichung (unausgeglichen)</h3><p>Fe + O<sub>2</sub> → Fe<sub>2</sub>O<sub>3</sub></p><h3>3. Ausgeglichene Reaktionsgleichung (korrekt)</h3><p><span class="coefficient">4</span> Fe + <span class="coefficient">3</span> O<sub>2</sub> → <span class="coefficient">2</span> Fe<sub>2</sub>O<sub>3</sub></p></div><p class="instruction"><span class="instruction-emoji">✒️</span>Vergleiche diesen Eintrag mit deinen Notizen und korrigiere sie, falls nötig.</p><div class="final-nav-buttons"><button id="back-to-step2-btn" class="nav-btn secondary">Zurück</button><a href="modul_9_schritt7.html" target="_blank" class="nav-btn">Modul mit Übung abschließen</a></div>`;
+    
+    const revealBtn = document.getElementById('reveal-btn');
+    const backBtn = document.getElementById('back-btn');
+    let hilfe1Abgeschlossen = false;
+    let hilfe2Abgeschlossen = false;
+    
+    const steps2 = [
+        { type: 'reveal', bubbleIds: ['bubble-eisen'], formulaId: 'formula-eisen', content: 'Fe' },
+        { type: 'reveal', bubbleIds: ['bubble-eisen', 'bubble-sauerstoff'], formulaId: 'formula-sauerstoff', content: 'O<sub>2</sub>' },
+        { type: 'reveal', bubbleIds: ['bubble-eisen', 'bubble-sauerstoff', 'bubble-eisenoxid'], formulaId: 'formula-eisenoxid', content: 'Fe<sub>x</sub>O<sub>y</sub>', action: 'openHilfe1' },
+        { type: 'action', action: 'replaceFormula' },
+        { type: 'action', action: 'showInstruction' },
+        { type: 'action', action: 'showBubbleHm' },
+        { type: 'action', action: 'showHaltBlock' },
+        { type: 'action', action: 'showBubbleAh' },
+        { type: 'action', action: 'showFinalSummary' }
+    ];
+    let currentStep2 = -1;
+
+    function drawArrow(sourceElem, targetElem, arrowId) {
+        const containerRect = mainContainer.getBoundingClientRect(); const sourceRect = sourceElem.getBoundingClientRect(); const targetRect = targetElem.getBoundingClientRect();
+        const startX = sourceRect.left + sourceRect.width / 2 - containerRect.left; const startY = sourceRect.bottom - containerRect.top;
+        const endX = targetRect.left + targetRect.width / 2 - containerRect.left; const endY = targetRect.top - containerRect.top - 5;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.id = arrowId; line.setAttribute('x1', startX); line.setAttribute('y1', startY); line.setAttribute('x2', endX); line.setAttribute('y2', endY); line.setAttribute('stroke', '#3498db'); line.setAttribute('stroke-width', '2'); line.setAttribute('marker-end', 'url(#arrowhead)');
+        svg.appendChild(line);
+    }
+    
+    function updateViewStep2() {
+        document.querySelectorAll('.post-formula-step').forEach(el => { el.style.display = 'none'; el.classList.remove('is-visible'); });
+        document.querySelectorAll('#step2-container .explanation-bubble').forEach(b => b.classList.remove('is-visible'));
+        document.querySelectorAll('#arrow-svg line').forEach(l => l.classList.remove('is-visible'));
+        document.getElementById('formula-eisenoxid').classList.remove('highlight');
+        revealBtn.style.display = 'inline-block';
+        revealBtn.disabled = false;
+
+        for(let i = 0; i < currentStep2; i++) {
+            const stepData = steps2[i];
+             if (stepData.type === 'reveal' && currentStep2 > 2) {
+                // do nothing, bubbles should stay hidden
+             } else if (stepData.type === 'reveal') {
+                stepData.bubbleIds.forEach(id => document.getElementById(id).classList.add('is-visible'));
+                document.getElementById(`arrow-${i}`).classList.add('is-visible');
+             }
+        }
+
+        const currentStepData = steps2[currentStep2];
+        if (currentStepData) {
+            if (currentStepData.type === 'reveal') {
+                currentStepData.bubbleIds.forEach(id => document.getElementById(id).classList.add('is-visible'));
+                document.getElementById(`arrow-${currentStep2}`).classList.add('is-visible');
+                document.getElementById(currentStepData.formulaId).innerHTML = currentStepData.content;
+            }
+            if (currentStepData.action === 'openHilfe1') {
+                revealBtn.disabled = !hilfe1Abgeschlossen;
+                const bubble = document.getElementById("bubble-eisenoxid");
+                bubble.innerHTML = "Woher soll man das wissen?";
+                if (!hilfe1Abgeschlossen) {
+                    const newBtn = document.createElement('button'); newBtn.className = 'nav-btn bubble-btn'; newBtn.textContent = "klick mich! 'Nebenrechnung für's Eisenoxid'";
+                    newBtn.onclick = () => window.open('modul_9_schritt3.html', '_blank');
+                    bubble.appendChild(newBtn);
+                }
+                if (hilfe1Abgeschlossen) { bubble.innerHTML = `Super! Wir haben die Formel für Eisen(III)oxid hergeleitet. Jetzt können wir sie in unsere Gleichung einsetzen.`; }
+            } else if (currentStepData.action === 'replaceFormula') {
+                 document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>2</sub>O<sub>3</sub>';
+                 document.getElementById('formula-eisenoxid').classList.add('highlight');
+            } else if (currentStepData.action === 'showInstruction') {
+                document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>2</sub>O<sub>3</sub>';
+                const el = document.getElementById('instruction-step2'); el.style.display = 'block'; setTimeout(() => el.classList.add('is-visible'), 10);
+            } else if (currentStepData.action === 'showBubbleHm') {
+                document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>2</sub>O<sub>3</sub>';
+                const el = document.getElementById('bubble-hm'); el.style.display = 'block'; setTimeout(() => el.classList.add('is-visible'), 10);
+            } else if (currentStepData.action === 'showHaltBlock') {
+                document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>2</sub>O<sub>3</sub>';
+                const el = document.getElementById('conflict-zone'); el.style.display = 'block'; setTimeout(() => el.classList.add('is-visible'), 10);
+            } else if (currentStepData.action === 'showBubbleAh') {
+                document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>2</sub>O<sub>3</sub>';
+                document.getElementById('conflict-zone').style.display = 'block';
+                document.getElementById('conflict-zone').classList.add('is-visible');
+                const bubbleAh = document.getElementById('bubble-ah');
+                bubbleAh.style.display = 'block'; setTimeout(() => bubbleAh.classList.add('is-visible'), 10);
+                
+                revealBtn.disabled = !hilfe2Abgeschlossen;
+
+                const ahButton = bubbleAh.querySelector('button');
+                const ahSpan = bubbleAh.querySelector('span');
+                if (hilfe2Abgeschlossen) {
+                    ahButton.style.display = 'none';
+                    ahSpan.textContent = 'Super! Jetzt können wir die Gleichung fertigstellen.';
+                } else {
+                     ahButton.style.display = 'inline-block';
+                     ahSpan.textContent = 'Die Atome sind links und rechts des Pfeils gleich, aber die Anzahl der Atome ist ungleich. Wir müssen beiden Seiten ausgleichen!';
+                }
+            } else if (currentStepData.action === 'showFinalSummary') {
+                step2Container.style.display = 'none';
+                finalSummaryContainer.style.display = 'block';
+            }
+        }
+        backBtn.disabled = currentStep2 < 0;
+    }
+
+    function initializeStep2() {
+        const postFormulaArea = document.getElementById('post-formula-area');
+        postFormulaArea.innerHTML = `<div id="instruction-step2" class="post-formula-step instruction"><p><span class="instruction-emoji">✒️</span>Übernehmt diese unausgeglichene Formelgleichung in euer Heft: <strong>Fe + O₂ → Fe₂O₃</strong></p></div><div id="bubble-hm" class="post-formula-step explanation-bubble full-width-bubble bubble-with-image"><div class="bubble-content"><img src="bilder/hm.jpg" alt="hm"><span>Moment mal... Irgendwas an dieser Gleichung fühlt sich "ungleich" an.</span></div></div><div id="conflict-zone" class="post-formula-step conflict-zone"><div class="halt-message">HALT! Das darf NICHT sein!</div><div class="atom-counter"><div><strong>Links (Edukte):</strong><br>1 x Eisen (Fe)<br>2 x Sauerstoff (O)</div><div class="imbalance-symbol">≠</div><div><strong>Rechts (Produkte):</strong><br>2 x Eisen (Fe)<br>3 x Sauerstoff (O)</div></div><div class="info-block" style="margin-top: 2rem;"><strong>Das Gesetz von der Erhaltung der Masse:</strong> In einer chemischen Reaktion gehen keine Atome verloren und es kommen auch keine hinzu. Die Anzahl jeder Atomsorte muss auf beiden Seiten des Pfeils exakt gleich sein!</div></div><div id="bubble-ah" class="post-formula-step explanation-bubble full-width-bubble bubble-with-image"><div class="bubble-content"><img src="bilder/ah.jpg" alt="ah"><span>Ah! Die Atomsorten sind links und rechts gleich, aber ihre ANZAHL ist ungleich. Wir müssen die Gleichung <strong>ausgleichen</strong>!</span></div><div class="bubble-controls"><button class="nav-btn bubble-btn" onclick="window.open('modul_9_schritt5.html', '_blank')">Wie geht Ausgleichen?</button></div></div>`;
+        svg.innerHTML = '<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db"></path></marker></defs>';
+        steps2.filter((s, i) => s.type === 'reveal' && i <= 2).forEach((step, index) => { const source = document.getElementById(`ref-${step.bubbleIds[step.bubbleIds.length - 1].replace('bubble-','')}`); const target = document.getElementById(step.formulaId); drawArrow(source, target, `arrow-${index}`); });
+        
+        document.getElementById('back-to-step2-btn').addEventListener('click', () => {
+            finalSummaryContainer.style.display = 'none';
+            step2Container.style.display = 'block';
+            currentStep2--; // Go back to the step before the summary
+            updateViewStep2();
+        });
+
+        updateViewStep2();
+    }
+    
+    revealBtn.addEventListener('click', () => { if (currentStep2 < steps2.length - 1) { currentStep2++; updateViewStep2(); } });
+    
+    backBtn.addEventListener('click', () => {
+        if (currentStep2 >= 0) {
+            if (currentStep2 > 3) {
+                 // The state is handled by updateViewStep2
+            } else if (currentStep2 === 3) {
+                document.getElementById('formula-eisenoxid').innerHTML = 'Fe<sub>x</sub>O<sub>y</sub>';
+            } else if (currentStep2 <= 2) {
+                document.getElementById('formula-eisenoxid').innerHTML = '?';
+                document.getElementById('formula-sauerstoff').innerHTML = '&nbsp;';
+                if (currentStep2 <= 1) {
+                    document.getElementById('formula-eisen').innerHTML = '&nbsp;';
+                }
+            }
+
+            document.querySelectorAll('.post-formula-step').forEach(el => { el.style.display = 'none'; el.classList.remove('is-visible');});
+            currentStep2--;
+            updateViewStep2();
+        }
+    });
+    
+    document.getElementById('skip-hilfe1').addEventListener('click', () => {
+        localStorage.setItem('nebenrechnung_done', 'true');
+        window.dispatchEvent(new StorageEvent('storage', {key: 'nebenrechnung_done', newValue: 'true'}));
+    });
+    document.getElementById('skip-hilfe2').addEventListener('click', () => {
+         localStorage.setItem('ausgleichen_done', 'true');
+        window.dispatchEvent(new StorageEvent('storage', {key: 'ausgleichen_done', newValue: 'true'}));
+    });
+
+    window.addEventListener('storage', e => {
+        if (e.key === 'nebenrechnung_done' && e.newValue === 'true') {
+            hilfe1Abgeschlossen = true;
+            updateViewStep2();
+        }
+        if (e.key === 'ausgleichen_done' && e.newValue === 'true') {
+            hilfe2Abgeschlossen = true;
+            updateViewStep2();
+        }
+    });
+
+    window.addEventListener('resize', initializeStep2);
+});
+</script>
+
+</body>
+</html>

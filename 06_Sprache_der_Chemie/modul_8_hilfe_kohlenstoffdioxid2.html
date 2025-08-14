@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baukasten: Interaktive Herleitung CO₂</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto;
+            padding: 0 1rem; background-color: #f9f9f9;
+        }
+        h2 {
+            color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff; padding: 2rem; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .info-block {
+            background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px;
+            margin: 1rem 0; border-radius: 0 5px 5px 0;
+        }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; transition: background-color 0.3s;
+        }
+        .nav-btn.secondary {
+             background-color: #7f8c8d;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn.secondary:hover:not(:disabled) { background-color: #34495e; }
+        .herleitung-step, .choice-container, .feedback-gif {
+            display: none;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .feedback-gif { border: none; }
+        .svg-drawing {
+            width: 100%;
+            max-width: 500px;
+            min-height: 120px;
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Interaktive Herleitung: Kohlenstoffdioxid (CO₂)</h2>
+        <p class="info-block">Wir leiten nun gemeinsam die Struktur des Kohlenstoffdioxid-Moleküls her. Nach jedem Schritt kannst du entscheiden, ob du alleine weitermachen möchtest.</p>
+        
+        <div id="co2-herleitung">
+            <!-- Step 1 -->
+            <div class="herleitung-step" id="step-1">
+                <p>1. Die Summenformel <strong>CO₂</strong> verrät uns die Bausteine: 1 Kohlenstoff-Atom und 2 Sauerstoff-Atome.</p>
+                <div id="co2-step1-svg"></div>
+            </div>
+            
+            <!-- Choice 1 -->
+            <div class="choice-container" id="choice-1">
+                <p>Schaffst du den Rest alleine?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn secondary" data-skip-feedback>Ja, Rest alleine</button>
+                    <button class="nav-btn" data-next-step="2">Nächsten Schritt anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="herleitung-step" id="step-2">
+                <p>2. Sauerstoff (O) hat die Wertigkeit II (2 Arme). Kohlenstoff (C) muss zwei O-Atome binden und hat die Wertigkeit IV (4 Arme).</p>
+                <div id="co2-step2-svg"></div>
+            </div>
+
+            <!-- Choice 2 -->
+            <div class="choice-container" id="choice-2">
+                 <p>Schaffst du den Rest alleine?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn secondary" data-skip-feedback>Ja, Rest alleine</button>
+                    <button class="nav-btn" data-next-step="3">Nächsten Schritt anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="herleitung-step" id="step-3">
+                <p>3. Die Atome werden so ausgerichtet, dass die nächstgelegenen Arme verbunden werden können. Es entstehen zwei Doppelbindungen.</p>
+                <div id="co2-step3-svg"></div>
+            </div>
+            
+            <!-- Choice 3 -->
+            <div class="choice-container" id="choice-3">
+                 <p>Bist du bereit für die Lösung?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn" data-next-step="final">Lösung anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Final Step -->
+            <div class="herleitung-step" id="step-final">
+                <p>4. Im letzten Schritt werden die Arme zum fertigen CO₂-Molekül verbunden.</p>
+                <div id="co2-final-svg"></div>
+            </div>
+
+            <!-- Feedback GIF -->
+            <div class="feedback-gif" id="skip-feedback-gif">
+                 <div class="tenor-gif-embed" data-postid="9181333401381757341" data-share-method="host" data-aspect-ratio="1.04762" data-width="20%"></div>
+            </div>
+        </div>
+        <button class="nav-btn" id="start-herleitung-btn">Herleitung starten</button>
+    </div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- KONSTANTEN UND ENGINE ---
+    const ARROW_GAP = 30;
+    function drawAtomWithSymbol(symbol, radius, color = 'white', arms = 0, armAngles = []) {
+        const fontSize = radius * 1.5;
+        let armPaths = '';
+        if (arms > 0) {
+            const armLength = radius * 0.8;
+            for (const angle of armAngles) {
+                const x1 = radius;
+                const x2 = radius + armLength;
+                armPaths += `<line x1="${x1}" y1="0" x2="${x2}" y2="0" stroke="black" stroke-width="3" stroke-linecap="round" transform="rotate(${angle})"/>`;
+            }
+        }
+        return `<g><circle cx="0" cy="0" r="${radius}" fill="${color}" stroke="black" stroke-width="2" /><text x="0" y="0" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold" text-anchor="middle" dy=".3em">${symbol}</text>${armPaths}</g>`;
+    }
+    
+    // --- Definitionen & Dynamische Berechnung ---
+    const cAtom = { x: 150, y: 100, r: 20, armLength: 16, angles: [150, 180, 210, 30, 0, -30] };
+    const oAtom = { r: 20, armLength: 16 };
+    const distanceToCenter = cAtom.r + cAtom.armLength + ARROW_GAP + oAtom.armLength + oAtom.r;
+    const oAtomLeftCenter = { x: cAtom.x - distanceToCenter, y: cAtom.y };
+    const oAtomRightCenter = { x: cAtom.x + distanceToCenter, y: cAtom.y };
+    const viewBox = `0 0 300 200`;
+    const getArmEndpoint = (cx, cy, r, al, deg) => ({ x: cx + (r + al) * Math.cos(deg * Math.PI/180), y: cy + (r + al) * Math.sin(deg * Math.PI/180) });
+    
+    const cArmEnds = {
+        leftTop: getArmEndpoint(cAtom.x, cAtom.y, cAtom.r, cAtom.armLength, 150),
+        leftBottom: getArmEndpoint(cAtom.x, cAtom.y, cAtom.r, cAtom.armLength, 210),
+        rightTop: getArmEndpoint(cAtom.x, cAtom.y, cAtom.r, cAtom.armLength, 30),
+        rightBottom: getArmEndpoint(cAtom.x, cAtom.y, cAtom.r, cAtom.armLength, -30)
+    };
+    const oArmEnds = {
+        leftTop: getArmEndpoint(oAtomLeftCenter.x, oAtomLeftCenter.y, oAtom.r, oAtom.armLength, 45),
+        leftBottom: getArmEndpoint(oAtomLeftCenter.x, oAtomLeftCenter.y, oAtom.r, oAtom.armLength, -45),
+        rightTop: getArmEndpoint(oAtomRightCenter.x, oAtomRightCenter.y, oAtom.r, oAtom.armLength, 135),
+        rightBottom: getArmEndpoint(oAtomRightCenter.x, oAtomRightCenter.y, oAtom.r, oAtom.armLength, -135)
+    };
+
+    // --- RENDER SVGs ---
+    document.getElementById('co2-step1-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing">
+        <g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666')}</g>
+        <g transform="translate(${oAtomLeftCenter.x}, ${oAtomLeftCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c')}</g>
+        <g transform="translate(${oAtomRightCenter.x}, ${oAtomRightCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c')}</g>
+    </svg>`;
+    
+    document.getElementById('co2-step2-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing">
+        <g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666', 4, [150, 210, 30, -30])}</g>
+        <g transform="translate(${oAtomLeftCenter.x}, ${oAtomLeftCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c', 2, [45, -45])}</g>
+        <g transform="translate(${oAtomRightCenter.x}, ${oAtomRightCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c', 2, [135, -135])}</g>
+    </svg>`;
+
+    let step3SVG = `<svg viewBox="${viewBox}" class="svg-drawing">
+            <defs><marker id="outwardArrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10" stroke="#3498db" stroke-width="1.5" fill="none"/></marker></defs>
+            <g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666', 4, [150, 210, 30, -30])}</g>
+            <g transform="translate(${oAtomLeftCenter.x}, ${oAtomLeftCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c', 2, [45, -45])}</g>
+            <g transform="translate(${oAtomRightCenter.x}, ${oAtomRightCenter.y})">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c', 2, [135, -135])}</g>
+            <line x1="${oArmEnds.leftTop.x}" y1="${oArmEnds.leftTop.y}" x2="${cArmEnds.leftTop.x}" y2="${cArmEnds.leftTop.y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" />
+            <line x1="${oArmEnds.leftBottom.x}" y1="${oArmEnds.leftBottom.y}" x2="${cArmEnds.leftBottom.x}" y2="${cArmEnds.leftBottom.y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" />
+            <line x1="${oArmEnds.rightTop.x}" y1="${oArmEnds.rightTop.y}" x2="${cArmEnds.rightTop.x}" y2="${cArmEnds.rightTop.y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" />
+            <line x1="${oArmEnds.rightBottom.x}" y1="${oArmEnds.rightBottom.y}" x2="${cArmEnds.rightBottom.x}" y2="${cArmEnds.rightBottom.y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" />
+        </svg>`;
+    document.getElementById('co2-step3-svg').innerHTML = step3SVG;
+    
+    let finalSVG = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${cAtom.x}, ${cAtom.y})">`;
+    const o_dist = cAtom.r + oAtom.r;
+    finalSVG += `<line x1="0" y1="-5" x2="-${o_dist}" y2="-5" stroke="black" stroke-width="3"/><line x1="0" y1="5" x2="-${o_dist}" y2="5" stroke="black" stroke-width="3"/>`;
+    finalSVG += `<line x1="0" y1="-5" x2="${o_dist}" y2="-5" stroke="black" stroke-width="3"/><line x1="0" y1="5" x2="${o_dist}" y2="5" stroke="black" stroke-width="3"/>`;
+    finalSVG += `${drawAtomWithSymbol('C', cAtom.r, '#666')}`;
+    finalSVG += `<g transform="translate(-${o_dist}, 0)">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c')}</g>`;
+    finalSVG += `<g transform="translate(${o_dist}, 0)">${drawAtomWithSymbol('O', oAtom.r, '#e74c3c')}</g>`;
+    finalSVG += `</g></svg>`;
+    document.getElementById('co2-final-svg').innerHTML = finalSVG;
+
+    // --- INTERACTIVITY LOGIC --- (unverändert)
+    const startBtn = document.getElementById('start-herleitung-btn');
+    const steps = document.querySelectorAll('.herleitung-step');
+    const choices = document.querySelectorAll('.choice-container');
+    const feedbackGif = document.getElementById('skip-feedback-gif');
+    startBtn.addEventListener('click', () => {
+        startBtn.style.display = 'none';
+        steps[0].style.display = 'block';
+        choices[0].style.display = 'block';
+    });
+    choices.forEach((choice, index) => {
+        const nextStepBtn = choice.querySelector('[data-next-step]');
+        const skipBtn = choice.querySelector('[data-skip-feedback]');
+        const finalBtn = choice.querySelector('[data-next-step="final"]');
+        if (nextStepBtn) {
+            nextStepBtn.addEventListener('click', () => {
+                choice.style.display = 'none';
+                const nextStepIndex = parseInt(nextStepBtn.dataset.nextStep) - 1;
+                if(nextStepIndex < steps.length-1) {
+                     steps[nextStepIndex].style.display = 'block';
+                     choices[nextStepIndex].style.display = 'block';
+                } else { steps[nextStepIndex].style.display = 'block'; }
+            });
+        }
+        if(finalBtn) {
+             finalBtn.addEventListener('click', () => {
+                steps.forEach(s => s.style.display = 'none');
+                choices.forEach(c => c.style.display = 'none');
+                document.getElementById('step-final').style.display = 'block';
+            });
+        }
+        if (skipBtn) {
+            skipBtn.addEventListener('click', () => {
+                choice.style.display = 'none';
+                feedbackGif.style.display = 'block';
+                setTimeout(() => {
+                    feedbackGif.style.display = 'none';
+                    choice.style.display = 'block';
+                }, 1500);
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>

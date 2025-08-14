@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Wertigkeit - eine Hilfe zur Aufstellung von Summenformeln</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto; padding: 0 1rem; background-color: #f9f9f9; }
+        h1, h2, h3 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .container { background-color: #ffffff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .step { display: none; border-top: 1px solid #ddd; padding-top: 1.5rem; margin-top: 1.5rem; }
+        .info-block { background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px; margin: 1rem 0; border-radius: 0 5px 5px 0; }
+        .instruction { color: #c0392b; font-weight: bold; }
+        .instruction-emoji { font-size: 1.2em; margin-right: 8px; }
+        .instruction ul { padding-left: 20px; font-weight: normal; margin-top: 0.5rem;}
+        .question-container { margin-top: 1.5rem; padding: 15px; border: 1px solid #bdc3c7; border-radius: 5px; }
+        .answer-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #7f8c8d; background-color: #ffffff; color: #34495e; font-size: 1em; text-align: left; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; }
+        .answer-btn:hover:not(:disabled) { background-color: #ecf0f1; border-color: #3498db; }
+        .answer-btn.correct { background-color: #dff9d8; border-color: #27ae60; color: #27ae60; font-weight: bold; }
+        .answer-btn.incorrect { background-color: #f9d8d8; border-color: #c0392b; color: #c0392b; }
+        .answer-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .nav-btn { display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer; margin-top: 1.5rem; float: right; transition: background-color 0.3s, opacity 0.3s; }
+        .nav-btn.secondary { background-color: #7f8c8d; }
+        .nav-btn.help-btn { background-color: #f1c40f; color: #fff; float: none; margin: 5px; font-size: 0.9em; padding: 8px 15px; }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn.secondary:hover:not(:disabled) { background-color: #34495e; }
+        .nav-btn.help-btn:hover:not(:disabled) { background-color: #e67e22; }
+        .nav-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.7; }
+        #start-section, #end-section, #heftansicht-section { text-align: center; }
+        #end-section, #heftansicht-section { display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd; }
+        .heftansicht-content { text-align: left; padding: 1.5rem; background-color: #fdfdfd; border: 1px solid #eee; border-radius: 5px;}
+        .heftansicht-content h3 { color: #3498db; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        .heftansicht-content .skizzen-hinweis { font-style: italic; color: #7f8c8d; background-color: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        figure { margin: 1.5rem 0; text-align: center; }
+        figure img { max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .help-container { border: 1px solid #ddd; border-radius: 5px; padding: 1rem; margin-top: 1.5rem; background-color: #fdfdfd; }
+        .help-content { display: none; margin-top: 1rem; padding: 1rem; background-color: #fef9e7; border-radius: 4px; }
+        .interactive-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .interactive-table td, .interactive-table th { border: 1px solid #ddd; padding: 8px; text-align: center; vertical-align: middle; }
+        .interactive-table th { background-color: #f2f2f2; }
+        .interactive-table input, .interactive-table select { width: 90%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; box-sizing: border-box; }
+        .correct-input { background-color: #dff9d8 !important; border-color: #27ae60 !important; }
+        .incorrect-input { background-color: #f9d8d8 !important; border-color: #c0392b !important; }
+        .feedback-gif { display: none; margin-top: 1rem; text-align: center;}
+        .completion-message { display: none; margin-top: 1rem; padding: 1rem; background-color: #dff9d8; border: 1px solid #27ae60; border-radius: 5px; text-align: center; font-weight: bold; }
+        .herleitung-step { display: none; padding: 1rem; border: 1px solid #ddd; border-radius: 5px; margin-top: 1rem; text-align: center; }
+        .svg-drawing { width: 100%; min-height: 120px; }
+        .button-wrapper { display: flex; justify-content: center; gap: 10px; margin-top: 1rem; }
+        .skip-container { margin-top: 2rem; padding: 1rem; background-color: #f8f9fa; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Die Wertigkeit - eine Hilfe zur Aufstellung von Summenformeln</h1>
+        <div id="start-section"><button class="nav-btn" id="start-btn">Lektion starten</button></div>
+        <div id="content-container">
+            <div class="step">
+                <h2>Wertigkeit – oder kann es einen Stoff mit der „Schalke-Formel“ SO₄ geben?</h2>
+                <figure>
+                    <div style="display:flex; justify-content:space-around; align-items:center;">
+                        <img src="bilder/schalke_logo.jpg" alt="Logo des FC Schalke 04" style="width: 40%;">
+                        <div id="so4-drawing" style="width: 40%;"></div>
+                    </div>
+                    <figcaption>Die chemische Formel SO₄ würde für einen Stoff namens Schwefeltetraoxid stehen... Aber gibt es diesen Stoff überhaupt?</figcaption>
+                </figure>
+                <div class="info-block"><p><strong>Die Wertigkeit eines Elements gibt an, wie viele Wasserstoff-Atome von einem Atom dieses Elements gebunden werden können (oder bildlicher, wie viele „Bindungsstellen“ es hat).</strong></p></div>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Übernimm den Merksatz zur Wertigkeit und die folgenden Skizzen in deine Mappe.</p>
+                <figure><img src="bilder/wertigkeit_beispiele.jpg" alt="Beispiele zur Wertigkeit von Wasserstoff und Sauerstoff"></figure>
+                <button class="nav-btn next-step-btn">Weiter</button>
+            </div>
+            <div class="step">
+                <h2>Von den Atomen zum Molekül</h2>
+                <p class="info-block">Aus der Wertigkeit lässt sich ableiten, wie die Atome in einer Verbindung angeordnet sein könnten. Schauen wir uns das am Beispiel Wasser (H₂O) an:</p>
+                <div id="wasser-herleitung">
+                    <div class="herleitung-step"><p>1. Die Formel <strong>H₂O</strong> verrät uns: 2 Wasserstoff-Atome, 1 Sauerstoff-Atom.</p><div id="wasser-step1-svg"></div></div>
+                    <div class="herleitung-step"><p>2. Wasserstoff (H) hat Wertigkeit I (einen Arm).</p><div id="wasser-step2-svg"></div></div>
+                    <div class="herleitung-step"><p>3. Sauerstoff (O) braucht zwei Arme (Wertigkeit II), um beide H-Atome zu binden.</p><div id="wasser-step3-svg"></div></div>
+                    <div class="herleitung-step"><p>4. Die nächstgelegenen Arme werden miteinander verbunden.</p><div id="wasser-step4-container"><div id="wasser-step4-svg-start"></div><div class="button-wrapper"><button class="nav-btn" id="connect-atoms-btn">Atome verbinden</button><button class="nav-btn secondary" id="repeat-animation-btn" style="display:none;">Wiederholen</button></div></div></div>
+                </div>
+                <button class="nav-btn" id="reveal-wasser-btn">Schritt für Schritt anzeigen</button>
+                <button class="nav-btn" id="wasser-herleitung-next-btn" style="display: none;">Weiter</button>
+            </div>
+            <div class="step">
+                <h2>Deine Aufgaben</h2>
+                <div class="instruction">
+                    <p><span class="instruction-emoji">✒️</span>Führe die folgenden Aufgaben in deinem Heft aus. Wenn du nicht weiterkommst, nutze die Hilfestellungen.</p>
+                </div>
+                
+                <div class="help-container">
+                    <strong>Aufgabe 1:</strong> Skizziere die Modelle von Methan (CH₄) und Ammoniak (NH₃).<br>
+                    <small>Hinweis: Stickstoff hat die Wertigkeit III.</small>
+                    <button class="nav-btn help-btn" onclick="document.getElementById('help1-content').style.display = 'block'; this.style.display='none';">Hilfe zu Aufgabe 1</button>
+                    <div id="help1-content" class="help-content">
+                        <p>Methan hat die Summenformel CH₄, d.h. ein Methan-Molekül besteht aus 1 Kohlenstoff- und 4 Wasserstoff-Atomen. Zeichne also entsprechend viele Modell-Atome. Anschließend modellierst du die Wertigkeiten der Atome, indem du entsprechend viele Bindungsstellen an die Modell-Atome zeichnest. Beachte, dass das Kohlenstoff-Atom ... Bindungsstellen haben muss!</p>
+                        <button class="nav-btn help-btn" onclick="window.open('modul_8_hilfe_methan2.html', '_blank')">Zeig mir eine interaktive Herleitung</button>
+                    </div>
+                </div>
+
+                <div class="help-container">
+                    <strong>Aufgabe 2:</strong> Leite das Produkt der Reaktion von Sauerstoff (II) mit Kohlenstoff (IV) ab.<br>
+                     <button class="nav-btn help-btn" onclick="document.getElementById('help2-content').style.display = 'block'; this.style.display='none';">Hilfe zu Aufgabe 2</button>
+                     <div id="help2-content" class="help-content">
+                        <p>Wenn die Lösung zu dieser Aufgabe genauso wäre wie für die 1. Aufgabe, hätte ich sie nicht gestellt. Um die 2. Aufgabe zu lösen, musst du aber wieder zunächst genauso vorgehen wie in der 1. Aufgabe. Du zeichnest also Modelle-Atome von Sauerstoff und Kohlenstoff inklusive der korrekten Anzahl an Bindungsstellen. Anschließend verbindest du die Atome über ihre Bindungsstellen. Da in unserem Modell keine Bindungsstellen unbesetzt bleiben dürfen, benötigst du insgesamt 3 Modell-Atome.</p>
+                        <button class="nav-btn help-btn" onclick="window.open('modul_8_hilfe_kohlenstoffdioxid2.html', '_blank')">Zeig mir eine interaktive Herleitung</button>
+                    </div>
+                </div>
+
+                 <div class="help-container">
+                    <strong>Aufgabe 3:</strong> Überprüfe dein Modell der Schwefelsäure (H₂SO₄).<br>
+                    <small>Hinweis: Schwefel hat hier die Wertigkeit VI.</small>
+                </div>
+
+                <button class="nav-btn next-step-btn">Weiter</button>
+            </div>
+            <div class="step">
+                <h2>Die Geschichte von Dr. Faulenzer</h2>
+                <p class="info-block">Der Chemiker Dr. Faulenzer hat die Nase voll vom Experimentieren und sucht eine Regel, um Formeln vorhersagen zu können.</p>
+                <p class="instruction"><span class="instruction-emoji">✒️</span>Hilf Dr. Faulenzer! Fülle die Tabellen auf deinem Arbeitsblatt (Aufgaben 4 und 5) aus. Anschließend kannst du deine Ergebnisse hier überprüfen.</p>
+                <button class="nav-btn next-step-btn">Weiter zur Überprüfung</button>
+            </div>
+            <div class="step">
+                 <h2>Überprüfung deines Arbeitsblattes</h2>
+                 <p class="info-block">Überprüfe hier die Tabellen. Wähle die korrekten Einträge aus den Dropdown-Menüs aus oder trage die Werte ein. Nutze die Hilfe-Buttons, wenn du bei einer Formel nicht weiterkommst.</p>
+                 
+                 <h3>Unbekannte Formeln (Aufgabe 4)</h3>
+                 <table class="interactive-table" id="formel-tabelle"></table>
+                 <button class="nav-btn" id="check-formeln" style="float:none;">Formeln überprüfen</button>
+                 <div class="feedback-gif" id="feedback-formel-error"><div class="tenor-gif-embed" data-postid="16803721" data-share-method="host" data-aspect-ratio="1.05611" data-width="20%"></div></div>
+                 <div class="feedback-gif" id="feedback-formel-success"><div class="tenor-gif-embed" data-postid="24047970" data-share-method="host" data-aspect-ratio="1" data-width="20%"></div></div>
+
+                 <h3 style="margin-top:2rem;">Wertigkeiten der Elemente (Aufgabe 5)</h3>
+                 <table class="interactive-table" id="wertigkeit-tabelle"></table>
+                 <button class="nav-btn" id="check-wertigkeit" style="float:none;">Wertigkeiten überprüfen</button>
+                 <div class="feedback-gif" id="feedback-wertigkeit-error"><div class="tenor-gif-embed" data-postid="16803721" data-share-method="host" data-aspect-ratio="1.05611" data-width="20%"></div></div>
+                 <div class="feedback-gif" id="feedback-wertigkeit-success"><div class="tenor-gif-embed" data-postid="24047970" data-share-method="host" data-aspect-ratio="1" data-width="20%"></div></div>
+                 
+                 <div id="completion-message" class="completion-message">Sehr gut! Alle Tabellen sind korrekt ausgefüllt.</div>
+
+                 <div class="skip-container">
+                    <label for="skip-tables-input">Keine Lust mehr? Tippe "weiter" ein, um fortzufahren:</label><br>
+                    <input type="text" id="skip-tables-input" placeholder="weiter" style="margin-top: 5px; padding: 5px;">
+                 </div>
+
+                 <button class="nav-btn" id="finish-check-btn" disabled>Weiter zur Auflösung</button>
+            </div>
+            <div class="step">
+                <h2>Die Auflösung des Schalke-Rätsels</h2>
+                 <div class="info-block">
+                    <p>Gut gemacht! Du hast jetzt alle Werkzeuge, um das Rätsel zu lösen.</p>
+                </div>
+                <p class="instruction">
+                    <span class="instruction-emoji">✒️</span>
+                    Kehre nun zu deinem Arbeitsblatt zurück und bearbeite die letzten beiden Aufgaben (Aufgabe 6). Erkläre dort schriftlich, warum es keine stabile "Schalke-Formel" SO₄ geben kann und was man aus den Abweichungen bei den Stickoxiden schließen kann.
+                </p>
+                 <button class="nav-btn next-step-btn">Lektion abschließen</button>
+            </div>
+        </div>
+        <div id="end-section"></div>
+        <div id="heftansicht-section"></div>
+    </div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Globale Steuerung ---
+    const startBtn = document.getElementById('start-btn');
+    const contentContainer = document.getElementById('content-container');
+    const steps = Array.from(contentContainer.querySelectorAll('.step'));
+    const endSectionContainer = document.getElementById('end-section');
+    const heftSectionContainer = document.getElementById('heftansicht-section');
+    let currentStepIndex = 0;
+
+    function showNextStep() {
+        if(currentStepIndex < steps.length) {
+            steps[currentStepIndex].style.display = 'none';
+        }
+        currentStepIndex++;
+        if (currentStepIndex < steps.length) {
+            steps[currentStepIndex].style.display = 'block';
+        } else {
+            showEndScreen();
+        }
+    }
+
+    function showEndScreen() {
+        contentContainer.style.display = 'none';
+        endSectionContainer.innerHTML = `<h2>Modul abgeschlossen!</h2><p>Du hast das interaktive Modul erfolgreich beendet.</p><button class="nav-btn" id="heft-btn">Heftansicht erstellen</button><a href="index.html" class="nav-btn" style="float: left;">Zurück zur Übersicht</a>`;
+        endSectionContainer.style.display = 'block';
+        document.getElementById('heft-btn').addEventListener('click', showHeftansicht);
+    }
+
+    function showHeftansicht() {
+        endSectionContainer.style.display = 'none';
+        heftSectionContainer.innerHTML = `<h2>Hefteintrag: Die Wertigkeit</h2>
+            <div class="heftansicht-content">
+                <h3>Merksatz zur Wertigkeit</h3>
+                <p>Die Wertigkeit eines Elements gibt an, wie viele Wasserstoff-Atome von einem Atom dieses Elements gebunden werden können (oder bildlicher, wie viele „Bindungsstellen“ es hat).</p>
+                <div class="skizzen-hinweis">[Hier sollten deine übernommenen Skizzen zu H und O sein.]</div>
+                <h3>Von den Atomen zum Molekül</h3>
+                <div class="skizzen-hinweis">[Hier sollte deine Skizze der schrittweisen Herleitung des Wassermoleküls sein.]</div>
+                <h3>Aufgaben</h3>
+                <div class="skizzen-hinweis">[Hier sollten deine gezeichneten Modelle für Methan, Ammoniak, CO₂ und Schwefelsäure sein.]</div>
+                <h3>Dr. Faulenzers Tabellen</h3>
+                <div class="skizzen-hinweis">[Hier sollten deine ausgefüllten Tabellen zu den Wertigkeiten und den neuen Formeln (Aufgabe 4 & 5) sein.]</div>
+                <h3>Auflösung des Schalke-Rätsels</h3>
+                 <div class="skizzen-hinweis">[Hier sollte deine schriftliche Erklärung zu Aufgabe 6 sein.]</div>
+            </div>
+            <button class="nav-btn" id="back-to-interactive-btn">Zurück</button>`;
+        heftSectionContainer.style.display = 'block';
+        document.getElementById('back-to-interactive-btn').addEventListener('click', () => {
+            heftSectionContainer.style.display = 'none';
+            endSectionContainer.style.display = 'block';
+        });
+        window.scrollTo(0, 0);
+    }
+    
+    startBtn.addEventListener('click', () => {
+        document.getElementById('start-section').style.display = 'none';
+        steps[0].style.display = 'block';
+    });
+
+    document.querySelectorAll('.next-step-btn').forEach(btn => btn.addEventListener('click', showNextStep));
+    document.getElementById('wasser-herleitung-next-btn').addEventListener('click', showNextStep);
+    document.getElementById('finish-check-btn').addEventListener('click', showNextStep);
+    
+    // --- SVG Engine ---
+    const atomFill = { 'O': '#e74c3c', 'H': 'white', 'S': '#f1c40f' };
+    function drawAtom(symbol, radius, arms = 0, armAngles = []) {
+        let armPaths = '';
+        if (arms > 0) {
+            const armLength = radius * 0.8;
+            for (const angle of armAngles) {
+                const x1 = radius; const x2 = radius + armLength;
+                armPaths += `<line x1="${x1}" y1="0" x2="${x2}" y2="0" stroke="black" stroke-width="3" stroke-linecap="round" transform="rotate(${angle})"/>`;
+            }
+        }
+        return `<g><circle cx="0" cy="0" r="${radius}" fill="${atomFill[symbol] || 'grey'}" stroke="black" stroke-width="2" /><text x="0" y="0" font-family="Arial, sans-serif" font-size="${radius*1.2}" font-weight="bold" text-anchor="middle" dy=".3em">${symbol}</text>${armPaths}</g>`;
+    }
+    document.getElementById('so4-drawing').innerHTML = `<svg viewBox="-50 -50 100 100"><g transform="translate(0,0)">${drawAtom('S', 20)}</g><g transform="translate(-25,-25)">${drawAtom('O', 15)}</g><g transform="translate(25,-25)">${drawAtom('O', 15)}</g><g transform="translate(-25,25)">${drawAtom('O', 15)}</g><g transform="translate(25,25)">${drawAtom('O', 15)}</g></svg>`;
+    
+    // --- Wasser-Herleitung ---
+    const wasserHerleitungContainer = document.getElementById('wasser-herleitung');
+    const wasserHerleitungSteps = wasserHerleitungContainer.querySelectorAll('.herleitung-step');
+    let currentWasserStep = 0;
+    const revealWasserBtn = document.getElementById('reveal-wasser-btn');
+    const wasserNextBtn = document.getElementById('wasser-herleitung-next-btn');
+    
+    revealWasserBtn.addEventListener('click', function() {
+        if (currentWasserStep < wasserHerleitungSteps.length) { 
+            wasserHerleitungSteps[currentWasserStep].style.display = 'block'; 
+            currentWasserStep++; 
+        } 
+        if (currentWasserStep === wasserHerleitungSteps.length) { 
+            this.style.display = 'none'; 
+            wasserNextBtn.style.display = 'inline-block';
+        } 
+    });
+    
+    const oAtomDef = { x: 150, y: 100, r: 15, armLength: 12, angles: [135, 225] };
+    const hAtomDef = { r: 15, armLength: 12 };
+    const ARROW_GAP = 50;
+    const distanceToCenter = oAtomDef.r + oAtomDef.armLength + ARROW_GAP + hAtomDef.r + hAtomDef.armLength;
+    const hAtomsCalculated = oAtomDef.angles.map(angle => ({ center: { x: oAtomDef.x + distanceToCenter * Math.cos(angle * Math.PI / 180), y: oAtomDef.y + distanceToCenter * Math.sin(angle * Math.PI / 180) }, armAngle: angle + 180 }));
+    const viewBox = `0 0 300 200`;
+    document.getElementById('wasser-step1-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${hAtomsCalculated[0].center.x}, ${hAtomsCalculated[0].center.y})">${drawAtom('H', hAtomDef.r)}</g><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})">${drawAtom('O', oAtomDef.r)}</g><g transform="translate(${hAtomsCalculated[1].center.x}, ${hAtomsCalculated[1].center.y})">${drawAtom('H', hAtomDef.r)}</g></svg>`;
+    document.getElementById('wasser-step2-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${hAtomsCalculated[0].center.x}, ${hAtomsCalculated[0].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[0].armAngle])}</g><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})">${drawAtom('O', oAtomDef.r)}</g><g transform="translate(${hAtomsCalculated[1].center.x}, ${hAtomsCalculated[1].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[1].armAngle])}</g></svg>`;
+    const step3SVG = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${hAtomsCalculated[0].center.x}, ${hAtomsCalculated[0].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[0].armAngle])}</g><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})">${drawAtom('O', oAtomDef.r, 2, oAtomDef.angles)}</g><g transform="translate(${hAtomsCalculated[1].center.x}, ${hAtomsCalculated[1].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[1].armAngle])}</g></svg>`;
+    document.getElementById('wasser-step3-svg').innerHTML = step3SVG;
+    const getArmEndpoint = (cx, cy, r, al, deg) => ({ x: cx + (r + al) * Math.cos(deg * Math.PI/180), y: cy + (r + al) * Math.sin(deg * Math.PI/180) });
+    const oArmEnds = oAtomDef.angles.map(angle => getArmEndpoint(oAtomDef.x, oAtomDef.y, oAtomDef.r, oAtomDef.armLength, angle));
+    const hArmEnds = hAtomsCalculated.map(h => getArmEndpoint(h.center.x, h.center.y, hAtomDef.r, hAtomDef.armLength, h.armAngle));
+    const step4Container = document.getElementById('wasser-step4-svg-start');
+    const connectBtn = document.getElementById('connect-atoms-btn');
+    const repeatBtn = document.getElementById('repeat-animation-btn');
+    const intermediateStateSVG = `<svg viewBox="${viewBox}" class="svg-drawing"><defs><marker id="outwardArrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10" stroke="#3498db" stroke-width="1.5" fill="none"/></marker></defs><g transform="translate(${hAtomsCalculated[0].center.x}, ${hAtomsCalculated[0].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[0].armAngle])}</g><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})">${drawAtom('O', oAtomDef.r, 2, oAtomDef.angles)}</g><g transform="translate(${hAtomsCalculated[1].center.x}, ${hAtomsCalculated[1].center.y})">${drawAtom('H', hAtomDef.r, 1, [hAtomsCalculated[1].armAngle])}</g><line x1="${hArmEnds[0].x}" y1="${hArmEnds[0].y}" x2="${oArmEnds[0].x}" y2="${oArmEnds[0].y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" /><line x1="${hArmEnds[1].x}" y1="${hArmEnds[1].y}" x2="${oArmEnds[1].x}" y2="${oArmEnds[1].y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" /></svg>`;
+    const final_h_distance = oAtomDef.r + hAtomDef.r;
+    const final_h1_center = { x: oAtomDef.x + final_h_distance * Math.cos(oAtomDef.angles[0] * Math.PI / 180), y: oAtomDef.y + final_h_distance * Math.sin(oAtomDef.angles[0] * Math.PI / 180) };
+    const final_h2_center = { x: oAtomDef.x + final_h_distance * Math.cos(oAtomDef.angles[1] * Math.PI / 180), y: oAtomDef.y + final_h_distance * Math.sin(oAtomDef.angles[1] * Math.PI / 180) };
+    const finalStateSVG = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})"><line x1="0" y1="0" x2="${final_h1_center.x - oAtomDef.x}" y2="${final_h1_center.y - oAtomDef.y}" stroke="black" stroke-width="3"/><line x1="0" y1="0" x2="${final_h2_center.x - oAtomDef.x}" y2="${final_h2_center.y - oAtomDef.y}" stroke="black" stroke-width="3"/></g><g transform="translate(${oAtomDef.x}, ${oAtomDef.y})">${drawAtom('O', oAtomDef.r)}</g><g transform="translate(${final_h1_center.x}, ${final_h1_center.y})">${drawAtom('H', hAtomDef.r)}</g><g transform="translate(${final_h2_center.x}, ${final_h2_center.y})">${drawAtom('H', hAtomDef.r)}</g></svg>`;
+    step4Container.innerHTML = step3SVG;
+    connectBtn.addEventListener('click', () => { connectBtn.style.display = 'none'; repeatBtn.style.display = 'none'; step4Container.innerHTML = intermediateStateSVG; setTimeout(() => { step4Container.innerHTML = finalStateSVG; repeatBtn.style.display = 'inline-block'; }, 1500); });
+    repeatBtn.addEventListener('click', () => { step4Container.innerHTML = step3SVG; connectBtn.style.display = 'inline-block'; repeatBtn.style.display = 'none'; });
+
+    // --- Tabellen-Logik ---
+    function formatFormula(text) { if (!text) return ''; return text.replace(/([A-Za-z])(\d+)/g, '$1<sub>$2</sub>'); }
+
+    const wertigkeitData = [ { name: 'Wasserstoff', symbol: 'H', correct: '1' }, { name: 'Kohlenstoff', symbol: 'C', correct: '4' }, { name: 'Lithium', symbol: 'Li', correct: '1' }, { name: 'Chlor', symbol: 'Cl', correct: '1' }, { name: 'Natrium', symbol: 'Na', correct: '1' }, { name: 'Silicium', symbol: 'Si', correct: '4' }, { name: 'Kalium', symbol: 'K', correct: '1' }, { name: 'Sauerstoff', symbol: 'O', correct: '2' }, { name: 'Magnesium', symbol: 'Mg', correct: '2' }, { name: 'Stickstoff', symbol: 'N', correct: '3' }, { name: 'Calcium', symbol: 'Ca', correct: '2' }, { name: 'Aluminium', symbol: 'Al', correct: '3' } ];
+    const formelData = [ { x: 'Na', y: 'Cl', correct: 'NaCl' }, { x: 'Li', y: 'Cl', correct: 'LiCl' }, { x: 'Ca', y: 'Cl', correct: 'CaCl2' }, { x: 'Mg', y: 'Cl', correct: 'MgCl2' }, { x: 'Al', y: 'Cl', correct: 'AlCl3' }, { x: 'Ca', y: 'O', correct: 'CaO' }, { x: 'Mg', y: 'O', correct: 'MgO' }, { x: 'Al', y: 'O', correct: 'Al2O3' }, { x: 'Cl', y: 'O', correct: 'Cl2O' }, { x: 'Si', y: 'O', correct: 'SiO2' }, { x: 'Ca', y: 'N', correct: 'Ca3N2' }, { x: 'Si', y: 'N', correct: 'Si3N4' }, { x: 'Al', y: 'N', correct: 'AlN' }, { x: 'N', y: 'Cl', correct: 'NCl3' }, { x: 'N', y: 'O', correct: 'N2O3' } ];
+    
+    const wertigkeitTabelle = document.getElementById('wertigkeit-tabelle');
+    let wtHTML = '<thead><tr><th>Name</th><th>Symbol</th><th>Wertigkeit</th><th>Name</th><th>Symbol</th><th>Wertigkeit</th></tr></thead><tbody>';
+    for(let i = 0; i < wertigkeitData.length / 2; i++) {
+        const item1 = wertigkeitData[i]; const item2 = wertigkeitData[i + 6];
+        wtHTML += `<tr><td>${item1.name}</td><td><input type="text" data-correct="${item1.symbol}"></td><td><input type="text" data-correct="${item1.correct}"></td><td>${item2.name}</td><td><input type="text" data-correct="${item2.symbol}"></td><td><input type="text" data-correct="${item2.correct}"></td></tr>`;
+    }
+    wertigkeitTabelle.innerHTML = wtHTML + '</tbody>';
+    
+    const formelTabelle = document.getElementById('formel-tabelle');
+    let ftHTML = '<tbody>';
+    const possibleIndices = [ '11', '12', '13', '14', '21', '22', '23', '24', '31', '32', '33', '34', '41', '42', '43', '44' ].sort((a,b)=>a.localeCompare(b));
+    for(let i = 0; i < 3; i++) {
+        ftHTML += '<tr>';
+        for(let j = 0; j < 5; j++) {
+            const item = formelData[i * 5 + j];
+            let helpBtnHTML = '';
+            if (item.correct === 'NaCl' || item.correct === 'CaCl2') {
+                 const helpFile = item.correct === 'NaCl' ? 'modul_8_hilfe_nacl.html' : 'modul_8_hilfe_cacl.html';
+                 helpBtnHTML = `<button class="nav-btn help-btn" style="padding: 5px 10px; font-size: 0.8em;" onclick="window.open('${helpFile}', '_blank')">?</button>`;
+            }
+
+            let optionsHTML = '<option>...</option>';
+            possibleIndices.forEach(idx => {
+                const xIndex = idx[0] === '1' ? '' : idx[0]; const yIndex = idx[1] === '1' ? '' : idx[1];
+                const formula = `${item.x}${xIndex}${item.y}${yIndex}`;
+                optionsHTML += `<option value="${formula}">${formatFormula(formula)}</option>`;
+            });
+            ftHTML += `<td><div style="display:flex; align-items:center; justify-content:center; gap: 5px;">${helpBtnHTML}<select data-correct="${item.correct}">${optionsHTML}</select></div></td>`;
+        }
+        ftHTML += '</tr>';
+    }
+    formelTabelle.innerHTML = ftHTML + '</tbody>';
+    
+    function checkTable(tableElement, errorFeedbackId, successFeedbackId) {
+        let hasErrors = false;
+        const inputs = tableElement.querySelectorAll('input:not([disabled]), select:not([disabled])');
+        if (inputs.length === 0) {
+            const successDiv = document.getElementById(successFeedbackId);
+            if(successDiv) { successDiv.style.display = 'block'; setTimeout(() => { successDiv.style.display = 'none'; }, 1500); }
+            return true;
+        }
+        inputs.forEach(input => {
+            const isCorrect = (input.value.toLowerCase().replace(/\s/g, '') === input.dataset.correct.toLowerCase().replace(/\s/g, ''));
+            input.classList.remove('correct-input', 'incorrect-input');
+            input.classList.add(isCorrect ? 'correct-input' : 'incorrect-input');
+            if (isCorrect) { input.disabled = true; } else { hasErrors = true; }
+        });
+        const feedbackDiv = hasErrors ? document.getElementById(errorFeedbackId) : document.getElementById(successFeedbackId);
+        if(feedbackDiv) { feedbackDiv.style.display = 'block'; setTimeout(() => { feedbackDiv.style.display = 'none'; }, 1500); }
+        return !hasErrors;
+    }
+    
+    function checkOverallCompletion() {
+        const allWertigkeitInputs = Array.from(document.querySelectorAll('#wertigkeit-tabelle input'));
+        const allFormelInputs = Array.from(document.querySelectorAll('#formel-tabelle select'));
+        if (allWertigkeitInputs.every(i => i.disabled) && allFormelInputs.every(i => i.disabled)) {
+            document.getElementById('completion-message').style.display = 'block';
+            document.getElementById('finish-check-btn').disabled = false;
+        }
+    }
+
+    document.getElementById('check-wertigkeit').addEventListener('click', () => { if (checkTable(wertigkeitTabelle, 'feedback-wertigkeit-error', 'feedback-wertigkeit-success')) checkOverallCompletion(); });
+    document.getElementById('check-formeln').addEventListener('click', () => { if (checkTable(formelTabelle, 'feedback-formel-error', 'feedback-formel-success')) checkOverallCompletion(); });
+    
+    document.getElementById('skip-tables-input').addEventListener('input', function() {
+        if (this.value.toLowerCase() === 'weiter') {
+            document.getElementById('finish-check-btn').disabled = false;
+        }
+    });
+});
+</script>
+</body>
+</html>
