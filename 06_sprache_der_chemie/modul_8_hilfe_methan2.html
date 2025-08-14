@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baukasten: Interaktive Herleitung CH₄</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; color: #333; max-width: 800px; margin: 2rem auto;
+            padding: 0 1rem; background-color: #f9f9f9;
+        }
+        h2 {
+            color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;
+        }
+        .container {
+            background-color: #ffffff; padding: 2rem; border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .info-block {
+            background-color: #ecf0f1; border-left: 5px solid #3498db; padding: 15px;
+            margin: 1rem 0; border-radius: 0 5px 5px 0;
+        }
+        .nav-btn {
+            display: inline-block; background-color: #3498db; color: #ffffff; padding: 12px 25px;
+            border-radius: 5px; text-decoration: none; font-size: 1.1em; border: none; cursor: pointer;
+            margin-top: 1.5rem; transition: background-color 0.3s;
+        }
+        .nav-btn.secondary {
+             background-color: #7f8c8d;
+        }
+        .nav-btn:hover:not(:disabled) { background-color: #2980b9; }
+        .nav-btn.secondary:hover:not(:disabled) { background-color: #34495e; }
+        .herleitung-step, .choice-container, .feedback-gif {
+            display: none;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .feedback-gif { border: none; }
+        .svg-drawing {
+            width: 100%;
+            max-width: 400px;
+            min-height: 120px;
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Interaktive Herleitung: Methan (CH₄)</h2>
+        <p class="info-block">Wir leiten nun gemeinsam die Struktur des Methan-Moleküls her. Nach jedem Schritt kannst du entscheiden, ob du alleine weitermachen möchtest.</p>
+        
+        <div id="methan-herleitung">
+            <!-- Step 1 -->
+            <div class="herleitung-step" id="step-1">
+                <p>1. Die Summenformel <strong>CH₄</strong> verrät uns die Bausteine: 1 Kohlenstoff-Atom und 4 Wasserstoff-Atome.</p>
+                <div id="methan-step1-svg"></div>
+            </div>
+            
+            <!-- Choice 1 -->
+            <div class="choice-container" id="choice-1">
+                <p>Schaffst du den Rest alleine?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn secondary" data-skip-feedback>Ja, Rest alleine</button>
+                    <button class="nav-btn" data-next-step="2">Nächsten Schritt anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="herleitung-step" id="step-2">
+                <p>2. Wasserstoff (H) hat die Wertigkeit I (1 Arm). Kohlenstoff (C) muss vier H-Atome binden, hat also die Wertigkeit IV (4 Arme im 90°-Raster).</p>
+                <div id="methan-step2-svg"></div>
+            </div>
+
+            <!-- Choice 2 -->
+            <div class="choice-container" id="choice-2">
+                 <p>Schaffst du den Rest alleine?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn secondary" data-skip-feedback>Ja, Rest alleine</button>
+                    <button class="nav-btn" data-next-step="3">Nächsten Schritt anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="herleitung-step" id="step-3">
+                <p>3. Die Atome werden nun so ausgerichtet, dass die nächstgelegenen Arme verbunden werden können.</p>
+                <div id="methan-step3-svg"></div>
+            </div>
+            
+            <!-- Choice 3 -->
+            <div class="choice-container" id="choice-3">
+                 <p>Bist du bereit für die Lösung?</p>
+                <div class="button-wrapper">
+                    <button class="nav-btn" data-next-step="final">Lösung anzeigen</button>
+                </div>
+            </div>
+
+            <!-- Final Step -->
+            <div class="herleitung-step" id="step-final">
+                <p>4. Im letzten Schritt werden die Arme zum fertigen Methan-Molekül verbunden.</p>
+                <div id="methan-final-svg"></div>
+            </div>
+
+            <!-- Feedback GIF -->
+            <div class="feedback-gif" id="skip-feedback-gif">
+                 <div class="tenor-gif-embed" data-postid="9181333401381757341" data-share-method="host" data-aspect-ratio="1.04762" data-width="20%"></div>
+            </div>
+        </div>
+        <button class="nav-btn" id="start-herleitung-btn">Herleitung starten</button>
+    </div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- KONSTANTEN UND ENGINE ---
+    const ARROW_GAP = 25;
+    function drawAtomWithSymbol(symbol, radius, color = 'white', arms = 0, armAngles = []) {
+        const fontSize = radius * 1.5;
+        let armPaths = '';
+        if (arms > 0) {
+            const armLength = radius * 0.8;
+            for (const angle of armAngles) {
+                const x1 = radius;
+                const x2 = radius + armLength;
+                armPaths += `<line x1="${x1}" y1="0" x2="${x2}" y2="0" stroke="black" stroke-width="3" stroke-linecap="round" transform="rotate(${angle})"/>`;
+            }
+        }
+        return `<g><circle cx="0" cy="0" r="${radius}" fill="${color}" stroke="black" stroke-width="2" /><text x="0" y="0" font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="bold" text-anchor="middle" dy=".3em">${symbol}</text>${armPaths}</g>`;
+    }
+    
+    // --- Definitionen & Dynamische Berechnung ---
+    const cAtom = { x: 100, y: 100, r: 18, armLength: 14.4, angles: [0, 90, 180, 270] };
+    const hAtom = { r: 12, armLength: 9.6 };
+    const distanceToCenter = cAtom.r + cAtom.armLength + ARROW_GAP + hAtom.armLength + hAtom.r;
+    const hAtoms = cAtom.angles.map(angle => ({
+        center: { x: cAtom.x + distanceToCenter * Math.cos(angle * Math.PI / 180), y: cAtom.y + distanceToCenter * Math.sin(angle * Math.PI / 180) },
+        armAngle: angle + 180
+    }));
+    const viewBox = `0 0 200 200`;
+    const getArmEndpoint = (cx, cy, r, al, deg) => ({ x: cx + (r + al) * Math.cos(deg * Math.PI/180), y: cy + (r + al) * Math.sin(deg * Math.PI/180) });
+    const cArmEnds = cAtom.angles.map(angle => getArmEndpoint(cAtom.x, cAtom.y, cAtom.r, cAtom.armLength, angle));
+    const hArmEnds = hAtoms.map(h => getArmEndpoint(h.center.x, h.center.y, hAtom.r, hAtom.armLength, h.armAngle));
+
+    // --- RENDER SVGs ---
+    document.getElementById('methan-step1-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666')}</g>${hAtoms.map(h => `<g transform="translate(${h.center.x}, ${h.center.y})">${drawAtomWithSymbol('H', hAtom.r, 'white')}</g>`).join('')}</svg>`;
+    document.getElementById('methan-step2-svg').innerHTML = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666', 4, cAtom.angles)}</g>${hAtoms.map(h => `<g transform="translate(${h.center.x}, ${h.center.y})">${drawAtomWithSymbol('H', hAtom.r, 'white', 1, [h.armAngle])}</g>`).join('')}</svg>`;
+    let step3SVG = `<svg viewBox="${viewBox}" class="svg-drawing"><defs><marker id="outwardArrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10" stroke="#3498db" stroke-width="1.5" fill="none"/></marker></defs><g transform="translate(${cAtom.x}, ${cAtom.y})">${drawAtomWithSymbol('C', cAtom.r, '#666', 4, cAtom.angles)}</g>${hAtoms.map(h => `<g transform="translate(${h.center.x}, ${h.center.y})">${drawAtomWithSymbol('H', hAtom.r, 'white', 1, [h.armAngle])}</g>`).join('')}`;
+    for (let i = 0; i < 4; i++) { step3SVG += `<line x1="${hArmEnds[i].x}" y1="${hArmEnds[i].y}" x2="${cArmEnds[i].x}" y2="${cArmEnds[i].y}" stroke="#3498db" stroke-width="2" marker-start="url(#outwardArrow)" marker-end="url(#outwardArrow)" />`; }
+    step3SVG += `</svg>`;
+    document.getElementById('methan-step3-svg').innerHTML = step3SVG;
+    let finalSVG = `<svg viewBox="${viewBox}" class="svg-drawing"><g transform="translate(${cAtom.x}, ${cAtom.y})">`;
+    cAtom.angles.forEach(angle => { const h_dist = cAtom.r + hAtom.r; const angleRad = angle * Math.PI / 180; const h_x = h_dist * Math.cos(angleRad); const h_y = h_dist * Math.sin(angleRad); finalSVG += `<line x1="0" y1="0" x2="${h_x}" y2="${h_y}" stroke="black" stroke-width="3"/>`; });
+    finalSVG += `${drawAtomWithSymbol('C', cAtom.r, '#666')}`;
+    cAtom.angles.forEach(angle => { const h_dist = cAtom.r + hAtom.r; const angleRad = angle * Math.PI / 180; const h_x = h_dist * Math.cos(angleRad); const h_y = h_dist * Math.sin(angleRad); finalSVG += `<g transform="translate(${h_x}, ${h_y})">${drawAtomWithSymbol('H', hAtom.r)}</g>`; });
+    finalSVG += `</g></svg>`;
+    document.getElementById('methan-final-svg').innerHTML = finalSVG;
+
+    // --- INTERACTIVITY LOGIC ---
+    const startBtn = document.getElementById('start-herleitung-btn');
+    const steps = document.querySelectorAll('.herleitung-step');
+    const choices = document.querySelectorAll('.choice-container');
+    const feedbackGif = document.getElementById('skip-feedback-gif');
+
+    startBtn.addEventListener('click', () => {
+        startBtn.style.display = 'none';
+        steps[0].style.display = 'block';
+        choices[0].style.display = 'block';
+    });
+
+    choices.forEach((choice, index) => {
+        const nextStepBtn = choice.querySelector('[data-next-step]');
+        const skipBtn = choice.querySelector('[data-skip-feedback]');
+        const finalBtn = choice.querySelector('[data-next-step="final"]');
+        
+        if (nextStepBtn) {
+            nextStepBtn.addEventListener('click', () => {
+                choice.style.display = 'none';
+                const nextStepIndex = parseInt(nextStepBtn.dataset.nextStep) - 1;
+                steps[nextStepIndex].style.display = 'block';
+                if(choices[nextStepIndex]) {
+                    choices[nextStepIndex].style.display = 'block';
+                }
+            });
+        }
+        if(finalBtn) {
+             finalBtn.addEventListener('click', () => {
+                steps.forEach(s => s.style.display = 'none');
+                choices.forEach(c => c.style.display = 'none');
+                document.getElementById('step-final').style.display = 'block';
+            });
+        }
+        if (skipBtn) {
+            skipBtn.addEventListener('click', () => {
+                choice.style.display = 'none';
+                feedbackGif.style.display = 'block';
+                setTimeout(() => {
+                    feedbackGif.style.display = 'none';
+                    choice.style.display = 'block';
+                }, 1500);
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
